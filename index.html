@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e8e2d6">
+<title>단어장</title>
+<style>
+  :root {
+    --bg: #e8e2d6;
+    --paper: #fffcf7;
+    --ink: #1c1916;
+    --muted: #8a8176;
+    --line: #ece6dc;
+    --accent: #226b49;
+    --soft: #f3eee6;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button:disabled { cursor: default; opacity: .38; }
+  .app {
+    width: min(520px, 100%);
+    min-height: 100dvh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: calc(14px + env(safe-area-inset-top)) 16px 10px;
+  }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  h1 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  #open {
+    border: 1px solid #d5cdc2;
+    background: transparent;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  .toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .toggle {
+    border: 1px solid #d5cdc2;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  .toggle[aria-pressed="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .legend { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
+  .prog { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .pos { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 72px; }
+  .track {
+    flex: 1;
+    height: 6px;
+    background: #ddd6cb;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    border-radius: inherit;
+  }
+  #status { margin: 8px 0 0; font-size: 13px; color: #8a3d2f; }
+  #status:empty { display: none; }
+  main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    padding: 6px 16px 8px;
+    touch-action: pan-y;
+  }
+  #card {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    background: var(--paper);
+    border-radius: 22px;
+    box-shadow: 0 12px 32px rgba(50, 36, 14, .08);
+    overscroll-behavior: contain;
+  }
+  main.dragging { user-select: none; }
+  .block { padding: 18px 22px 20px; }
+  .block + .block { border-top: 1px solid var(--line); }
+  .kicker { margin: 0 0 6px; font-size: 12px; letter-spacing: .08em; color: var(--muted); }
+  .word {
+    margin: 0;
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+  .forms { margin: 8px 0 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+  .def { font-size: 20px; line-height: 1.45; }
+  .def.big { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
+  .mean-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .mean-list li { display: flex; flex-direction: column; gap: 2px; }
+  .form { font-size: 13px; color: var(--muted); }
+  .exp, .ex, .empty, .loading { margin: 0; font-size: 18px; line-height: 1.55; overflow-wrap: anywhere; }
+  .exp + .exp, .ex + .ex { margin-top: 10px; }
+  .ex { padding-left: 12px; border-left: 3px solid var(--accent); }
+  .empty, .loading { color: var(--muted); }
+  .loading, .done, .error { padding: 28px 22px; }
+  .cover {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    min-height: 84px;
+  }
+  .cover .hint { display: block; margin-top: 2px; font-size: 17px; color: var(--ink); }
+  .cover:active { background: var(--soft); }
+  footer {
+    display: flex;
+    gap: 10px;
+    padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+  .nav {
+    height: 52px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 650;
+  }
+  #prev { flex: 1; background: transparent; border: 1px solid #d5cdc2; }
+  #next { flex: 1.6; background: var(--accent); color: #f4fff8; border: 0; }
+  .from-right { animation: from-right .22s ease; }
+  .from-left { animation: from-left .22s ease; }
+  @keyframes from-right {
+    from { transform: translateX(32px); opacity: .35; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes from-left {
+    from { transform: translateX(-32px); opacity: .35; }
+    to { transform: none; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .from-right, .from-left { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="top">
+        <h1>단어장</h1>
+        <button type="button" id="open">열기</button>
+        <input id="file" type="file" accept="application/json,.json" hidden>
+      </div>
+      <div class="toggles" id="toggles">
+        <button type="button" class="toggle" data-toggle="word">단어</button>
+        <button type="button" class="toggle" data-toggle="mean">뜻</button>
+        <button type="button" class="toggle" data-toggle="exp">설명</button>
+        <button type="button" class="toggle" data-toggle="ex">예문</button>
+      </div>
+      <p class="legend">켠 항목은 항상 표시 · 끈 항목은 눌러서 확인</p>
+      <div class="prog">
+        <span class="pos" id="pos">0 / 0</span>
+        <div class="track" id="bar" role="progressbar" aria-valuemin="0" aria-valuenow="0" aria-valuemax="0" aria-label="진행">
+          <div class="fill" id="fill"></div>
+        </div>
+      </div>
+      <p id="status" role="status"></p>
+    </header>
+    <main id="stage">
+      <article id="card"><p class="loading">불러오는 중…</p></article>
+    </main>
+    <footer>
+      <button type="button" class="nav" id="prev" disabled>이전</button>
+      <button type="button" class="nav" id="next" disabled>다음</button>
+    </footer>
+  </div>
+<script>
+const FIELDS = ["word", "mean", "exp", "ex"];
+const LABELS = { word: "단어", mean: "뜻", exp: "설명", ex: "예문" };
+const DEFAULT_SHOW = { word: true, mean: false, exp: false, ex: false };
+
+let cards = [];
+let i = 0;
+let peek = {};
+let show = loadShow();
+let drag = null;
+let swipeAt = 0;
+
+const cardEl = document.getElementById("card");
+const stage = document.getElementById("stage");
+
+function loadShow() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("vocab-show") || "null");
+    const next = { ...DEFAULT_SHOW };
+    for (const key of FIELDS) {
+      if (saved && typeof saved[key] === "boolean") next[key] = saved[key];
+    }
+    return next;
+  } catch {
+    return { ...DEFAULT_SHOW };
+  }
+}
+
+function save() {
+  try {
+    localStorage.setItem("vocab-i", String(i));
+    localStorage.setItem("vocab-show", JSON.stringify(show));
+  } catch { /* private mode */ }
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+function lines(v) {
+  if (v == null) return [];
+  const list = Array.isArray(v) ? v : [v];
+  return list.map((x) => String(x).trim()).filter(Boolean);
+}
+
+function phrasesOf(card) {
+  const list = Array.isArray(card.phrases) ? card.phrases : [];
+  return list.map((p) => ({
+    phrase: p && p.phrase ? String(p.phrase) : "",
+    means: Array.isArray(p && p.means) ? p.means.map(String).filter(Boolean) : []
+  })).filter((p) => p.phrase || p.means.length);
+}
+
+function hasField(card, key) {
+  if (key === "word") return Boolean(card.key) || phrasesOf(card).some((p) => p.phrase);
+  if (key === "mean") return phrasesOf(card).some((p) => p.means.length);
+  if (key === "exp") return lines(card.exp).length > 0;
+  return lines(card.ex).length > 0;
+}
+
+function wordHTML(card) {
+  const ps = phrasesOf(card);
+  const key = String(card.key || (ps[0] && ps[0].phrase) || "").trim();
+  const forms = [];
+  for (const p of ps) {
+    if (p.phrase && p.phrase !== key && !forms.includes(p.phrase)) forms.push(p.phrase);
+  }
+  return `<p class="kicker">단어</p><h2 class="word">${esc(key)}</h2>` +
+    (forms.length ? `<p class="forms">${forms.map(esc).join(" · ")}</p>` : "");
+}
+
+function meanHTML(card) {
+  const ps = phrasesOf(card).filter((p) => p.means.length);
+  const wordOpen = show.word || peek.word;
+  if (!wordOpen || ps.length < 2) {
+    const defs = [];
+    for (const p of ps) for (const m of p.means) if (!defs.includes(m)) defs.push(m);
+    return `<p class="kicker">뜻</p><p class="def big">${esc(defs.join(", "))}</p>`;
+  }
+  return `<p class="kicker">뜻</p><ul class="mean-list">` + ps.map((p) =>
+    `<li><span class="form">${esc(p.phrase)}</span><span class="def">${esc(p.means.join(", "))}</span></li>`
+  ).join("") + `</ul>`;
+}
+
+function textHTML(card, key, cls) {
+  const bits = lines(card[key]).map((t) => `<p class="${cls}">${esc(t)}</p>`).join("");
+  return `<p class="kicker">${LABELS[key]}</p>${bits}`;
+}
+
+function section(card, key) {
+  if (!hasField(card, key)) return "";
+  if (show[key] || peek[key]) {
+    const html = key === "word" ? wordHTML(card) : key === "mean" ? meanHTML(card) : textHTML(card, key, key);
+    return `<section class="block">${html}</section>`;
+  }
+  return `<button type="button" class="block cover" data-reveal="${key}"><span class="kicker">${LABELS[key]}</span><span class="hint">눌러서 보기</span></button>`;
+}
+
+function paintToggles() {
+  for (const key of FIELDS) {
+    document.querySelector(`[data-toggle="${key}"]`).setAttribute("aria-pressed", show[key] ? "true" : "false");
+  }
+}
+
+function render(dir) {
+  paintToggles();
+  const total = cards.length;
+  const done = total > 0 && i >= total;
+  const shown = done ? total : Math.min(i + 1, total);
+  document.getElementById("pos").textContent = total ? `${shown} / ${total}` : "0 / 0";
+  document.getElementById("fill").style.width = total ? `${(shown / total) * 100}%` : "0%";
+  const bar = document.getElementById("bar");
+  bar.setAttribute("aria-valuenow", String(shown));
+  bar.setAttribute("aria-valuemax", String(total));
+  bar.setAttribute("aria-valuetext", total ? `${shown} / ${total}` : "0 / 0");
+  document.getElementById("prev").disabled = i <= 0;
+  document.getElementById("next").disabled = total === 0;
+  document.getElementById("next").textContent = done ? "처음부터" : "다음";
+  document.title = total ? `단어장 ${shown}/${total}` : "단어장";
+
+  if (!total) return;
+  cardEl.innerHTML = done
+    ? `<div class="done"><p class="kicker">끝</p><h2 class="word">다 봤어요</h2><p class="exp">${total}개를 넘겼습니다.</p></div>`
+    : FIELDS.map((key) => section(cards[i], key)).join("");
+
+  if (!dir) return;
+  cardEl.classList.remove("from-right", "from-left");
+  void cardEl.offsetWidth;
+  cardEl.classList.add(dir > 0 ? "from-right" : "from-left");
+}
+
+function go(delta) {
+  if (!cards.length) return;
+  const n = i + delta;
+  if (n < 0 || n > cards.length) return;
+  i = n;
+  peek = {};
+  save();
+  render(delta);
+}
+
+function restart() {
+  i = 0;
+  peek = {};
+  save();
+  render(-1);
+}
+
+function setCards(data, restore) {
+  if (!Array.isArray(data)) throw new Error("not array");
+  cards = data.filter((x) => x && typeof x === "object");
+  peek = {};
+  document.getElementById("status").textContent = cards.length ? "" : "단어가 없습니다.";
+  let n = 0;
+  if (restore) {
+    n = Number(localStorage.getItem("vocab-i"));
+    if (!Number.isInteger(n) || n < 0 || n > cards.length) n = 0;
+  }
+  i = cards.length ? n : 0;
+  render(0);
+}
+
+function fail(msg) {
+  document.getElementById("status").textContent = msg;
+  if (!cards.length) {
+    cardEl.innerHTML = `<div class="error"><p class="exp">${esc(msg)}</p></div>`;
+  }
+}
+
+async function loadDefault() {
+  try {
+    const res = await fetch("phrases/1.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(String(res.status));
+    setCards(await res.json(), true);
+  } catch {
+    fail("phrases/1.json을 읽지 못했습니다. 열기로 JSON 파일을 선택하세요.");
+  }
+}
+
+document.getElementById("toggles").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-toggle]");
+  if (!b) return;
+  const key = b.dataset.toggle;
+  show[key] = !show[key];
+  if (!show[key]) delete peek[key];
+  save();
+  render(0);
+});
+
+document.getElementById("prev").addEventListener("click", () => go(-1));
+document.getElementById("next").addEventListener("click", () => {
+  if (i >= cards.length) restart();
+  else go(1);
+});
+document.getElementById("open").addEventListener("click", () => document.getElementById("file").click());
+document.getElementById("file").addEventListener("change", () => {
+  const input = document.getElementById("file");
+  const f = input.files && input.files[0];
+  input.value = "";
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try { setCards(JSON.parse(String(reader.result)), false); }
+    catch { fail("JSON 형식이 아닙니다."); }
+  };
+  reader.readAsText(f);
+});
+
+cardEl.addEventListener("click", (e) => {
+  if (Date.now() - swipeAt < 450) return;
+  const b = e.target.closest("[data-reveal]");
+  if (!b) return;
+  peek[b.dataset.reveal] = true;
+  render(0);
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.closest("input, textarea")) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); if (i >= cards.length) restart(); else go(1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+});
+
+stage.addEventListener("pointerdown", (e) => {
+  if (!e.isPrimary || e.button !== 0 || !cards.length) return;
+  drag = { id: e.pointerId, x: e.clientX, y: e.clientY, locked: "" };
+});
+
+window.addEventListener("pointermove", (e) => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dx = e.clientX - drag.x;
+  const dy = e.clientY - drag.y;
+  if (!drag.locked) {
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    drag.locked = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    if (drag.locked === "y") { drag = null; cardEl.style.transform = ""; stage.classList.remove("dragging"); return; }
+  }
+  stage.classList.add("dragging");
+  cardEl.style.transform = `translateX(${Math.max(-96, Math.min(96, dx * 0.4))}px)`;
+});
+
+function endDrag(e, cancel) {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dx = e.clientX - drag.x;
+  const dy = e.clientY - drag.y;
+  const swipe = !cancel && drag.locked === "x" && Math.abs(dx) > 64 && Math.abs(dx) > Math.abs(dy);
+  drag = null;
+  cardEl.style.transform = "";
+  stage.classList.remove("dragging");
+  if (!swipe) return;
+  swipeAt = Date.now();
+  if (dx < 0) { if (i >= cards.length) return; go(1); }
+  else go(-1);
+}
+
+window.addEventListener("pointerup", (e) => endDrag(e, false));
+window.addEventListener("pointercancel", (e) => endDrag(e, true));
+
+loadDefault();
+</script>
+</body>
+</html>
+
