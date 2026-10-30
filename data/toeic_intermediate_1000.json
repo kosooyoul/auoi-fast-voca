@@ -1,0 +1,7197 @@
+[
+  {
+    "id": 1,
+    "phrase": "schedule",
+    "means": [
+      "일정",
+      "일정을 잡다"
+    ]
+  },
+  {
+    "id": 2,
+    "phrase": "timetable",
+    "means": [
+      "시간표"
+    ]
+  },
+  {
+    "id": 3,
+    "phrase": "availability",
+    "means": [
+      "이용 가능 여부",
+      "가능한 시간"
+    ]
+  },
+  {
+    "id": 4,
+    "phrase": "slot",
+    "means": [
+      "시간대",
+      "빈자리",
+      "투입구"
+    ]
+  },
+  {
+    "id": 5,
+    "phrase": "time frame",
+    "means": [
+      "기간",
+      "시간 범위"
+    ]
+  },
+  {
+    "id": 6,
+    "phrase": "due date",
+    "means": [
+      "기한",
+      "납기일"
+    ]
+  },
+  {
+    "id": 7,
+    "phrase": "upcoming",
+    "means": [
+      "다가오는"
+    ]
+  },
+  {
+    "id": 8,
+    "phrase": "prior",
+    "means": [
+      "이전의",
+      "사전의"
+    ]
+  },
+  {
+    "id": 9,
+    "phrase": "advance notice",
+    "means": [
+      "사전 통지"
+    ]
+  },
+  {
+    "id": 10,
+    "phrase": "notify",
+    "means": [
+      "알리다",
+      "통지하다"
+    ]
+  },
+  {
+    "id": 11,
+    "phrase": "reminder",
+    "means": [
+      "알림",
+      "독촉"
+    ]
+  },
+  {
+    "id": 12,
+    "phrase": "confirmation",
+    "means": [
+      "확인",
+      "확정"
+    ]
+  },
+  {
+    "id": 13,
+    "phrase": "reschedule",
+    "means": [
+      "일정을 다시 잡다"
+    ]
+  },
+  {
+    "id": 14,
+    "phrase": "postpone",
+    "means": [
+      "연기하다"
+    ]
+  },
+  {
+    "id": 15,
+    "phrase": "cancellation",
+    "means": [
+      "취소"
+    ]
+  },
+  {
+    "id": 16,
+    "phrase": "rearrange",
+    "means": [
+      "일정을 재조정하다"
+    ]
+  },
+  {
+    "id": 17,
+    "phrase": "coordinate",
+    "means": [
+      "조율하다"
+    ]
+  },
+  {
+    "id": 18,
+    "phrase": "arrange",
+    "means": [
+      "준비하다",
+      "주선하다"
+    ]
+  },
+  {
+    "id": 19,
+    "phrase": "set up",
+    "means": [
+      "마련하다",
+      "설치하다"
+    ]
+  },
+  {
+    "id": 20,
+    "phrase": "plan ahead",
+    "means": [
+      "미리 계획하다"
+    ]
+  },
+  {
+    "id": 21,
+    "phrase": "on time",
+    "means": [
+      "정시에"
+    ]
+  },
+  {
+    "id": 22,
+    "phrase": "in advance",
+    "means": [
+      "미리",
+      "사전에"
+    ]
+  },
+  {
+    "id": 23,
+    "phrase": "ahead of schedule",
+    "means": [
+      "예정보다 일찍"
+    ]
+  },
+  {
+    "id": 24,
+    "phrase": "behind schedule",
+    "means": [
+      "일정보다 늦게"
+    ]
+  },
+  {
+    "id": 25,
+    "phrase": "as scheduled",
+    "means": [
+      "예정대로"
+    ]
+  },
+  {
+    "id": 26,
+    "phrase": "at short notice",
+    "means": [
+      "갑작스럽게",
+      "촉박한 통보로"
+    ]
+  },
+  {
+    "id": 27,
+    "phrase": "at your convenience",
+    "means": [
+      "편하신 때에"
+    ]
+  },
+  {
+    "id": 28,
+    "phrase": "at your earliest convenience",
+    "means": [
+      "가능한 한 빠른 편한 때에"
+    ]
+  },
+  {
+    "id": 29,
+    "phrase": "no later than",
+    "means": [
+      "늦어도 ~까지"
+    ]
+  },
+  {
+    "id": 30,
+    "phrase": "by the end of",
+    "means": [
+      "~이 끝날 때까지"
+    ]
+  },
+  {
+    "id": 31,
+    "phrase": "from time to time",
+    "means": [
+      "때때로"
+    ]
+  },
+  {
+    "id": 32,
+    "phrase": "in the meantime",
+    "means": [
+      "그동안에"
+    ]
+  },
+  {
+    "id": 33,
+    "phrase": "meanwhile",
+    "means": [
+      "그동안",
+      "한편"
+    ]
+  },
+  {
+    "id": 34,
+    "phrase": "shortly",
+    "means": [
+      "곧"
+    ]
+  },
+  {
+    "id": 35,
+    "phrase": "promptly",
+    "means": [
+      "신속하게",
+      "즉시",
+      "정시에"
+    ]
+  },
+  {
+    "id": 36,
+    "phrase": "currently",
+    "means": [
+      "현재"
+    ]
+  },
+  {
+    "id": 37,
+    "phrase": "previously",
+    "means": [
+      "이전에"
+    ]
+  },
+  {
+    "id": 38,
+    "phrase": "regularly",
+    "means": [
+      "정기적으로"
+    ]
+  },
+  {
+    "id": 39,
+    "phrase": "tentative",
+    "means": [
+      "잠정적인"
+    ]
+  },
+  {
+    "id": 40,
+    "phrase": "tentatively",
+    "means": [
+      "잠정적으로"
+    ]
+  },
+  {
+    "id": 41,
+    "phrase": "reserve",
+    "means": [
+      "예약하다"
+    ]
+  },
+  {
+    "id": 42,
+    "phrase": "book in advance",
+    "means": [
+      "미리 예약하다"
+    ]
+  },
+  {
+    "id": 43,
+    "phrase": "make a reservation",
+    "means": [
+      "예약하다"
+    ]
+  },
+  {
+    "id": 44,
+    "phrase": "reservation number",
+    "means": [
+      "예약 번호"
+    ]
+  },
+  {
+    "id": 45,
+    "phrase": "booking reference",
+    "means": [
+      "예약 확인 번호"
+    ]
+  },
+  {
+    "id": 46,
+    "phrase": "confirmation number",
+    "means": [
+      "확인 번호"
+    ]
+  },
+  {
+    "id": 47,
+    "phrase": "vacancy",
+    "means": [
+      "빈방",
+      "공석"
+    ]
+  },
+  {
+    "id": 48,
+    "phrase": "occupy",
+    "means": [
+      "차지하다",
+      "사용하다"
+    ]
+  },
+  {
+    "id": 49,
+    "phrase": "fully booked",
+    "means": [
+      "예약이 꽉 찬"
+    ]
+  },
+  {
+    "id": 50,
+    "phrase": "waiting list",
+    "means": [
+      "대기 명단"
+    ]
+  },
+  {
+    "id": 51,
+    "phrase": "waiting period",
+    "means": [
+      "대기 기간"
+    ]
+  },
+  {
+    "id": 52,
+    "phrase": "walk-in",
+    "means": [
+      "예약 없이 방문하는 손님"
+    ]
+  },
+  {
+    "id": 53,
+    "phrase": "check in",
+    "means": [
+      "체크인하다",
+      "접수하다"
+    ]
+  },
+  {
+    "id": 54,
+    "phrase": "check out",
+    "means": [
+      "체크아웃하다",
+      "퇴실하다"
+    ]
+  },
+  {
+    "id": 55,
+    "phrase": "early check-in",
+    "means": [
+      "조기 체크인"
+    ]
+  },
+  {
+    "id": 56,
+    "phrase": "late checkout",
+    "means": [
+      "늦은 체크아웃"
+    ]
+  },
+  {
+    "id": 57,
+    "phrase": "front desk",
+    "means": [
+      "안내 데스크",
+      "프런트"
+    ]
+  },
+  {
+    "id": 58,
+    "phrase": "reception",
+    "means": [
+      "접수처",
+      "환영회"
+    ]
+  },
+  {
+    "id": 59,
+    "phrase": "lobby",
+    "means": [
+      "로비"
+    ]
+  },
+  {
+    "id": 60,
+    "phrase": "accommodation",
+    "means": [
+      "숙소",
+      "숙박 시설"
+    ]
+  },
+  {
+    "id": 61,
+    "phrase": "lodging",
+    "means": [
+      "숙박",
+      "숙소"
+    ]
+  },
+  {
+    "id": 62,
+    "phrase": "room rate",
+    "means": [
+      "객실 요금"
+    ]
+  },
+  {
+    "id": 63,
+    "phrase": "single room",
+    "means": [
+      "1인용 객실"
+    ]
+  },
+  {
+    "id": 64,
+    "phrase": "double room",
+    "means": [
+      "더블 침대가 있는 객실"
+    ]
+  },
+  {
+    "id": 65,
+    "phrase": "suite",
+    "means": [
+      "거실 등 여러 공간으로 구성된 호텔 객실"
+    ]
+  },
+  {
+    "id": 66,
+    "phrase": "amenity",
+    "means": [
+      "편의 시설",
+      "비품"
+    ]
+  },
+  {
+    "id": 67,
+    "phrase": "complimentary",
+    "means": [
+      "무료로 제공되는"
+    ]
+  },
+  {
+    "id": 68,
+    "phrase": "additional charge",
+    "means": [
+      "추가 요금"
+    ]
+  },
+  {
+    "id": 69,
+    "phrase": "service charge",
+    "means": [
+      "서비스 이용료",
+      "봉사료"
+    ]
+  },
+  {
+    "id": 70,
+    "phrase": "cancellation fee",
+    "means": [
+      "취소 수수료"
+    ]
+  },
+  {
+    "id": 71,
+    "phrase": "nonrefundable",
+    "means": [
+      "환불되지 않는"
+    ]
+  },
+  {
+    "id": 72,
+    "phrase": "refundable",
+    "means": [
+      "환불 가능한"
+    ]
+  },
+  {
+    "id": 73,
+    "phrase": "security deposit",
+    "means": [
+      "보증금"
+    ]
+  },
+  {
+    "id": 74,
+    "phrase": "valid ID",
+    "means": [
+      "유효한 신분증"
+    ]
+  },
+  {
+    "id": 75,
+    "phrase": "identification",
+    "means": [
+      "신분증",
+      "신원 확인"
+    ]
+  },
+  {
+    "id": 76,
+    "phrase": "property",
+    "means": [
+      "재산",
+      "부동산",
+      "건물·호텔 등의 시설"
+    ]
+  },
+  {
+    "id": 77,
+    "phrase": "housekeeping",
+    "means": [
+      "객실 청소",
+      "시설 관리"
+    ]
+  },
+  {
+    "id": 78,
+    "phrase": "room service",
+    "means": [
+      "객실 서비스"
+    ]
+  },
+  {
+    "id": 79,
+    "phrase": "occupancy",
+    "means": [
+      "점유",
+      "입주",
+      "객실 이용 상태"
+    ]
+  },
+  {
+    "id": 80,
+    "phrase": "special request",
+    "means": [
+      "특별 요청"
+    ]
+  },
+  {
+    "id": 81,
+    "phrase": "extend a stay",
+    "means": [
+      "숙박을 연장하다"
+    ]
+  },
+  {
+    "id": 82,
+    "phrase": "place an order",
+    "means": [
+      "주문하다"
+    ]
+  },
+  {
+    "id": 83,
+    "phrase": "order form",
+    "means": [
+      "주문서"
+    ]
+  },
+  {
+    "id": 84,
+    "phrase": "purchase order",
+    "means": [
+      "구매 주문서"
+    ]
+  },
+  {
+    "id": 85,
+    "phrase": "purchaser",
+    "means": [
+      "구매자"
+    ]
+  },
+  {
+    "id": 86,
+    "phrase": "retailer",
+    "means": [
+      "소매업자"
+    ]
+  },
+  {
+    "id": 87,
+    "phrase": "wholesaler",
+    "means": [
+      "도매업자"
+    ]
+  },
+  {
+    "id": 88,
+    "phrase": "item",
+    "means": [
+      "품목",
+      "물품"
+    ]
+  },
+  {
+    "id": 89,
+    "phrase": "merchandise",
+    "means": [
+      "상품"
+    ]
+  },
+  {
+    "id": 90,
+    "phrase": "model number",
+    "means": [
+      "모델 번호"
+    ]
+  },
+  {
+    "id": 91,
+    "phrase": "product code",
+    "means": [
+      "제품 코드"
+    ]
+  },
+  {
+    "id": 92,
+    "phrase": "unit",
+    "means": [
+      "단위",
+      "개"
+    ]
+  },
+  {
+    "id": 93,
+    "phrase": "unit price",
+    "means": [
+      "단가"
+    ]
+  },
+  {
+    "id": 94,
+    "phrase": "price tag",
+    "means": [
+      "가격표"
+    ]
+  },
+  {
+    "id": 95,
+    "phrase": "list price",
+    "means": [
+      "정가"
+    ]
+  },
+  {
+    "id": 96,
+    "phrase": "sale price",
+    "means": [
+      "할인 가격"
+    ]
+  },
+  {
+    "id": 97,
+    "phrase": "pricing",
+    "means": [
+      "가격 책정"
+    ]
+  },
+  {
+    "id": 98,
+    "phrase": "quotation",
+    "means": [
+      "견적서",
+      "견적"
+    ]
+  },
+  {
+    "id": 99,
+    "phrase": "bulk order",
+    "means": [
+      "대량 주문"
+    ]
+  },
+  {
+    "id": 100,
+    "phrase": "in bulk",
+    "means": [
+      "대량으로"
+    ]
+  },
+  {
+    "id": 101,
+    "phrase": "minimum order",
+    "means": [
+      "최소 주문 수량"
+    ]
+  },
+  {
+    "id": 102,
+    "phrase": "custom order",
+    "means": [
+      "맞춤 주문"
+    ]
+  },
+  {
+    "id": 103,
+    "phrase": "back order",
+    "means": [
+      "재고 부족으로 미처리된 주문"
+    ]
+  },
+  {
+    "id": 104,
+    "phrase": "out of stock",
+    "means": [
+      "재고가 없는"
+    ]
+  },
+  {
+    "id": 105,
+    "phrase": "in stock",
+    "means": [
+      "재고가 있는"
+    ]
+  },
+  {
+    "id": 106,
+    "phrase": "restock",
+    "means": [
+      "재입고하다"
+    ]
+  },
+  {
+    "id": 107,
+    "phrase": "reorder",
+    "means": [
+      "재주문하다"
+    ]
+  },
+  {
+    "id": 108,
+    "phrase": "order status",
+    "means": [
+      "주문 상태"
+    ]
+  },
+  {
+    "id": 109,
+    "phrase": "order history",
+    "means": [
+      "주문 내역"
+    ]
+  },
+  {
+    "id": 110,
+    "phrase": "process an order",
+    "means": [
+      "주문을 처리하다"
+    ]
+  },
+  {
+    "id": 111,
+    "phrase": "fill an order",
+    "means": [
+      "주문을 이행하다",
+      "주문한 물품을 공급하다"
+    ]
+  },
+  {
+    "id": 112,
+    "phrase": "fulfill an order",
+    "means": [
+      "주문을 이행하다",
+      "주문대로 물품을 공급하다"
+    ]
+  },
+  {
+    "id": 113,
+    "phrase": "cancel an order",
+    "means": [
+      "주문을 취소하다"
+    ]
+  },
+  {
+    "id": 114,
+    "phrase": "order confirmation",
+    "means": [
+      "주문 확인"
+    ]
+  },
+  {
+    "id": 115,
+    "phrase": "checkout",
+    "means": [
+      "결제 절차"
+    ]
+  },
+  {
+    "id": 116,
+    "phrase": "shopping cart",
+    "means": [
+      "장바구니"
+    ]
+  },
+  {
+    "id": 117,
+    "phrase": "sell out",
+    "means": [
+      "매진되다"
+    ]
+  },
+  {
+    "id": 118,
+    "phrase": "limited supply",
+    "means": [
+      "한정 수량"
+    ]
+  },
+  {
+    "id": 119,
+    "phrase": "substitute item",
+    "means": [
+      "대체 상품"
+    ]
+  },
+  {
+    "id": 120,
+    "phrase": "shipping fee",
+    "means": [
+      "배송비"
+    ]
+  },
+  {
+    "id": 121,
+    "phrase": "shipping address",
+    "means": [
+      "배송지"
+    ]
+  },
+  {
+    "id": 122,
+    "phrase": "handling fee",
+    "means": [
+      "취급 수수료"
+    ]
+  },
+  {
+    "id": 123,
+    "phrase": "delivery date",
+    "means": [
+      "배송일",
+      "납품일"
+    ]
+  },
+  {
+    "id": 124,
+    "phrase": "estimated delivery",
+    "means": [
+      "예상 배송"
+    ]
+  },
+  {
+    "id": 125,
+    "phrase": "scheduled delivery",
+    "means": [
+      "예정된 배송"
+    ]
+  },
+  {
+    "id": 126,
+    "phrase": "express delivery",
+    "means": [
+      "특급 배송"
+    ]
+  },
+  {
+    "id": 127,
+    "phrase": "same-day delivery",
+    "means": [
+      "당일 배송"
+    ]
+  },
+  {
+    "id": 128,
+    "phrase": "standard shipping",
+    "means": [
+      "일반 배송"
+    ]
+  },
+  {
+    "id": 129,
+    "phrase": "free shipping",
+    "means": [
+      "무료 배송"
+    ]
+  },
+  {
+    "id": 130,
+    "phrase": "courier",
+    "means": [
+      "택배 기사",
+      "급송업체"
+    ]
+  },
+  {
+    "id": 131,
+    "phrase": "packaging",
+    "means": [
+      "포장",
+      "포장재"
+    ]
+  },
+  {
+    "id": 132,
+    "phrase": "packing slip",
+    "means": [
+      "포장 명세서"
+    ]
+  },
+  {
+    "id": 133,
+    "phrase": "shipping label",
+    "means": [
+      "배송 라벨"
+    ]
+  },
+  {
+    "id": 134,
+    "phrase": "tracking number",
+    "means": [
+      "운송장 번호"
+    ]
+  },
+  {
+    "id": 135,
+    "phrase": "track a package",
+    "means": [
+      "택배를 조회하다"
+    ]
+  },
+  {
+    "id": 136,
+    "phrase": "in transit",
+    "means": [
+      "운송 중인"
+    ]
+  },
+  {
+    "id": 137,
+    "phrase": "dispatch",
+    "means": [
+      "발송하다",
+      "발송"
+    ]
+  },
+  {
+    "id": 138,
+    "phrase": "distribution",
+    "means": [
+      "유통",
+      "배포"
+    ]
+  },
+  {
+    "id": 139,
+    "phrase": "distribution center",
+    "means": [
+      "물류센터"
+    ]
+  },
+  {
+    "id": 140,
+    "phrase": "stockroom",
+    "means": [
+      "재고 보관실"
+    ]
+  },
+  {
+    "id": 141,
+    "phrase": "stock level",
+    "means": [
+      "재고 수준"
+    ]
+  },
+  {
+    "id": 142,
+    "phrase": "supply chain",
+    "means": [
+      "공급망"
+    ]
+  },
+  {
+    "id": 143,
+    "phrase": "freight",
+    "means": [
+      "화물",
+      "화물 운송"
+    ]
+  },
+  {
+    "id": 144,
+    "phrase": "cargo",
+    "means": [
+      "화물"
+    ]
+  },
+  {
+    "id": 145,
+    "phrase": "loading dock",
+    "means": [
+      "하역장"
+    ]
+  },
+  {
+    "id": 146,
+    "phrase": "load",
+    "means": [
+      "짐을 싣다"
+    ]
+  },
+  {
+    "id": 147,
+    "phrase": "unload",
+    "means": [
+      "짐을 내리다"
+    ]
+  },
+  {
+    "id": 148,
+    "phrase": "pallet",
+    "means": [
+      "운반대",
+      "팔레트"
+    ]
+  },
+  {
+    "id": 149,
+    "phrase": "container",
+    "means": [
+      "컨테이너",
+      "용기"
+    ]
+  },
+  {
+    "id": 150,
+    "phrase": "fragile",
+    "means": [
+      "깨지기 쉬운"
+    ]
+  },
+  {
+    "id": 151,
+    "phrase": "handle with care",
+    "means": [
+      "취급 주의"
+    ]
+  },
+  {
+    "id": 152,
+    "phrase": "perishable",
+    "means": [
+      "상하기 쉬운",
+      "유통기한이 짧은"
+    ]
+  },
+  {
+    "id": 153,
+    "phrase": "damaged in transit",
+    "means": [
+      "운송 중 파손된"
+    ]
+  },
+  {
+    "id": 154,
+    "phrase": "missing item",
+    "means": [
+      "누락된 물품"
+    ]
+  },
+  {
+    "id": 155,
+    "phrase": "shipment delay",
+    "means": [
+      "배송 지연"
+    ]
+  },
+  {
+    "id": 156,
+    "phrase": "proof of delivery",
+    "means": [
+      "배송 완료 증빙"
+    ]
+  },
+  {
+    "id": 157,
+    "phrase": "inquiry",
+    "means": [
+      "문의",
+      "질문"
+    ]
+  },
+  {
+    "id": 158,
+    "phrase": "response",
+    "means": [
+      "응답",
+      "답변"
+    ]
+  },
+  {
+    "id": 159,
+    "phrase": "concern",
+    "means": [
+      "우려",
+      "문제"
+    ]
+  },
+  {
+    "id": 160,
+    "phrase": "resolve",
+    "means": [
+      "해결하다"
+    ]
+  },
+  {
+    "id": 161,
+    "phrase": "resolution",
+    "means": [
+      "해결",
+      "결의"
+    ]
+  },
+  {
+    "id": 162,
+    "phrase": "assist",
+    "means": [
+      "돕다",
+      "지원하다"
+    ]
+  },
+  {
+    "id": 163,
+    "phrase": "assistance",
+    "means": [
+      "도움",
+      "지원"
+    ]
+  },
+  {
+    "id": 164,
+    "phrase": "customer service",
+    "means": [
+      "고객 서비스"
+    ]
+  },
+  {
+    "id": 165,
+    "phrase": "customer support",
+    "means": [
+      "고객 지원"
+    ]
+  },
+  {
+    "id": 166,
+    "phrase": "service representative",
+    "means": [
+      "고객 응대 담당자"
+    ]
+  },
+  {
+    "id": 167,
+    "phrase": "help desk",
+    "means": [
+      "상담 창구"
+    ]
+  },
+  {
+    "id": 168,
+    "phrase": "call center",
+    "means": [
+      "고객 상담 센터"
+    ]
+  },
+  {
+    "id": 169,
+    "phrase": "hotline",
+    "means": [
+      "상담 전화"
+    ]
+  },
+  {
+    "id": 170,
+    "phrase": "contact",
+    "means": [
+      "연락하다",
+      "연락",
+      "연락 상대"
+    ]
+  },
+  {
+    "id": 171,
+    "phrase": "follow up",
+    "means": [
+      "후속 조치를 하다",
+      "다시 확인하거나 연락하다"
+    ]
+  },
+  {
+    "id": 172,
+    "phrase": "follow-up",
+    "means": [
+      "후속 조치",
+      "후속의"
+    ]
+  },
+  {
+    "id": 173,
+    "phrase": "get back to",
+    "means": [
+      "~에게 다시 연락하다"
+    ]
+  },
+  {
+    "id": 174,
+    "phrase": "call back",
+    "means": [
+      "다시 전화하다"
+    ]
+  },
+  {
+    "id": 175,
+    "phrase": "hold the line",
+    "means": [
+      "전화를 끊지 않고 기다리다"
+    ]
+  },
+  {
+    "id": 176,
+    "phrase": "transfer a call",
+    "means": [
+      "전화를 연결하다"
+    ]
+  },
+  {
+    "id": 177,
+    "phrase": "leave a message",
+    "means": [
+      "메시지를 남기다"
+    ]
+  },
+  {
+    "id": 178,
+    "phrase": "take a message",
+    "means": [
+      "전할 말을 받아 적다"
+    ]
+  },
+  {
+    "id": 179,
+    "phrase": "on hold",
+    "means": [
+      "전화 대기 중인"
+    ]
+  },
+  {
+    "id": 180,
+    "phrase": "extension",
+    "means": [
+      "내선 번호",
+      "연장",
+      "증축"
+    ]
+  },
+  {
+    "id": 181,
+    "phrase": "voicemail",
+    "means": [
+      "음성 메시지"
+    ]
+  },
+  {
+    "id": 182,
+    "phrase": "operator",
+    "means": [
+      "전화 교환원",
+      "조작자",
+      "운영자"
+    ]
+  },
+  {
+    "id": 183,
+    "phrase": "apology",
+    "means": [
+      "사과"
+    ]
+  },
+  {
+    "id": 184,
+    "phrase": "inconvenience",
+    "means": [
+      "불편"
+    ]
+  },
+  {
+    "id": 185,
+    "phrase": "satisfaction",
+    "means": [
+      "만족"
+    ]
+  },
+  {
+    "id": 186,
+    "phrase": "satisfied",
+    "means": [
+      "만족한"
+    ]
+  },
+  {
+    "id": 187,
+    "phrase": "dissatisfied",
+    "means": [
+      "불만족한"
+    ]
+  },
+  {
+    "id": 188,
+    "phrase": "courteous",
+    "means": [
+      "예의 바른",
+      "정중한"
+    ]
+  },
+  {
+    "id": 189,
+    "phrase": "prompt service",
+    "means": [
+      "신속한 서비스"
+    ]
+  },
+  {
+    "id": 190,
+    "phrase": "handle a complaint",
+    "means": [
+      "불만을 처리하다"
+    ]
+  },
+  {
+    "id": 191,
+    "phrase": "address a concern",
+    "means": [
+      "우려 사항을 다루다",
+      "문제 해결에 나서다"
+    ]
+  },
+  {
+    "id": 192,
+    "phrase": "replacement",
+    "means": [
+      "교체품",
+      "교체"
+    ]
+  },
+  {
+    "id": 193,
+    "phrase": "defective",
+    "means": [
+      "불량의",
+      "결함이 있는"
+    ]
+  },
+  {
+    "id": 194,
+    "phrase": "faulty",
+    "means": [
+      "결함이 있는"
+    ]
+  },
+  {
+    "id": 195,
+    "phrase": "scratch",
+    "means": [
+      "긁힌 자국",
+      "긁다"
+    ]
+  },
+  {
+    "id": 196,
+    "phrase": "malfunction",
+    "means": [
+      "오작동",
+      "오작동하다"
+    ]
+  },
+  {
+    "id": 197,
+    "phrase": "quality control",
+    "means": [
+      "품질 관리"
+    ]
+  },
+  {
+    "id": 198,
+    "phrase": "warranty period",
+    "means": [
+      "보증 기간"
+    ]
+  },
+  {
+    "id": 199,
+    "phrase": "proof of purchase",
+    "means": [
+      "구매 증빙"
+    ]
+  },
+  {
+    "id": 200,
+    "phrase": "original packaging",
+    "means": [
+      "원래 포장"
+    ]
+  },
+  {
+    "id": 201,
+    "phrase": "return policy",
+    "means": [
+      "반품 규정"
+    ]
+  },
+  {
+    "id": 202,
+    "phrase": "refund policy",
+    "means": [
+      "환불 규정"
+    ]
+  },
+  {
+    "id": 203,
+    "phrase": "exchange policy",
+    "means": [
+      "교환 규정"
+    ]
+  },
+  {
+    "id": 204,
+    "phrase": "return label",
+    "means": [
+      "반품용 배송 라벨"
+    ]
+  },
+  {
+    "id": 205,
+    "phrase": "return shipping",
+    "means": [
+      "반품 배송"
+    ]
+  },
+  {
+    "id": 206,
+    "phrase": "store credit",
+    "means": [
+      "해당 매장에서 사용할 수 있는 환불 크레딧"
+    ]
+  },
+  {
+    "id": 207,
+    "phrase": "full refund",
+    "means": [
+      "전액 환불"
+    ]
+  },
+  {
+    "id": 208,
+    "phrase": "partial refund",
+    "means": [
+      "부분 환불"
+    ]
+  },
+  {
+    "id": 209,
+    "phrase": "eligible for a refund",
+    "means": [
+      "환불 대상인"
+    ]
+  },
+  {
+    "id": 210,
+    "phrase": "process a refund",
+    "means": [
+      "환불을 처리하다"
+    ]
+  },
+  {
+    "id": 211,
+    "phrase": "issue a refund",
+    "means": [
+      "환불하다"
+    ]
+  },
+  {
+    "id": 212,
+    "phrase": "request a refund",
+    "means": [
+      "환불을 요청하다"
+    ]
+  },
+  {
+    "id": 213,
+    "phrase": "replace a part",
+    "means": [
+      "부품을 교체하다"
+    ]
+  },
+  {
+    "id": 214,
+    "phrase": "repair service",
+    "means": [
+      "수리 서비스"
+    ]
+  },
+  {
+    "id": 215,
+    "phrase": "service center",
+    "means": [
+      "서비스 센터"
+    ]
+  },
+  {
+    "id": 216,
+    "phrase": "maintenance",
+    "means": [
+      "유지 관리",
+      "정비"
+    ]
+  },
+  {
+    "id": 217,
+    "phrase": "inspection",
+    "means": [
+      "점검",
+      "검사"
+    ]
+  },
+  {
+    "id": 218,
+    "phrase": "inspect",
+    "means": [
+      "점검하다",
+      "검사하다"
+    ]
+  },
+  {
+    "id": 219,
+    "phrase": "wear and tear",
+    "means": [
+      "통상적인 마모"
+    ]
+  },
+  {
+    "id": 220,
+    "phrase": "user manual",
+    "means": [
+      "사용 설명서"
+    ]
+  },
+  {
+    "id": 221,
+    "phrase": "troubleshoot",
+    "means": [
+      "문제를 진단하고 해결하다"
+    ]
+  },
+  {
+    "id": 222,
+    "phrase": "restore",
+    "means": [
+      "복구하다",
+      "원상태로 돌리다"
+    ]
+  },
+  {
+    "id": 223,
+    "phrase": "reissue",
+    "means": [
+      "재발급하다"
+    ]
+  },
+  {
+    "id": 224,
+    "phrase": "compensation",
+    "means": [
+      "보상",
+      "배상"
+    ]
+  },
+  {
+    "id": 225,
+    "phrase": "compensate",
+    "means": [
+      "보상하다"
+    ]
+  },
+  {
+    "id": 226,
+    "phrase": "billing address",
+    "means": [
+      "청구서 수령 주소"
+    ]
+  },
+  {
+    "id": 227,
+    "phrase": "payable",
+    "means": [
+      "지불해야 할"
+    ]
+  },
+  {
+    "id": 228,
+    "phrase": "payment method",
+    "means": [
+      "결제 수단"
+    ]
+  },
+  {
+    "id": 229,
+    "phrase": "amount due",
+    "means": [
+      "지불해야 할 금액"
+    ]
+  },
+  {
+    "id": 230,
+    "phrase": "outstanding balance",
+    "means": [
+      "미지급 잔액"
+    ]
+  },
+  {
+    "id": 231,
+    "phrase": "transaction",
+    "means": [
+      "거래"
+    ]
+  },
+  {
+    "id": 232,
+    "phrase": "transaction fee",
+    "means": [
+      "거래 수수료"
+    ]
+  },
+  {
+    "id": 233,
+    "phrase": "processing fee",
+    "means": [
+      "처리 수수료"
+    ]
+  },
+  {
+    "id": 234,
+    "phrase": "service fee",
+    "means": [
+      "서비스 수수료"
+    ]
+  },
+  {
+    "id": 235,
+    "phrase": "charge a fee",
+    "means": [
+      "수수료를 부과하다"
+    ]
+  },
+  {
+    "id": 236,
+    "phrase": "late fee",
+    "means": [
+      "연체료"
+    ]
+  },
+  {
+    "id": 237,
+    "phrase": "installment",
+    "means": [
+      "할부금",
+      "분할 납부"
+    ]
+  },
+  {
+    "id": 238,
+    "phrase": "pay in installments",
+    "means": [
+      "할부로 지불하다"
+    ]
+  },
+  {
+    "id": 239,
+    "phrase": "credit card",
+    "means": [
+      "신용카드"
+    ]
+  },
+  {
+    "id": 240,
+    "phrase": "debit card",
+    "means": [
+      "직불카드"
+    ]
+  },
+  {
+    "id": 241,
+    "phrase": "bank transfer",
+    "means": [
+      "계좌 이체"
+    ]
+  },
+  {
+    "id": 242,
+    "phrase": "wire transfer",
+    "means": [
+      "전신 송금"
+    ]
+  },
+  {
+    "id": 243,
+    "phrase": "direct deposit",
+    "means": [
+      "계좌 자동 입금"
+    ]
+  },
+  {
+    "id": 244,
+    "phrase": "automatic payment",
+    "means": [
+      "자동 결제"
+    ]
+  },
+  {
+    "id": 245,
+    "phrase": "payment confirmation",
+    "means": [
+      "결제 확인"
+    ]
+  },
+  {
+    "id": 246,
+    "phrase": "payment plan",
+    "means": [
+      "분할 납부 계획"
+    ]
+  },
+  {
+    "id": 247,
+    "phrase": "account statement",
+    "means": [
+      "계좌 명세서"
+    ]
+  },
+  {
+    "id": 248,
+    "phrase": "bank statement",
+    "means": [
+      "은행 거래 명세서"
+    ]
+  },
+  {
+    "id": 249,
+    "phrase": "reimburse",
+    "means": [
+      "지출 비용을 상환하다"
+    ]
+  },
+  {
+    "id": 250,
+    "phrase": "reimbursement",
+    "means": [
+      "비용 상환",
+      "경비 정산"
+    ]
+  },
+  {
+    "id": 251,
+    "phrase": "expense report",
+    "means": [
+      "경비 보고서"
+    ]
+  },
+  {
+    "id": 252,
+    "phrase": "expense",
+    "means": [
+      "비용",
+      "경비"
+    ]
+  },
+  {
+    "id": 253,
+    "phrase": "within budget",
+    "means": [
+      "예산 범위 내에서"
+    ]
+  },
+  {
+    "id": 254,
+    "phrase": "over budget",
+    "means": [
+      "예산을 초과하여"
+    ]
+  },
+  {
+    "id": 255,
+    "phrase": "estimate the cost",
+    "means": [
+      "비용을 추산하다"
+    ]
+  },
+  {
+    "id": 256,
+    "phrase": "total amount",
+    "means": [
+      "총액"
+    ]
+  },
+  {
+    "id": 257,
+    "phrase": "subtotal",
+    "means": [
+      "소계"
+    ]
+  },
+  {
+    "id": 258,
+    "phrase": "sales tax",
+    "means": [
+      "판매세"
+    ]
+  },
+  {
+    "id": 259,
+    "phrase": "conference call",
+    "means": [
+      "전화 회의"
+    ]
+  },
+  {
+    "id": 260,
+    "phrase": "video conference",
+    "means": [
+      "화상 회의"
+    ]
+  },
+  {
+    "id": 261,
+    "phrase": "briefing",
+    "means": [
+      "간단한 설명회"
+    ]
+  },
+  {
+    "id": 262,
+    "phrase": "orientation",
+    "means": [
+      "오리엔테이션",
+      "사전 교육"
+    ]
+  },
+  {
+    "id": 263,
+    "phrase": "session",
+    "means": [
+      "회의 시간",
+      "세션"
+    ]
+  },
+  {
+    "id": 264,
+    "phrase": "attendee",
+    "means": [
+      "참석자"
+    ]
+  },
+  {
+    "id": 265,
+    "phrase": "participant",
+    "means": [
+      "참가자"
+    ]
+  },
+  {
+    "id": 266,
+    "phrase": "attend",
+    "means": [
+      "참석하다"
+    ]
+  },
+  {
+    "id": 267,
+    "phrase": "participate",
+    "means": [
+      "참여하다"
+    ]
+  },
+  {
+    "id": 268,
+    "phrase": "participate in",
+    "means": [
+      "~에 참여하다"
+    ]
+  },
+  {
+    "id": 269,
+    "phrase": "join a meeting",
+    "means": [
+      "회의에 참석하다"
+    ]
+  },
+  {
+    "id": 270,
+    "phrase": "host a meeting",
+    "means": [
+      "회의를 주최하다"
+    ]
+  },
+  {
+    "id": 271,
+    "phrase": "chair a meeting",
+    "means": [
+      "회의를 주재하다"
+    ]
+  },
+  {
+    "id": 272,
+    "phrase": "agenda item",
+    "means": [
+      "안건 항목"
+    ]
+  },
+  {
+    "id": 273,
+    "phrase": "meeting room",
+    "means": [
+      "회의실"
+    ]
+  },
+  {
+    "id": 274,
+    "phrase": "venue",
+    "means": [
+      "행사 장소"
+    ]
+  },
+  {
+    "id": 275,
+    "phrase": "presenter",
+    "means": [
+      "발표자"
+    ]
+  },
+  {
+    "id": 276,
+    "phrase": "slide",
+    "means": [
+      "발표 자료 한 장"
+    ]
+  },
+  {
+    "id": 277,
+    "phrase": "handout",
+    "means": [
+      "배포 자료"
+    ]
+  },
+  {
+    "id": 278,
+    "phrase": "outline",
+    "means": [
+      "개요",
+      "개요를 작성하다"
+    ]
+  },
+  {
+    "id": 279,
+    "phrase": "overview",
+    "means": [
+      "개요",
+      "전체적인 설명"
+    ]
+  },
+  {
+    "id": 280,
+    "phrase": "discussion",
+    "means": [
+      "논의"
+    ]
+  },
+  {
+    "id": 281,
+    "phrase": "question-and-answer session",
+    "means": [
+      "질의응답 시간"
+    ]
+  },
+  {
+    "id": 282,
+    "phrase": "wrap up",
+    "means": [
+      "마무리하다"
+    ]
+  },
+  {
+    "id": 283,
+    "phrase": "conclude",
+    "means": [
+      "끝내다",
+      "결론을 내리다"
+    ]
+  },
+  {
+    "id": 284,
+    "phrase": "summarize",
+    "means": [
+      "요약하다"
+    ]
+  },
+  {
+    "id": 285,
+    "phrase": "clarify",
+    "means": [
+      "명확히 하다"
+    ]
+  },
+  {
+    "id": 286,
+    "phrase": "point out",
+    "means": [
+      "지적하다",
+      "언급하다"
+    ]
+  },
+  {
+    "id": 287,
+    "phrase": "bring up",
+    "means": [
+      "화제를 꺼내다"
+    ]
+  },
+  {
+    "id": 288,
+    "phrase": "take notes",
+    "means": [
+      "메모하다"
+    ]
+  },
+  {
+    "id": 289,
+    "phrase": "take minutes",
+    "means": [
+      "회의록을 작성하다"
+    ]
+  },
+  {
+    "id": 290,
+    "phrase": "reach an agreement",
+    "means": [
+      "합의에 이르다"
+    ]
+  },
+  {
+    "id": 291,
+    "phrase": "make a decision",
+    "means": [
+      "결정하다"
+    ]
+  },
+  {
+    "id": 292,
+    "phrase": "action item",
+    "means": [
+      "후속 실행 항목"
+    ]
+  },
+  {
+    "id": 293,
+    "phrase": "subject line",
+    "means": [
+      "이메일 제목란"
+    ]
+  },
+  {
+    "id": 294,
+    "phrase": "attach",
+    "means": [
+      "첨부하다"
+    ]
+  },
+  {
+    "id": 295,
+    "phrase": "copy someone on an email",
+    "means": [
+      "이메일 참조에 넣다"
+    ]
+  },
+  {
+    "id": 296,
+    "phrase": "cc",
+    "means": [
+      "참조로 보내다"
+    ]
+  },
+  {
+    "id": 297,
+    "phrase": "bcc",
+    "means": [
+      "숨은참조로 보내다"
+    ]
+  },
+  {
+    "id": 298,
+    "phrase": "compose",
+    "means": [
+      "작성하다",
+      "구성하다"
+    ]
+  },
+  {
+    "id": 299,
+    "phrase": "send out",
+    "means": [
+      "발송하다"
+    ]
+  },
+  {
+    "id": 300,
+    "phrase": "acknowledge receipt",
+    "means": [
+      "수신을 확인하다"
+    ]
+  },
+  {
+    "id": 301,
+    "phrase": "regarding",
+    "means": [
+      "~에 관하여"
+    ]
+  },
+  {
+    "id": 302,
+    "phrase": "concerning",
+    "means": [
+      "~에 관한"
+    ]
+  },
+  {
+    "id": 303,
+    "phrase": "with regard to",
+    "means": [
+      "~에 관하여"
+    ]
+  },
+  {
+    "id": 304,
+    "phrase": "in response to",
+    "means": [
+      "~에 대한 응답으로"
+    ]
+  },
+  {
+    "id": 305,
+    "phrase": "as discussed",
+    "means": [
+      "논의한 바와 같이"
+    ]
+  },
+  {
+    "id": 306,
+    "phrase": "as requested",
+    "means": [
+      "요청하신 대로"
+    ]
+  },
+  {
+    "id": 307,
+    "phrase": "for your reference",
+    "means": [
+      "참고하시도록"
+    ]
+  },
+  {
+    "id": 308,
+    "phrase": "for your information",
+    "means": [
+      "참고로 알려드리면"
+    ]
+  },
+  {
+    "id": 309,
+    "phrase": "please find attached",
+    "means": [
+      "첨부 파일을 확인해 주세요"
+    ]
+  },
+  {
+    "id": 310,
+    "phrase": "look forward to",
+    "means": [
+      "~을 기대하다"
+    ]
+  },
+  {
+    "id": 311,
+    "phrase": "hear from",
+    "means": [
+      "~에게서 연락을 받다"
+    ]
+  },
+  {
+    "id": 312,
+    "phrase": "in writing",
+    "means": [
+      "서면으로"
+    ]
+  },
+  {
+    "id": 313,
+    "phrase": "written confirmation",
+    "means": [
+      "서면 확인"
+    ]
+  },
+  {
+    "id": 314,
+    "phrase": "correspondence",
+    "means": [
+      "서신",
+      "주고받은 연락"
+    ]
+  },
+  {
+    "id": 315,
+    "phrase": "contact information",
+    "means": [
+      "연락처 정보"
+    ]
+  },
+  {
+    "id": 316,
+    "phrase": "contact details",
+    "means": [
+      "연락처 세부 정보"
+    ]
+  },
+  {
+    "id": 317,
+    "phrase": "mailing address",
+    "means": [
+      "우편 주소"
+    ]
+  },
+  {
+    "id": 318,
+    "phrase": "postal code",
+    "means": [
+      "우편번호"
+    ]
+  },
+  {
+    "id": 319,
+    "phrase": "sign off",
+    "means": [
+      "서명하고 마치다"
+    ]
+  },
+  {
+    "id": 320,
+    "phrase": "unsubscribe",
+    "means": [
+      "구독을 해지하다"
+    ]
+  },
+  {
+    "id": 321,
+    "phrase": "mailing list",
+    "means": [
+      "메일링 목록"
+    ]
+  },
+  {
+    "id": 322,
+    "phrase": "announcement",
+    "means": [
+      "공지",
+      "발표"
+    ]
+  },
+  {
+    "id": 323,
+    "phrase": "newsletter",
+    "means": [
+      "소식지"
+    ]
+  },
+  {
+    "id": 324,
+    "phrase": "business trip",
+    "means": [
+      "출장"
+    ]
+  },
+  {
+    "id": 325,
+    "phrase": "travel arrangements",
+    "means": [
+      "여행 준비",
+      "출장 준비"
+    ]
+  },
+  {
+    "id": 326,
+    "phrase": "itinerary",
+    "means": [
+      "여행 일정표"
+    ]
+  },
+  {
+    "id": 327,
+    "phrase": "travel agency",
+    "means": [
+      "여행사"
+    ]
+  },
+  {
+    "id": 328,
+    "phrase": "travel agent",
+    "means": [
+      "여행사 직원"
+    ]
+  },
+  {
+    "id": 329,
+    "phrase": "flight number",
+    "means": [
+      "항공편 번호"
+    ]
+  },
+  {
+    "id": 330,
+    "phrase": "airfare",
+    "means": [
+      "항공 요금"
+    ]
+  },
+  {
+    "id": 331,
+    "phrase": "airline",
+    "means": [
+      "항공사"
+    ]
+  },
+  {
+    "id": 332,
+    "phrase": "airport shuttle",
+    "means": [
+      "공항 셔틀"
+    ]
+  },
+  {
+    "id": 333,
+    "phrase": "boarding pass",
+    "means": [
+      "탑승권"
+    ]
+  },
+  {
+    "id": 334,
+    "phrase": "boarding gate",
+    "means": [
+      "탑승구"
+    ]
+  },
+  {
+    "id": 335,
+    "phrase": "boarding time",
+    "means": [
+      "탑승 시간"
+    ]
+  },
+  {
+    "id": 336,
+    "phrase": "check-in counter",
+    "means": [
+      "탑승 수속 카운터"
+    ]
+  },
+  {
+    "id": 337,
+    "phrase": "carry-on luggage",
+    "means": [
+      "기내 반입 수하물"
+    ]
+  },
+  {
+    "id": 338,
+    "phrase": "checked baggage",
+    "means": [
+      "위탁 수하물"
+    ]
+  },
+  {
+    "id": 339,
+    "phrase": "baggage allowance",
+    "means": [
+      "수하물 허용량"
+    ]
+  },
+  {
+    "id": 340,
+    "phrase": "baggage claim",
+    "means": [
+      "수하물 찾는 곳"
+    ]
+  },
+  {
+    "id": 341,
+    "phrase": "layover",
+    "means": [
+      "경유",
+      "환승 대기 시간"
+    ]
+  },
+  {
+    "id": 342,
+    "phrase": "connecting flight",
+    "means": [
+      "연결 항공편"
+    ]
+  },
+  {
+    "id": 343,
+    "phrase": "direct flight",
+    "means": [
+      "직접 연결되는 항공편(중간 기착 가능)"
+    ]
+  },
+  {
+    "id": 344,
+    "phrase": "round-trip ticket",
+    "means": [
+      "왕복 항공권"
+    ]
+  },
+  {
+    "id": 345,
+    "phrase": "one-way ticket",
+    "means": [
+      "편도 항공권"
+    ]
+  },
+  {
+    "id": 346,
+    "phrase": "fare difference",
+    "means": [
+      "운임 차액"
+    ]
+  },
+  {
+    "id": 347,
+    "phrase": "seat assignment",
+    "means": [
+      "좌석 배정"
+    ]
+  },
+  {
+    "id": 348,
+    "phrase": "aisle seat",
+    "means": [
+      "통로 좌석"
+    ]
+  },
+  {
+    "id": 349,
+    "phrase": "window seat",
+    "means": [
+      "창가 좌석"
+    ]
+  },
+  {
+    "id": 350,
+    "phrase": "departure time",
+    "means": [
+      "출발 시각"
+    ]
+  },
+  {
+    "id": 351,
+    "phrase": "arrival time",
+    "means": [
+      "도착 시각"
+    ]
+  },
+  {
+    "id": 352,
+    "phrase": "transit",
+    "means": [
+      "환승",
+      "교통"
+    ]
+  },
+  {
+    "id": 353,
+    "phrase": "traffic congestion",
+    "means": [
+      "교통 체증"
+    ]
+  },
+  {
+    "id": 354,
+    "phrase": "rush hour",
+    "means": [
+      "출퇴근 혼잡 시간"
+    ]
+  },
+  {
+    "id": 355,
+    "phrase": "rental car",
+    "means": [
+      "렌터카"
+    ]
+  },
+  {
+    "id": 356,
+    "phrase": "car rental",
+    "means": [
+      "차량 대여"
+    ]
+  },
+  {
+    "id": 357,
+    "phrase": "pick-up location",
+    "means": [
+      "인수 장소"
+    ]
+  },
+  {
+    "id": 358,
+    "phrase": "return location",
+    "means": [
+      "반납 장소"
+    ]
+  },
+  {
+    "id": 359,
+    "phrase": "facility",
+    "means": [
+      "시설",
+      "설비"
+    ]
+  },
+  {
+    "id": 360,
+    "phrase": "premises",
+    "means": [
+      "사업장",
+      "구내"
+    ]
+  },
+  {
+    "id": 361,
+    "phrase": "floor plan",
+    "means": [
+      "평면도"
+    ]
+  },
+  {
+    "id": 362,
+    "phrase": "layout",
+    "means": [
+      "배치",
+      "설계"
+    ]
+  },
+  {
+    "id": 363,
+    "phrase": "emergency exit",
+    "means": [
+      "비상구"
+    ]
+  },
+  {
+    "id": 364,
+    "phrase": "hallway",
+    "means": [
+      "복도"
+    ]
+  },
+  {
+    "id": 365,
+    "phrase": "corridor",
+    "means": [
+      "복도"
+    ]
+  },
+  {
+    "id": 366,
+    "phrase": "stairwell",
+    "means": [
+      "계단통로"
+    ]
+  },
+  {
+    "id": 367,
+    "phrase": "escalator",
+    "means": [
+      "에스컬레이터"
+    ]
+  },
+  {
+    "id": 368,
+    "phrase": "parking lot",
+    "means": [
+      "주차장"
+    ]
+  },
+  {
+    "id": 369,
+    "phrase": "parking space",
+    "means": [
+      "주차 공간"
+    ]
+  },
+  {
+    "id": 370,
+    "phrase": "parking permit",
+    "means": [
+      "주차 허가증"
+    ]
+  },
+  {
+    "id": 371,
+    "phrase": "access card",
+    "means": [
+      "출입 카드"
+    ]
+  },
+  {
+    "id": 372,
+    "phrase": "access code",
+    "means": [
+      "출입 코드"
+    ]
+  },
+  {
+    "id": 373,
+    "phrase": "security guard",
+    "means": [
+      "경비원"
+    ]
+  },
+  {
+    "id": 374,
+    "phrase": "security system",
+    "means": [
+      "보안 시스템"
+    ]
+  },
+  {
+    "id": 375,
+    "phrase": "visitor pass",
+    "means": [
+      "방문객 출입증"
+    ]
+  },
+  {
+    "id": 376,
+    "phrase": "visitor registration",
+    "means": [
+      "방문객 등록"
+    ]
+  },
+  {
+    "id": 377,
+    "phrase": "reception area",
+    "means": [
+      "접수 구역"
+    ]
+  },
+  {
+    "id": 378,
+    "phrase": "waiting area",
+    "means": [
+      "대기 구역"
+    ]
+  },
+  {
+    "id": 379,
+    "phrase": "restroom",
+    "means": [
+      "화장실"
+    ]
+  },
+  {
+    "id": 380,
+    "phrase": "break room",
+    "means": [
+      "휴게실"
+    ]
+  },
+  {
+    "id": 381,
+    "phrase": "storage room",
+    "means": [
+      "창고",
+      "보관실"
+    ]
+  },
+  {
+    "id": 382,
+    "phrase": "emergency equipment",
+    "means": [
+      "비상 장비"
+    ]
+  },
+  {
+    "id": 383,
+    "phrase": "fire alarm",
+    "means": [
+      "화재 경보"
+    ]
+  },
+  {
+    "id": 384,
+    "phrase": "fire extinguisher",
+    "means": [
+      "소화기"
+    ]
+  },
+  {
+    "id": 385,
+    "phrase": "safety procedure",
+    "means": [
+      "안전 절차"
+    ]
+  },
+  {
+    "id": 386,
+    "phrase": "safety inspection",
+    "means": [
+      "안전 점검"
+    ]
+  },
+  {
+    "id": 387,
+    "phrase": "hazard",
+    "means": [
+      "위험 요인"
+    ]
+  },
+  {
+    "id": 388,
+    "phrase": "caution",
+    "means": [
+      "주의",
+      "주의를 주다"
+    ]
+  },
+  {
+    "id": 389,
+    "phrase": "restricted area",
+    "means": [
+      "출입 제한 구역"
+    ]
+  },
+  {
+    "id": 390,
+    "phrase": "under construction",
+    "means": [
+      "공사 중인"
+    ]
+  },
+  {
+    "id": 391,
+    "phrase": "under renovation",
+    "means": [
+      "보수 공사 중인"
+    ]
+  },
+  {
+    "id": 392,
+    "phrase": "renovation",
+    "means": [
+      "개보수"
+    ]
+  },
+  {
+    "id": 393,
+    "phrase": "construction work",
+    "means": [
+      "건설 공사"
+    ]
+  },
+  {
+    "id": 394,
+    "phrase": "facility manager",
+    "means": [
+      "시설 관리자"
+    ]
+  },
+  {
+    "id": 395,
+    "phrase": "property manager",
+    "means": [
+      "건물 관리자"
+    ]
+  },
+  {
+    "id": 396,
+    "phrase": "occupant",
+    "means": [
+      "입주자",
+      "점유자"
+    ]
+  },
+  {
+    "id": 397,
+    "phrase": "tenant",
+    "means": [
+      "임차인",
+      "세입자"
+    ]
+  },
+  {
+    "id": 398,
+    "phrase": "lease",
+    "means": [
+      "임대차 계약",
+      "임대하다"
+    ]
+  },
+  {
+    "id": 399,
+    "phrase": "equipment",
+    "means": [
+      "장비",
+      "기기"
+    ]
+  },
+  {
+    "id": 400,
+    "phrase": "photocopier",
+    "means": [
+      "복사기"
+    ]
+  },
+  {
+    "id": 401,
+    "phrase": "copier",
+    "means": [
+      "복사기"
+    ]
+  },
+  {
+    "id": 402,
+    "phrase": "paper tray",
+    "means": [
+      "용지함"
+    ]
+  },
+  {
+    "id": 403,
+    "phrase": "ink cartridge",
+    "means": [
+      "잉크 카트리지"
+    ]
+  },
+  {
+    "id": 404,
+    "phrase": "toner",
+    "means": [
+      "토너"
+    ]
+  },
+  {
+    "id": 405,
+    "phrase": "power supply",
+    "means": [
+      "전원 공급 장치"
+    ]
+  },
+  {
+    "id": 406,
+    "phrase": "power outage",
+    "means": [
+      "정전"
+    ]
+  },
+  {
+    "id": 407,
+    "phrase": "internet connection",
+    "means": [
+      "인터넷 연결"
+    ]
+  },
+  {
+    "id": 408,
+    "phrase": "wireless network",
+    "means": [
+      "무선 네트워크"
+    ]
+  },
+  {
+    "id": 409,
+    "phrase": "log in",
+    "means": [
+      "로그인하다"
+    ]
+  },
+  {
+    "id": 410,
+    "phrase": "log out",
+    "means": [
+      "로그아웃하다"
+    ]
+  },
+  {
+    "id": 411,
+    "phrase": "user account",
+    "means": [
+      "사용자 계정"
+    ]
+  },
+  {
+    "id": 412,
+    "phrase": "installation",
+    "means": [
+      "설치"
+    ]
+  },
+  {
+    "id": 413,
+    "phrase": "configure",
+    "means": [
+      "설정하다"
+    ]
+  },
+  {
+    "id": 414,
+    "phrase": "restart",
+    "means": [
+      "다시 시작하다"
+    ]
+  },
+  {
+    "id": 415,
+    "phrase": "reset",
+    "means": [
+      "재설정하다"
+    ]
+  },
+  {
+    "id": 416,
+    "phrase": "file format",
+    "means": [
+      "파일 형식"
+    ]
+  },
+  {
+    "id": 417,
+    "phrase": "shared folder",
+    "means": [
+      "공유 폴더"
+    ]
+  },
+  {
+    "id": 418,
+    "phrase": "online portal",
+    "means": [
+      "온라인 포털"
+    ]
+  },
+  {
+    "id": 419,
+    "phrase": "technical support",
+    "means": [
+      "기술 지원"
+    ]
+  },
+  {
+    "id": 420,
+    "phrase": "system error",
+    "means": [
+      "시스템 오류"
+    ]
+  },
+  {
+    "id": 421,
+    "phrase": "error message",
+    "means": [
+      "오류 메시지"
+    ]
+  },
+  {
+    "id": 422,
+    "phrase": "out of service",
+    "means": [
+      "운행·서비스가 중단된",
+      "사용할 수 없는"
+    ]
+  },
+  {
+    "id": 423,
+    "phrase": "out of order",
+    "means": [
+      "고장 난"
+    ]
+  },
+  {
+    "id": 424,
+    "phrase": "operating system",
+    "means": [
+      "운영체제"
+    ]
+  },
+  {
+    "id": 425,
+    "phrase": "compatible",
+    "means": [
+      "호환되는"
+    ]
+  },
+  {
+    "id": 426,
+    "phrase": "switch on",
+    "means": [
+      "켜다"
+    ]
+  },
+  {
+    "id": 427,
+    "phrase": "switch off",
+    "means": [
+      "끄다"
+    ]
+  },
+  {
+    "id": 428,
+    "phrase": "turn up",
+    "means": [
+      "높이다"
+    ]
+  },
+  {
+    "id": 429,
+    "phrase": "turn down",
+    "means": [
+      "낮추다"
+    ]
+  },
+  {
+    "id": 430,
+    "phrase": "plug in",
+    "means": [
+      "플러그를 꽂다"
+    ]
+  },
+  {
+    "id": 431,
+    "phrase": "unplug",
+    "means": [
+      "플러그를 뽑다"
+    ]
+  },
+  {
+    "id": 432,
+    "phrase": "adjust",
+    "means": [
+      "조절하다"
+    ]
+  },
+  {
+    "id": 433,
+    "phrase": "adjustment",
+    "means": [
+      "조정"
+    ]
+  },
+  {
+    "id": 434,
+    "phrase": "measurement",
+    "means": [
+      "측정",
+      "치수"
+    ]
+  },
+  {
+    "id": 435,
+    "phrase": "run a test",
+    "means": [
+      "시험을 실시하다",
+      "시험 가동하다"
+    ]
+  },
+  {
+    "id": 436,
+    "phrase": "functional",
+    "means": [
+      "제 기능을 하는"
+    ]
+  },
+  {
+    "id": 437,
+    "phrase": "in working order",
+    "means": [
+      "정상 작동하는"
+    ]
+  },
+  {
+    "id": 438,
+    "phrase": "break down",
+    "means": [
+      "고장 나다"
+    ]
+  },
+  {
+    "id": 439,
+    "phrase": "breakdown",
+    "means": [
+      "고장"
+    ]
+  },
+  {
+    "id": 440,
+    "phrase": "maintenance schedule",
+    "means": [
+      "정비 일정"
+    ]
+  },
+  {
+    "id": 441,
+    "phrase": "routine maintenance",
+    "means": [
+      "정기 정비"
+    ]
+  },
+  {
+    "id": 442,
+    "phrase": "preventive maintenance",
+    "means": [
+      "예방 정비"
+    ]
+  },
+  {
+    "id": 443,
+    "phrase": "service technician",
+    "means": [
+      "정비 기사"
+    ]
+  },
+  {
+    "id": 444,
+    "phrase": "maintenance crew",
+    "means": [
+      "정비팀"
+    ]
+  },
+  {
+    "id": 445,
+    "phrase": "replacement part",
+    "means": [
+      "교체 부품"
+    ]
+  },
+  {
+    "id": 446,
+    "phrase": "spare part",
+    "means": [
+      "예비 부품"
+    ]
+  },
+  {
+    "id": 447,
+    "phrase": "component",
+    "means": [
+      "구성 부품"
+    ]
+  },
+  {
+    "id": 448,
+    "phrase": "assemble",
+    "means": [
+      "조립하다"
+    ]
+  },
+  {
+    "id": 449,
+    "phrase": "assembly",
+    "means": [
+      "조립",
+      "집회"
+    ]
+  },
+  {
+    "id": 450,
+    "phrase": "disassemble",
+    "means": [
+      "분해하다"
+    ]
+  },
+  {
+    "id": 451,
+    "phrase": "manufacture",
+    "means": [
+      "제조하다"
+    ]
+  },
+  {
+    "id": 452,
+    "phrase": "manufacturer",
+    "means": [
+      "제조업체"
+    ]
+  },
+  {
+    "id": 453,
+    "phrase": "production",
+    "means": [
+      "생산"
+    ]
+  },
+  {
+    "id": 454,
+    "phrase": "production line",
+    "means": [
+      "생산 라인"
+    ]
+  },
+  {
+    "id": 455,
+    "phrase": "job opening",
+    "means": [
+      "채용 가능한 자리",
+      "공석"
+    ]
+  },
+  {
+    "id": 456,
+    "phrase": "apply for",
+    "means": [
+      "~에 지원하다"
+    ]
+  },
+  {
+    "id": 457,
+    "phrase": "application form",
+    "means": [
+      "지원서 양식"
+    ]
+  },
+  {
+    "id": 458,
+    "phrase": "resume",
+    "means": [
+      "이력서"
+    ]
+  },
+  {
+    "id": 459,
+    "phrase": "cover letter",
+    "means": [
+      "지원 동기 등을 적어 이력서와 함께 보내는 편지"
+    ]
+  },
+  {
+    "id": 460,
+    "phrase": "reference",
+    "means": [
+      "추천인",
+      "참고 자료"
+    ]
+  },
+  {
+    "id": 461,
+    "phrase": "recommendation letter",
+    "means": [
+      "추천서"
+    ]
+  },
+  {
+    "id": 462,
+    "phrase": "qualify",
+    "means": [
+      "자격을 얻다"
+    ]
+  },
+  {
+    "id": 463,
+    "phrase": "requirement",
+    "means": [
+      "요구 사항",
+      "필요조건"
+    ]
+  },
+  {
+    "id": 464,
+    "phrase": "work experience",
+    "means": [
+      "직무 경력"
+    ]
+  },
+  {
+    "id": 465,
+    "phrase": "skill set",
+    "means": [
+      "보유 기술",
+      "역량"
+    ]
+  },
+  {
+    "id": 466,
+    "phrase": "temporary position",
+    "means": [
+      "임시직"
+    ]
+  },
+  {
+    "id": 467,
+    "phrase": "permanent position",
+    "means": [
+      "상시직",
+      "기간의 정함이 없는 직위"
+    ]
+  },
+  {
+    "id": 468,
+    "phrase": "full-time",
+    "means": [
+      "전일제의",
+      "상근의"
+    ]
+  },
+  {
+    "id": 469,
+    "phrase": "part-time",
+    "means": [
+      "시간제의",
+      "시간제로"
+    ]
+  },
+  {
+    "id": 470,
+    "phrase": "shift",
+    "means": [
+      "근무 교대조",
+      "근무 시간"
+    ]
+  },
+  {
+    "id": 471,
+    "phrase": "night shift",
+    "means": [
+      "야간 근무"
+    ]
+  },
+  {
+    "id": 472,
+    "phrase": "work schedule",
+    "means": [
+      "근무 일정"
+    ]
+  },
+  {
+    "id": 473,
+    "phrase": "job interview",
+    "means": [
+      "채용 면접"
+    ]
+  },
+  {
+    "id": 474,
+    "phrase": "interviewer",
+    "means": [
+      "면접관"
+    ]
+  },
+  {
+    "id": 475,
+    "phrase": "interviewee",
+    "means": [
+      "면접 대상자"
+    ]
+  },
+  {
+    "id": 476,
+    "phrase": "recruit",
+    "means": [
+      "채용하다"
+    ]
+  },
+  {
+    "id": 477,
+    "phrase": "recruitment",
+    "means": [
+      "채용"
+    ]
+  },
+  {
+    "id": 478,
+    "phrase": "hire",
+    "means": [
+      "고용하다",
+      "신입 직원"
+    ]
+  },
+  {
+    "id": 479,
+    "phrase": "personnel",
+    "means": [
+      "직원들",
+      "인사 담당 부서"
+    ]
+  },
+  {
+    "id": 480,
+    "phrase": "human resources",
+    "means": [
+      "인사부",
+      "인적 자원"
+    ]
+  },
+  {
+    "id": 481,
+    "phrase": "team member",
+    "means": [
+      "팀원"
+    ]
+  },
+  {
+    "id": 482,
+    "phrase": "staff member",
+    "means": [
+      "직원"
+    ]
+  },
+  {
+    "id": 483,
+    "phrase": "on-the-job training",
+    "means": [
+      "현장 실무 교육"
+    ]
+  },
+  {
+    "id": 484,
+    "phrase": "performance review",
+    "means": [
+      "근무 평가"
+    ]
+  },
+  {
+    "id": 485,
+    "phrase": "resign",
+    "means": [
+      "사직하다"
+    ]
+  },
+  {
+    "id": 486,
+    "phrase": "retire",
+    "means": [
+      "퇴직하다"
+    ]
+  },
+  {
+    "id": 487,
+    "phrase": "salary",
+    "means": [
+      "급여",
+      "봉급"
+    ]
+  },
+  {
+    "id": 488,
+    "phrase": "wage",
+    "means": [
+      "임금"
+    ]
+  },
+  {
+    "id": 489,
+    "phrase": "hourly wage",
+    "means": [
+      "시급"
+    ]
+  },
+  {
+    "id": 490,
+    "phrase": "paycheck",
+    "means": [
+      "급여 수표",
+      "급여"
+    ]
+  },
+  {
+    "id": 491,
+    "phrase": "payroll",
+    "means": [
+      "급여 지급 명부"
+    ]
+  },
+  {
+    "id": 492,
+    "phrase": "pay period",
+    "means": [
+      "급여 산정 기간"
+    ]
+  },
+  {
+    "id": 493,
+    "phrase": "pay raise",
+    "means": [
+      "임금 인상"
+    ]
+  },
+  {
+    "id": 494,
+    "phrase": "bonus",
+    "means": [
+      "상여금"
+    ]
+  },
+  {
+    "id": 495,
+    "phrase": "commission",
+    "means": [
+      "판매 수수료",
+      "의뢰하다"
+    ]
+  },
+  {
+    "id": 496,
+    "phrase": "overtime",
+    "means": [
+      "초과 근무"
+    ]
+  },
+  {
+    "id": 497,
+    "phrase": "overtime pay",
+    "means": [
+      "초과 근무 수당"
+    ]
+  },
+  {
+    "id": 498,
+    "phrase": "employee benefits",
+    "means": [
+      "직원 복리후생"
+    ]
+  },
+  {
+    "id": 499,
+    "phrase": "health insurance",
+    "means": [
+      "건강 보험"
+    ]
+  },
+  {
+    "id": 500,
+    "phrase": "paid leave",
+    "means": [
+      "유급 휴가"
+    ]
+  },
+  {
+    "id": 501,
+    "phrase": "unpaid leave",
+    "means": [
+      "무급 휴가"
+    ]
+  },
+  {
+    "id": 502,
+    "phrase": "sick leave",
+    "means": [
+      "병가"
+    ]
+  },
+  {
+    "id": 503,
+    "phrase": "maternity leave",
+    "means": [
+      "출산 휴가"
+    ]
+  },
+  {
+    "id": 504,
+    "phrase": "annual leave",
+    "means": [
+      "연차 휴가"
+    ]
+  },
+  {
+    "id": 505,
+    "phrase": "vacation days",
+    "means": [
+      "휴가 일수"
+    ]
+  },
+  {
+    "id": 506,
+    "phrase": "time off",
+    "means": [
+      "휴가",
+      "쉬는 시간"
+    ]
+  },
+  {
+    "id": 507,
+    "phrase": "request time off",
+    "means": [
+      "휴가를 신청하다"
+    ]
+  },
+  {
+    "id": 508,
+    "phrase": "absent",
+    "means": [
+      "결석한",
+      "부재한"
+    ]
+  },
+  {
+    "id": 509,
+    "phrase": "absence",
+    "means": [
+      "결근",
+      "부재"
+    ]
+  },
+  {
+    "id": 510,
+    "phrase": "attendance",
+    "means": [
+      "출석",
+      "참석"
+    ]
+  },
+  {
+    "id": 511,
+    "phrase": "punctual",
+    "means": [
+      "시간을 잘 지키는"
+    ]
+  },
+  {
+    "id": 512,
+    "phrase": "punctuality",
+    "means": [
+      "시간 엄수"
+    ]
+  },
+  {
+    "id": 513,
+    "phrase": "workload",
+    "means": [
+      "업무량"
+    ]
+  },
+  {
+    "id": 514,
+    "phrase": "be responsible for",
+    "means": [
+      "~을 담당하다"
+    ]
+  },
+  {
+    "id": 515,
+    "phrase": "team leader",
+    "means": [
+      "팀장"
+    ]
+  },
+  {
+    "id": 516,
+    "phrase": "report to",
+    "means": [
+      "~에게 보고하다"
+    ]
+  },
+  {
+    "id": 517,
+    "phrase": "supervise",
+    "means": [
+      "감독하다"
+    ]
+  },
+  {
+    "id": 518,
+    "phrase": "delegate",
+    "means": [
+      "업무를 위임하다"
+    ]
+  },
+  {
+    "id": 519,
+    "phrase": "work remotely",
+    "means": [
+      "원격 근무하다"
+    ]
+  },
+  {
+    "id": 520,
+    "phrase": "work from home",
+    "means": [
+      "재택근무하다"
+    ]
+  },
+  {
+    "id": 521,
+    "phrase": "flexible hours",
+    "means": [
+      "탄력 근무 시간"
+    ]
+  },
+  {
+    "id": 522,
+    "phrase": "shift change",
+    "means": [
+      "근무 교대 변경"
+    ]
+  },
+  {
+    "id": 523,
+    "phrase": "cover a shift",
+    "means": [
+      "교대 근무를 대신하다"
+    ]
+  },
+  {
+    "id": 524,
+    "phrase": "clock in",
+    "means": [
+      "출근 시간을 기록하다"
+    ]
+  },
+  {
+    "id": 525,
+    "phrase": "clock out",
+    "means": [
+      "퇴근 시간을 기록하다"
+    ]
+  },
+  {
+    "id": 526,
+    "phrase": "staff shortage",
+    "means": [
+      "인력 부족"
+    ]
+  },
+  {
+    "id": 527,
+    "phrase": "terms and conditions",
+    "means": [
+      "이용 약관",
+      "계약 조건"
+    ]
+  },
+  {
+    "id": 528,
+    "phrase": "clause",
+    "means": [
+      "계약 조항"
+    ]
+  },
+  {
+    "id": 529,
+    "phrase": "contract term",
+    "means": [
+      "계약 기간"
+    ]
+  },
+  {
+    "id": 530,
+    "phrase": "sign a contract",
+    "means": [
+      "계약서에 서명하다"
+    ]
+  },
+  {
+    "id": 531,
+    "phrase": "negotiate",
+    "means": [
+      "협상하다"
+    ]
+  },
+  {
+    "id": 532,
+    "phrase": "negotiation",
+    "means": [
+      "협상"
+    ]
+  },
+  {
+    "id": 533,
+    "phrase": "renew",
+    "means": [
+      "갱신하다",
+      "연장하다"
+    ]
+  },
+  {
+    "id": 534,
+    "phrase": "renewal",
+    "means": [
+      "갱신"
+    ]
+  },
+  {
+    "id": 535,
+    "phrase": "extend",
+    "means": [
+      "연장하다"
+    ]
+  },
+  {
+    "id": 536,
+    "phrase": "expire",
+    "means": [
+      "만료되다"
+    ]
+  },
+  {
+    "id": 537,
+    "phrase": "expiration date",
+    "means": [
+      "만료일"
+    ]
+  },
+  {
+    "id": 538,
+    "phrase": "valid",
+    "means": [
+      "유효한"
+    ]
+  },
+  {
+    "id": 539,
+    "phrase": "cancel a contract",
+    "means": [
+      "계약을 해지하다"
+    ]
+  },
+  {
+    "id": 540,
+    "phrase": "termination",
+    "means": [
+      "종료",
+      "계약 해지"
+    ]
+  },
+  {
+    "id": 541,
+    "phrase": "terminate",
+    "means": [
+      "종료하다",
+      "해지하다"
+    ]
+  },
+  {
+    "id": 542,
+    "phrase": "obligation",
+    "means": [
+      "의무"
+    ]
+  },
+  {
+    "id": 543,
+    "phrase": "commitment",
+    "means": [
+      "약속",
+      "책임",
+      "헌신"
+    ]
+  },
+  {
+    "id": 544,
+    "phrase": "comply with",
+    "means": [
+      "~을 준수하다"
+    ]
+  },
+  {
+    "id": 545,
+    "phrase": "compliance",
+    "means": [
+      "규정 준수"
+    ]
+  },
+  {
+    "id": 546,
+    "phrase": "company policy",
+    "means": [
+      "회사 방침"
+    ]
+  },
+  {
+    "id": 547,
+    "phrase": "follow a procedure",
+    "means": [
+      "절차를 따르다"
+    ]
+  },
+  {
+    "id": 548,
+    "phrase": "regulation",
+    "means": [
+      "규정"
+    ]
+  },
+  {
+    "id": 549,
+    "phrase": "according to",
+    "means": [
+      "~에 따르면",
+      "~에 따라"
+    ]
+  },
+  {
+    "id": 550,
+    "phrase": "in accordance with",
+    "means": [
+      "~에 따라"
+    ]
+  },
+  {
+    "id": 551,
+    "phrase": "subject to",
+    "means": [
+      "~의 적용을 받는",
+      "~을 조건으로"
+    ]
+  },
+  {
+    "id": 552,
+    "phrase": "eligible",
+    "means": [
+      "자격이 있는"
+    ]
+  },
+  {
+    "id": 553,
+    "phrase": "be eligible for",
+    "means": [
+      "~을 받을 자격이 있다"
+    ]
+  },
+  {
+    "id": 554,
+    "phrase": "approve",
+    "means": [
+      "승인하다"
+    ]
+  },
+  {
+    "id": 555,
+    "phrase": "authorization",
+    "means": [
+      "허가",
+      "승인"
+    ]
+  },
+  {
+    "id": 556,
+    "phrase": "authorize",
+    "means": [
+      "권한을 부여하다",
+      "승인하다"
+    ]
+  },
+  {
+    "id": 557,
+    "phrase": "consent",
+    "means": [
+      "동의",
+      "동의하다"
+    ]
+  },
+  {
+    "id": 558,
+    "phrase": "confidential",
+    "means": [
+      "기밀의"
+    ]
+  },
+  {
+    "id": 559,
+    "phrase": "privacy policy",
+    "means": [
+      "개인정보 처리 방침"
+    ]
+  },
+  {
+    "id": 560,
+    "phrase": "in effect",
+    "means": [
+      "효력이 있는",
+      "사실상"
+    ]
+  },
+  {
+    "id": 561,
+    "phrase": "advertise",
+    "means": [
+      "광고하다"
+    ]
+  },
+  {
+    "id": 562,
+    "phrase": "promotional",
+    "means": [
+      "홍보용의"
+    ]
+  },
+  {
+    "id": 563,
+    "phrase": "promote",
+    "means": [
+      "홍보하다",
+      "승진시키다"
+    ]
+  },
+  {
+    "id": 564,
+    "phrase": "special offer",
+    "means": [
+      "특별 행사"
+    ]
+  },
+  {
+    "id": 565,
+    "phrase": "limited-time offer",
+    "means": [
+      "기간 한정 행사"
+    ]
+  },
+  {
+    "id": 566,
+    "phrase": "sale",
+    "means": [
+      "할인 행사",
+      "판매"
+    ]
+  },
+  {
+    "id": 567,
+    "phrase": "discount rate",
+    "means": [
+      "할인율"
+    ]
+  },
+  {
+    "id": 568,
+    "phrase": "gift card",
+    "means": [
+      "상품권"
+    ]
+  },
+  {
+    "id": 569,
+    "phrase": "loyalty program",
+    "means": [
+      "고객 우대 프로그램"
+    ]
+  },
+  {
+    "id": 570,
+    "phrase": "membership",
+    "means": [
+      "회원 자격"
+    ]
+  },
+  {
+    "id": 571,
+    "phrase": "member discount",
+    "means": [
+      "회원 할인"
+    ]
+  },
+  {
+    "id": 572,
+    "phrase": "sign up",
+    "means": [
+      "가입하다",
+      "신청하다"
+    ]
+  },
+  {
+    "id": 573,
+    "phrase": "subscribe",
+    "means": [
+      "구독하다"
+    ]
+  },
+  {
+    "id": 574,
+    "phrase": "subscription",
+    "means": [
+      "구독"
+    ]
+  },
+  {
+    "id": 575,
+    "phrase": "free trial",
+    "means": [
+      "무료 체험"
+    ]
+  },
+  {
+    "id": 576,
+    "phrase": "trial period",
+    "means": [
+      "체험 기간"
+    ]
+  },
+  {
+    "id": 577,
+    "phrase": "sample",
+    "means": [
+      "견본",
+      "샘플"
+    ]
+  },
+  {
+    "id": 578,
+    "phrase": "product demonstration",
+    "means": [
+      "제품 시연"
+    ]
+  },
+  {
+    "id": 579,
+    "phrase": "demonstration",
+    "means": [
+      "시연",
+      "설명"
+    ]
+  },
+  {
+    "id": 580,
+    "phrase": "display",
+    "means": [
+      "전시하다",
+      "진열품"
+    ]
+  },
+  {
+    "id": 581,
+    "phrase": "exhibit",
+    "means": [
+      "전시하다",
+      "전시품"
+    ]
+  },
+  {
+    "id": 582,
+    "phrase": "booth",
+    "means": [
+      "전시 부스"
+    ]
+  },
+  {
+    "id": 583,
+    "phrase": "trade show",
+    "means": [
+      "무역 박람회"
+    ]
+  },
+  {
+    "id": 584,
+    "phrase": "leaflet",
+    "means": [
+      "전단",
+      "안내지"
+    ]
+  },
+  {
+    "id": 585,
+    "phrase": "poster",
+    "means": [
+      "포스터"
+    ]
+  },
+  {
+    "id": 586,
+    "phrase": "banner",
+    "means": [
+      "현수막",
+      "배너"
+    ]
+  },
+  {
+    "id": 587,
+    "phrase": "campaign",
+    "means": [
+      "홍보 활동",
+      "캠페인"
+    ]
+  },
+  {
+    "id": 588,
+    "phrase": "launch",
+    "means": [
+      "출시하다",
+      "출시"
+    ]
+  },
+  {
+    "id": 589,
+    "phrase": "product launch",
+    "means": [
+      "신제품 출시"
+    ]
+  },
+  {
+    "id": 590,
+    "phrase": "marketing",
+    "means": [
+      "마케팅"
+    ]
+  },
+  {
+    "id": 591,
+    "phrase": "market research",
+    "means": [
+      "시장 조사"
+    ]
+  },
+  {
+    "id": 592,
+    "phrase": "questionnaire",
+    "means": [
+      "설문지"
+    ]
+  },
+  {
+    "id": 593,
+    "phrase": "consumer",
+    "means": [
+      "소비자"
+    ]
+  },
+  {
+    "id": 594,
+    "phrase": "target audience",
+    "means": [
+      "목표 고객층"
+    ]
+  },
+  {
+    "id": 595,
+    "phrase": "public relations",
+    "means": [
+      "홍보",
+      "대외 관계"
+    ]
+  },
+  {
+    "id": 596,
+    "phrase": "press release",
+    "means": [
+      "보도 자료"
+    ]
+  },
+  {
+    "id": 597,
+    "phrase": "sponsor",
+    "means": [
+      "후원자",
+      "후원하다"
+    ]
+  },
+  {
+    "id": 598,
+    "phrase": "file a report",
+    "means": [
+      "보고서를 제출하다"
+    ]
+  },
+  {
+    "id": 599,
+    "phrase": "submit",
+    "means": [
+      "제출하다"
+    ]
+  },
+  {
+    "id": 600,
+    "phrase": "submission",
+    "means": [
+      "제출",
+      "제출물"
+    ]
+  },
+  {
+    "id": 601,
+    "phrase": "fill out a form",
+    "means": [
+      "양식을 작성하다"
+    ]
+  },
+  {
+    "id": 602,
+    "phrase": "signature line",
+    "means": [
+      "서명란"
+    ]
+  },
+  {
+    "id": 603,
+    "phrase": "initial",
+    "means": [
+      "머리글자 서명을 하다",
+      "초기의"
+    ]
+  },
+  {
+    "id": 604,
+    "phrase": "make a copy",
+    "means": [
+      "사본을 만들다"
+    ]
+  },
+  {
+    "id": 605,
+    "phrase": "photocopy",
+    "means": [
+      "복사하다",
+      "복사본"
+    ]
+  },
+  {
+    "id": 606,
+    "phrase": "original document",
+    "means": [
+      "원본 서류"
+    ]
+  },
+  {
+    "id": 607,
+    "phrase": "hard copy",
+    "means": [
+      "인쇄본"
+    ]
+  },
+  {
+    "id": 608,
+    "phrase": "soft copy",
+    "means": [
+      "전자 파일"
+    ]
+  },
+  {
+    "id": 609,
+    "phrase": "scan",
+    "means": [
+      "스캔하다"
+    ]
+  },
+  {
+    "id": 610,
+    "phrase": "file away",
+    "means": [
+      "서류를 정리해 보관하다"
+    ]
+  },
+  {
+    "id": 611,
+    "phrase": "archive",
+    "means": [
+      "보관하다",
+      "기록 보관소"
+    ]
+  },
+  {
+    "id": 612,
+    "phrase": "recordkeeping",
+    "means": [
+      "기록 관리"
+    ]
+  },
+  {
+    "id": 613,
+    "phrase": "spreadsheet",
+    "means": [
+      "스프레드시트"
+    ]
+  },
+  {
+    "id": 614,
+    "phrase": "worksheet",
+    "means": [
+      "작업표"
+    ]
+  },
+  {
+    "id": 615,
+    "phrase": "entry",
+    "means": [
+      "입력 항목",
+      "기재 사항"
+    ]
+  },
+  {
+    "id": 616,
+    "phrase": "data entry",
+    "means": [
+      "자료 입력"
+    ]
+  },
+  {
+    "id": 617,
+    "phrase": "revision",
+    "means": [
+      "수정",
+      "개정"
+    ]
+  },
+  {
+    "id": 618,
+    "phrase": "proofread",
+    "means": [
+      "교정하다"
+    ]
+  },
+  {
+    "id": 619,
+    "phrase": "correct an error",
+    "means": [
+      "오류를 바로잡다"
+    ]
+  },
+  {
+    "id": 620,
+    "phrase": "verify",
+    "means": [
+      "확인하다",
+      "검증하다"
+    ]
+  },
+  {
+    "id": 621,
+    "phrase": "verification",
+    "means": [
+      "확인",
+      "검증"
+    ]
+  },
+  {
+    "id": 622,
+    "phrase": "finalize",
+    "means": [
+      "마무리하다",
+      "최종 확정하다"
+    ]
+  },
+  {
+    "id": 623,
+    "phrase": "final version",
+    "means": [
+      "최종본"
+    ]
+  },
+  {
+    "id": 624,
+    "phrase": "latest version",
+    "means": [
+      "최신 버전"
+    ]
+  },
+  {
+    "id": 625,
+    "phrase": "relevant document",
+    "means": [
+      "관련 문서"
+    ]
+  },
+  {
+    "id": 626,
+    "phrase": "supporting document",
+    "means": [
+      "증빙 서류"
+    ]
+  },
+  {
+    "id": 627,
+    "phrase": "keep on file",
+    "means": [
+      "서류로 보관하다"
+    ]
+  },
+  {
+    "id": 628,
+    "phrase": "for the record",
+    "means": [
+      "기록을 위해"
+    ]
+  },
+  {
+    "id": 629,
+    "phrase": "branch office",
+    "means": [
+      "지사",
+      "지점"
+    ]
+  },
+  {
+    "id": 630,
+    "phrase": "head office",
+    "means": [
+      "본사"
+    ]
+  },
+  {
+    "id": 631,
+    "phrase": "regional office",
+    "means": [
+      "지역 사무소"
+    ]
+  },
+  {
+    "id": 632,
+    "phrase": "division",
+    "means": [
+      "부문",
+      "사업부"
+    ]
+  },
+  {
+    "id": 633,
+    "phrase": "administration",
+    "means": [
+      "관리",
+      "행정"
+    ]
+  },
+  {
+    "id": 634,
+    "phrase": "administrative",
+    "means": [
+      "행정의"
+    ]
+  },
+  {
+    "id": 635,
+    "phrase": "coordinator",
+    "means": [
+      "조정 담당자"
+    ]
+  },
+  {
+    "id": 636,
+    "phrase": "reception desk",
+    "means": [
+      "접수대"
+    ]
+  },
+  {
+    "id": 637,
+    "phrase": "switchboard",
+    "means": [
+      "전화 교환대"
+    ]
+  },
+  {
+    "id": 638,
+    "phrase": "office supply",
+    "means": [
+      "사무용품"
+    ]
+  },
+  {
+    "id": 639,
+    "phrase": "stationery",
+    "means": [
+      "문구류"
+    ]
+  },
+  {
+    "id": 640,
+    "phrase": "notepad",
+    "means": [
+      "메모지"
+    ]
+  },
+  {
+    "id": 641,
+    "phrase": "bulletin board",
+    "means": [
+      "게시판"
+    ]
+  },
+  {
+    "id": 642,
+    "phrase": "notice board",
+    "means": [
+      "게시판"
+    ]
+  },
+  {
+    "id": 643,
+    "phrase": "filing cabinet",
+    "means": [
+      "서류 보관함"
+    ]
+  },
+  {
+    "id": 644,
+    "phrase": "conference room",
+    "means": [
+      "회의실"
+    ]
+  },
+  {
+    "id": 645,
+    "phrase": "workstation",
+    "means": [
+      "작업 공간"
+    ]
+  },
+  {
+    "id": 646,
+    "phrase": "cubicle",
+    "means": [
+      "칸막이 사무 공간"
+    ]
+  },
+  {
+    "id": 647,
+    "phrase": "office hours",
+    "means": [
+      "업무 시간"
+    ]
+  },
+  {
+    "id": 648,
+    "phrase": "business hours",
+    "means": [
+      "영업 시간"
+    ]
+  },
+  {
+    "id": 649,
+    "phrase": "opening hours",
+    "means": [
+      "영업 시간"
+    ]
+  },
+  {
+    "id": 650,
+    "phrase": "closing time",
+    "means": [
+      "마감 시간"
+    ]
+  },
+  {
+    "id": 651,
+    "phrase": "lunch break",
+    "means": [
+      "점심시간"
+    ]
+  },
+  {
+    "id": 652,
+    "phrase": "business day",
+    "means": [
+      "영업일"
+    ]
+  },
+  {
+    "id": 653,
+    "phrase": "public holiday",
+    "means": [
+      "공휴일"
+    ]
+  },
+  {
+    "id": 654,
+    "phrase": "observed holiday",
+    "means": [
+      "실제로 휴무를 적용하는 공휴일",
+      "대체 휴일"
+    ]
+  },
+  {
+    "id": 655,
+    "phrase": "company-wide",
+    "means": [
+      "회사 전체의"
+    ]
+  },
+  {
+    "id": 656,
+    "phrase": "internal memo",
+    "means": [
+      "사내 메모"
+    ]
+  },
+  {
+    "id": 657,
+    "phrase": "employee directory",
+    "means": [
+      "직원 연락처 목록"
+    ]
+  },
+  {
+    "id": 658,
+    "phrase": "organization chart",
+    "means": [
+      "조직도"
+    ]
+  },
+  {
+    "id": 659,
+    "phrase": "staff meeting",
+    "means": [
+      "직원 회의"
+    ]
+  },
+  {
+    "id": 660,
+    "phrase": "office relocation",
+    "means": [
+      "사무실 이전"
+    ]
+  },
+  {
+    "id": 661,
+    "phrase": "event",
+    "means": [
+      "행사"
+    ]
+  },
+  {
+    "id": 662,
+    "phrase": "corporate event",
+    "means": [
+      "기업 행사"
+    ]
+  },
+  {
+    "id": 663,
+    "phrase": "company retreat",
+    "means": [
+      "회사 워크숍"
+    ]
+  },
+  {
+    "id": 664,
+    "phrase": "register",
+    "means": [
+      "등록하다"
+    ]
+  },
+  {
+    "id": 665,
+    "phrase": "registration desk",
+    "means": [
+      "등록 데스크"
+    ]
+  },
+  {
+    "id": 666,
+    "phrase": "registration fee",
+    "means": [
+      "등록비"
+    ]
+  },
+  {
+    "id": 667,
+    "phrase": "registration form",
+    "means": [
+      "등록 양식"
+    ]
+  },
+  {
+    "id": 668,
+    "phrase": "sign-in sheet",
+    "means": [
+      "참석자 서명부"
+    ]
+  },
+  {
+    "id": 669,
+    "phrase": "name tag",
+    "means": [
+      "명찰"
+    ]
+  },
+  {
+    "id": 670,
+    "phrase": "admission",
+    "means": [
+      "입장",
+      "입장료"
+    ]
+  },
+  {
+    "id": 671,
+    "phrase": "admission fee",
+    "means": [
+      "입장료"
+    ]
+  },
+  {
+    "id": 672,
+    "phrase": "entrance fee",
+    "means": [
+      "입장료"
+    ]
+  },
+  {
+    "id": 673,
+    "phrase": "invitation",
+    "means": [
+      "초대장"
+    ]
+  },
+  {
+    "id": 674,
+    "phrase": "RSVP",
+    "means": [
+      "참석 여부를 회신하다"
+    ]
+  },
+  {
+    "id": 675,
+    "phrase": "guest list",
+    "means": [
+      "초대 손님 명단"
+    ]
+  },
+  {
+    "id": 676,
+    "phrase": "host",
+    "means": [
+      "주최자",
+      "주최하다"
+    ]
+  },
+  {
+    "id": 677,
+    "phrase": "organizer",
+    "means": [
+      "주최자",
+      "기획자"
+    ]
+  },
+  {
+    "id": 678,
+    "phrase": "caterer",
+    "means": [
+      "행사 음식 공급업체"
+    ]
+  },
+  {
+    "id": 679,
+    "phrase": "refreshments",
+    "means": [
+      "다과",
+      "간단한 음식과 음료"
+    ]
+  },
+  {
+    "id": 680,
+    "phrase": "banquet",
+    "means": [
+      "연회"
+    ]
+  },
+  {
+    "id": 681,
+    "phrase": "seating arrangement",
+    "means": [
+      "좌석 배치"
+    ]
+  },
+  {
+    "id": 682,
+    "phrase": "capacity",
+    "means": [
+      "수용 인원",
+      "용량"
+    ]
+  },
+  {
+    "id": 683,
+    "phrase": "open to the public",
+    "means": [
+      "일반인에게 공개된"
+    ]
+  },
+  {
+    "id": 684,
+    "phrase": "ticket booth",
+    "means": [
+      "매표소"
+    ]
+  },
+  {
+    "id": 685,
+    "phrase": "e-ticket",
+    "means": [
+      "전자 티켓"
+    ]
+  },
+  {
+    "id": 686,
+    "phrase": "information desk",
+    "means": [
+      "안내 데스크"
+    ]
+  },
+  {
+    "id": 687,
+    "phrase": "guided tour",
+    "means": [
+      "안내인이 동행하는 관람"
+    ]
+  },
+  {
+    "id": 688,
+    "phrase": "tour guide",
+    "means": [
+      "관광 안내원"
+    ]
+  },
+  {
+    "id": 689,
+    "phrase": "exhibition",
+    "means": [
+      "전시회"
+    ]
+  },
+  {
+    "id": 690,
+    "phrase": "keynote speech",
+    "means": [
+      "기조연설"
+    ]
+  },
+  {
+    "id": 691,
+    "phrase": "cancellation notice",
+    "means": [
+      "취소 공지"
+    ]
+  },
+  {
+    "id": 692,
+    "phrase": "last-minute change",
+    "means": [
+      "막판 변경"
+    ]
+  },
+  {
+    "id": 693,
+    "phrase": "weather permitting",
+    "means": [
+      "날씨가 허락하면"
+    ]
+  },
+  {
+    "id": 694,
+    "phrase": "parking validation",
+    "means": [
+      "주차 요금 면제·할인을 위한 확인 처리"
+    ]
+  },
+  {
+    "id": 695,
+    "phrase": "check availability",
+    "means": [
+      "이용 가능 여부를 확인하다"
+    ]
+  },
+  {
+    "id": 696,
+    "phrase": "confirm attendance",
+    "means": [
+      "참석 여부를 확인하다"
+    ]
+  },
+  {
+    "id": 697,
+    "phrase": "reserve a seat",
+    "means": [
+      "좌석을 예약하다"
+    ]
+  },
+  {
+    "id": 698,
+    "phrase": "make an inquiry",
+    "means": [
+      "문의를 하다"
+    ]
+  },
+  {
+    "id": 699,
+    "phrase": "dispatch notice",
+    "means": [
+      "발송 안내"
+    ]
+  },
+  {
+    "id": 700,
+    "phrase": "delivery window",
+    "means": [
+      "예상 배송 시간대"
+    ]
+  },
+  {
+    "id": 701,
+    "phrase": "order cutoff",
+    "means": [
+      "주문 마감 시각"
+    ]
+  },
+  {
+    "id": 702,
+    "phrase": "delivery confirmation",
+    "means": [
+      "배송 완료 확인"
+    ]
+  },
+  {
+    "id": 703,
+    "phrase": "order tracking",
+    "means": [
+      "주문 배송 조회"
+    ]
+  },
+  {
+    "id": 704,
+    "phrase": "workforce",
+    "means": [
+      "노동 인력"
+    ]
+  },
+  {
+    "id": 705,
+    "phrase": "interview",
+    "means": [
+      "면접"
+    ]
+  },
+  {
+    "id": 706,
+    "phrase": "expertise",
+    "means": [
+      "전문 지식"
+    ]
+  },
+  {
+    "id": 707,
+    "phrase": "recommendation",
+    "means": [
+      "추천",
+      "권고"
+    ]
+  },
+  {
+    "id": 708,
+    "phrase": "shortlist",
+    "means": [
+      "최종 후보 명단"
+    ]
+  },
+  {
+    "id": 709,
+    "phrase": "appoint",
+    "means": [
+      "임명하다"
+    ]
+  },
+  {
+    "id": 710,
+    "phrase": "relocate",
+    "means": [
+      "이전하다",
+      "이사하다"
+    ]
+  },
+  {
+    "id": 711,
+    "phrase": "collaborate",
+    "means": [
+      "협력하다"
+    ]
+  },
+  {
+    "id": 712,
+    "phrase": "contribute",
+    "means": [
+      "기여하다"
+    ]
+  },
+  {
+    "id": 713,
+    "phrase": "handle",
+    "means": [
+      "처리하다"
+    ]
+  },
+  {
+    "id": 714,
+    "phrase": "accomplish",
+    "means": [
+      "성취하다"
+    ]
+  },
+  {
+    "id": 715,
+    "phrase": "remote work",
+    "means": [
+      "원격 근무"
+    ]
+  },
+  {
+    "id": 716,
+    "phrase": "incentive",
+    "means": [
+      "성과급",
+      "장려책"
+    ]
+  },
+  {
+    "id": 717,
+    "phrase": "allowance",
+    "means": [
+      "수당"
+    ]
+  },
+  {
+    "id": 718,
+    "phrase": "raise",
+    "means": [
+      "임금 인상"
+    ]
+  },
+  {
+    "id": 719,
+    "phrase": "job description",
+    "means": [
+      "직무 설명"
+    ]
+  },
+  {
+    "id": 720,
+    "phrase": "workplace",
+    "means": [
+      "직장"
+    ]
+  },
+  {
+    "id": 721,
+    "phrase": "productive",
+    "means": [
+      "생산적인"
+    ]
+  },
+  {
+    "id": 722,
+    "phrase": "meet a deadline",
+    "means": [
+      "마감 기한을 지키다"
+    ]
+  },
+  {
+    "id": 723,
+    "phrase": "take place",
+    "means": [
+      "열리다",
+      "발생하다"
+    ]
+  },
+  {
+    "id": 724,
+    "phrase": "make arrangements for",
+    "means": [
+      "~을 준비하다"
+    ]
+  },
+  {
+    "id": 725,
+    "phrase": "prior to",
+    "means": [
+      "~보다 먼저"
+    ]
+  },
+  {
+    "id": 726,
+    "phrase": "eventually",
+    "means": [
+      "결국"
+    ]
+  },
+  {
+    "id": 727,
+    "phrase": "immediately",
+    "means": [
+      "즉시"
+    ]
+  },
+  {
+    "id": 728,
+    "phrase": "temporarily",
+    "means": [
+      "일시적으로"
+    ]
+  },
+  {
+    "id": 729,
+    "phrase": "occasionally",
+    "means": [
+      "가끔"
+    ]
+  },
+  {
+    "id": 730,
+    "phrase": "frequently",
+    "means": [
+      "자주"
+    ]
+  },
+  {
+    "id": 731,
+    "phrase": "recently",
+    "means": [
+      "최근에"
+    ]
+  },
+  {
+    "id": 732,
+    "phrase": "initially",
+    "means": [
+      "처음에는"
+    ]
+  },
+  {
+    "id": 733,
+    "phrase": "approximately",
+    "means": [
+      "대략"
+    ]
+  },
+  {
+    "id": 734,
+    "phrase": "moderator",
+    "means": [
+      "사회자"
+    ]
+  },
+  {
+    "id": 735,
+    "phrase": "chairperson",
+    "means": [
+      "의장"
+    ]
+  },
+  {
+    "id": 736,
+    "phrase": "panel",
+    "means": [
+      "토론자단"
+    ]
+  },
+  {
+    "id": 737,
+    "phrase": "audience",
+    "means": [
+      "청중"
+    ]
+  },
+  {
+    "id": 738,
+    "phrase": "mention",
+    "means": [
+      "언급하다"
+    ]
+  },
+  {
+    "id": 739,
+    "phrase": "inquire",
+    "means": [
+      "문의하다"
+    ]
+  },
+  {
+    "id": 740,
+    "phrase": "enclose",
+    "means": [
+      "동봉하다"
+    ]
+  },
+  {
+    "id": 741,
+    "phrase": "comment",
+    "means": [
+      "의견",
+      "논평"
+    ]
+  },
+  {
+    "id": 742,
+    "phrase": "summary",
+    "means": [
+      "요약"
+    ]
+  },
+  {
+    "id": 743,
+    "phrase": "at the latest",
+    "means": [
+      "늦어도"
+    ]
+  },
+  {
+    "id": 744,
+    "phrase": "as soon as possible",
+    "means": [
+      "가능한 한 빨리"
+    ]
+  },
+  {
+    "id": 745,
+    "phrase": "in person",
+    "means": [
+      "직접 만나서",
+      "본인이 직접"
+    ]
+  },
+  {
+    "id": 746,
+    "phrase": "free of charge",
+    "means": [
+      "무료로"
+    ]
+  },
+  {
+    "id": 747,
+    "phrase": "order number",
+    "means": [
+      "주문 번호"
+    ]
+  },
+  {
+    "id": 748,
+    "phrase": "distributor",
+    "means": [
+      "유통업체"
+    ]
+  },
+  {
+    "id": 749,
+    "phrase": "merchant",
+    "means": [
+      "상인"
+    ]
+  },
+  {
+    "id": 750,
+    "phrase": "storeroom",
+    "means": [
+      "창고"
+    ]
+  },
+  {
+    "id": 751,
+    "phrase": "shortage",
+    "means": [
+      "부족"
+    ]
+  },
+  {
+    "id": 752,
+    "phrase": "surplus",
+    "means": [
+      "잉여"
+    ]
+  },
+  {
+    "id": 753,
+    "phrase": "batch",
+    "means": [
+      "한 묶음",
+      "생산분"
+    ]
+  },
+  {
+    "id": 754,
+    "phrase": "transport",
+    "means": [
+      "운송하다"
+    ]
+  },
+  {
+    "id": 755,
+    "phrase": "wrap",
+    "means": [
+      "포장하다"
+    ]
+  },
+  {
+    "id": 756,
+    "phrase": "carton",
+    "means": [
+      "상자"
+    ]
+  },
+  {
+    "id": 757,
+    "phrase": "crate",
+    "means": [
+      "나무 상자"
+    ]
+  },
+  {
+    "id": 758,
+    "phrase": "carrier",
+    "means": [
+      "운송업체"
+    ]
+  },
+  {
+    "id": 759,
+    "phrase": "shipment status",
+    "means": [
+      "배송 상태"
+    ]
+  },
+  {
+    "id": 760,
+    "phrase": "overnight delivery",
+    "means": [
+      "익일 배송"
+    ]
+  },
+  {
+    "id": 761,
+    "phrase": "pickup",
+    "means": [
+      "수령",
+      "픽업"
+    ]
+  },
+  {
+    "id": 762,
+    "phrase": "drop-off",
+    "means": [
+      "물품을 맡기기"
+    ]
+  },
+  {
+    "id": 763,
+    "phrase": "incorrect",
+    "means": [
+      "잘못된"
+    ]
+  },
+  {
+    "id": 764,
+    "phrase": "claim",
+    "means": [
+      "청구하다",
+      "주장하다",
+      "청구",
+      "주장"
+    ]
+  },
+  {
+    "id": 765,
+    "phrase": "credit note",
+    "means": [
+      "청구액 감액 통지서",
+      "환불·반품에 따른 대변 전표"
+    ]
+  },
+  {
+    "id": 766,
+    "phrase": "service desk",
+    "means": [
+      "고객 상담 창구"
+    ]
+  },
+  {
+    "id": 767,
+    "phrase": "advisor",
+    "means": [
+      "상담원"
+    ]
+  },
+  {
+    "id": 768,
+    "phrase": "welcome",
+    "means": [
+      "환영하다"
+    ]
+  },
+  {
+    "id": 769,
+    "phrase": "accommodate",
+    "means": [
+      "편의를 제공하다"
+    ]
+  },
+  {
+    "id": 770,
+    "phrase": "investigate",
+    "means": [
+      "조사하다"
+    ]
+  },
+  {
+    "id": 771,
+    "phrase": "assure",
+    "means": [
+      "확신시키다"
+    ]
+  },
+  {
+    "id": 772,
+    "phrase": "dissatisfaction",
+    "means": [
+      "불만족"
+    ]
+  },
+  {
+    "id": 773,
+    "phrase": "expectation",
+    "means": [
+      "기대"
+    ]
+  },
+  {
+    "id": 774,
+    "phrase": "preference",
+    "means": [
+      "선호"
+    ]
+  },
+  {
+    "id": 775,
+    "phrase": "alternative",
+    "means": [
+      "대안"
+    ]
+  },
+  {
+    "id": 776,
+    "phrase": "ask for assistance",
+    "means": [
+      "도움을 요청하다"
+    ]
+  },
+  {
+    "id": 777,
+    "phrase": "file a complaint",
+    "means": [
+      "불만을 접수하다"
+    ]
+  },
+  {
+    "id": 778,
+    "phrase": "offer a replacement",
+    "means": [
+      "교환품을 제공하다"
+    ]
+  },
+  {
+    "id": 779,
+    "phrase": "make an exception",
+    "means": [
+      "예외를 인정하다"
+    ]
+  },
+  {
+    "id": 780,
+    "phrase": "put someone on hold",
+    "means": [
+      "전화를 잠시 기다리게 하다"
+    ]
+  },
+  {
+    "id": 781,
+    "phrase": "phone extension",
+    "means": [
+      "내선 번호"
+    ]
+  },
+  {
+    "id": 782,
+    "phrase": "after-sales service",
+    "means": [
+      "사후 서비스"
+    ]
+  },
+  {
+    "id": 783,
+    "phrase": "sales department",
+    "means": [
+      "영업 부서"
+    ]
+  },
+  {
+    "id": 784,
+    "phrase": "sales target",
+    "means": [
+      "매출 목표"
+    ]
+  },
+  {
+    "id": 785,
+    "phrase": "customer base",
+    "means": [
+      "고객층"
+    ]
+  },
+  {
+    "id": 786,
+    "phrase": "potential customer",
+    "means": [
+      "잠재 고객"
+    ]
+  },
+  {
+    "id": 787,
+    "phrase": "existing customer",
+    "means": [
+      "기존 고객"
+    ]
+  },
+  {
+    "id": 788,
+    "phrase": "repeat customer",
+    "means": [
+      "재구매 고객"
+    ]
+  },
+  {
+    "id": 789,
+    "phrase": "loyal customer",
+    "means": [
+      "단골 고객"
+    ]
+  },
+  {
+    "id": 790,
+    "phrase": "new customer",
+    "means": [
+      "신규 고객"
+    ]
+  },
+  {
+    "id": 791,
+    "phrase": "respondent",
+    "means": [
+      "설문 응답자"
+    ]
+  },
+  {
+    "id": 792,
+    "phrase": "trend",
+    "means": [
+      "추세"
+    ]
+  },
+  {
+    "id": 793,
+    "phrase": "competition",
+    "means": [
+      "경쟁"
+    ]
+  },
+  {
+    "id": 794,
+    "phrase": "competitor",
+    "means": [
+      "경쟁업체"
+    ]
+  },
+  {
+    "id": 795,
+    "phrase": "competitive",
+    "means": [
+      "경쟁력 있는"
+    ]
+  },
+  {
+    "id": 796,
+    "phrase": "reasonable",
+    "means": [
+      "합리적인"
+    ]
+  },
+  {
+    "id": 797,
+    "phrase": "cost-effective",
+    "means": [
+      "비용 효율적인"
+    ]
+  },
+  {
+    "id": 798,
+    "phrase": "unique",
+    "means": [
+      "독특한"
+    ]
+  },
+  {
+    "id": 799,
+    "phrase": "reliable",
+    "means": [
+      "믿을 만한"
+    ]
+  },
+  {
+    "id": 800,
+    "phrase": "benefit",
+    "means": [
+      "혜택",
+      "이점",
+      "이익을 주다"
+    ]
+  },
+  {
+    "id": 801,
+    "phrase": "advantage",
+    "means": [
+      "장점"
+    ]
+  },
+  {
+    "id": 802,
+    "phrase": "drawback",
+    "means": [
+      "단점"
+    ]
+  },
+  {
+    "id": 803,
+    "phrase": "reputation",
+    "means": [
+      "평판"
+    ]
+  },
+  {
+    "id": 804,
+    "phrase": "rating",
+    "means": [
+      "평점"
+    ]
+  },
+  {
+    "id": 805,
+    "phrase": "revenue",
+    "means": [
+      "매출",
+      "수입"
+    ]
+  },
+  {
+    "id": 806,
+    "phrase": "quarterly",
+    "means": [
+      "분기별의",
+      "분기마다"
+    ]
+  },
+  {
+    "id": 807,
+    "phrase": "income",
+    "means": [
+      "소득",
+      "수입"
+    ]
+  },
+  {
+    "id": 808,
+    "phrase": "earnings",
+    "means": [
+      "소득",
+      "수익"
+    ]
+  },
+  {
+    "id": 809,
+    "phrase": "accounting",
+    "means": [
+      "회계"
+    ]
+  },
+  {
+    "id": 810,
+    "phrase": "bookkeeping",
+    "means": [
+      "장부 기입"
+    ]
+  },
+  {
+    "id": 811,
+    "phrase": "financial statement",
+    "means": [
+      "재무제표"
+    ]
+  },
+  {
+    "id": 812,
+    "phrase": "cash flow",
+    "means": [
+      "현금 흐름"
+    ]
+  },
+  {
+    "id": 813,
+    "phrase": "transfer funds",
+    "means": [
+      "자금을 이체하다"
+    ]
+  },
+  {
+    "id": 814,
+    "phrase": "withdraw",
+    "means": [
+      "인출하다"
+    ]
+  },
+  {
+    "id": 815,
+    "phrase": "partial payment",
+    "means": [
+      "일부 지급"
+    ]
+  },
+  {
+    "id": 816,
+    "phrase": "overdue payment",
+    "means": [
+      "연체금"
+    ]
+  },
+  {
+    "id": 817,
+    "phrase": "due",
+    "means": [
+      "예정된",
+      "지급·제출 기한이 된"
+    ]
+  },
+  {
+    "id": 818,
+    "phrase": "bid",
+    "means": [
+      "입찰하다",
+      "입찰가"
+    ]
+  },
+  {
+    "id": 819,
+    "phrase": "purchase price",
+    "means": [
+      "구매 가격"
+    ]
+  },
+  {
+    "id": 820,
+    "phrase": "retail price",
+    "means": [
+      "소매 가격"
+    ]
+  },
+  {
+    "id": 821,
+    "phrase": "wholesale price",
+    "means": [
+      "도매 가격"
+    ]
+  },
+  {
+    "id": 822,
+    "phrase": "final price",
+    "means": [
+      "최종 가격"
+    ]
+  },
+  {
+    "id": 823,
+    "phrase": "price range",
+    "means": [
+      "가격대"
+    ]
+  },
+  {
+    "id": 824,
+    "phrase": "term",
+    "means": [
+      "기간",
+      "용어",
+      "조건(주로 복수형 terms)"
+    ]
+  },
+  {
+    "id": 825,
+    "phrase": "invalid",
+    "means": [
+      "유효하지 않은"
+    ]
+  },
+  {
+    "id": 826,
+    "phrase": "enforce",
+    "means": [
+      "시행하다"
+    ]
+  },
+  {
+    "id": 827,
+    "phrase": "insurance",
+    "means": [
+      "보험"
+    ]
+  },
+  {
+    "id": 828,
+    "phrase": "coverage",
+    "means": [
+      "보장 범위"
+    ]
+  },
+  {
+    "id": 829,
+    "phrase": "premium",
+    "means": [
+      "보험료",
+      "추가 요금",
+      "고급의"
+    ]
+  },
+  {
+    "id": 830,
+    "phrase": "claim form",
+    "means": [
+      "청구 양식"
+    ]
+  },
+  {
+    "id": 831,
+    "phrase": "firm",
+    "means": [
+      "회사"
+    ]
+  },
+  {
+    "id": 832,
+    "phrase": "travel expense",
+    "means": [
+      "여행 경비"
+    ]
+  },
+  {
+    "id": 833,
+    "phrase": "travel allowance",
+    "means": [
+      "출장 수당"
+    ]
+  },
+  {
+    "id": 834,
+    "phrase": "travel insurance",
+    "means": [
+      "여행 보험"
+    ]
+  },
+  {
+    "id": 835,
+    "phrase": "security check",
+    "means": [
+      "보안 검색"
+    ]
+  },
+  {
+    "id": 836,
+    "phrase": "customs",
+    "means": [
+      "세관"
+    ]
+  },
+  {
+    "id": 837,
+    "phrase": "immigration",
+    "means": [
+      "출입국 심사"
+    ]
+  },
+  {
+    "id": 838,
+    "phrase": "take off",
+    "means": [
+      "이륙하다"
+    ]
+  },
+  {
+    "id": 839,
+    "phrase": "excess baggage",
+    "means": [
+      "초과 수하물"
+    ]
+  },
+  {
+    "id": 840,
+    "phrase": "lost luggage",
+    "means": [
+      "분실 수하물"
+    ]
+  },
+  {
+    "id": 841,
+    "phrase": "baggage tag",
+    "means": [
+      "수하물 표"
+    ]
+  },
+  {
+    "id": 842,
+    "phrase": "transfer station",
+    "means": [
+      "환승역"
+    ]
+  },
+  {
+    "id": 843,
+    "phrase": "commuter",
+    "means": [
+      "통근자"
+    ]
+  },
+  {
+    "id": 844,
+    "phrase": "traffic jam",
+    "means": [
+      "교통 체증"
+    ]
+  },
+  {
+    "id": 845,
+    "phrase": "road closure",
+    "means": [
+      "도로 폐쇄"
+    ]
+  },
+  {
+    "id": 846,
+    "phrase": "detour",
+    "means": [
+      "우회로"
+    ]
+  },
+  {
+    "id": 847,
+    "phrase": "shuttle",
+    "means": [
+      "셔틀버스"
+    ]
+  },
+  {
+    "id": 848,
+    "phrase": "complimentary breakfast",
+    "means": [
+      "무료 조식"
+    ]
+  },
+  {
+    "id": 849,
+    "phrase": "wake-up call",
+    "means": [
+      "모닝콜"
+    ]
+  },
+  {
+    "id": 850,
+    "phrase": "concierge",
+    "means": [
+      "안내 직원"
+    ]
+  },
+  {
+    "id": 851,
+    "phrase": "laundry service",
+    "means": [
+      "세탁 서비스"
+    ]
+  },
+  {
+    "id": 852,
+    "phrase": "book a room",
+    "means": [
+      "객실을 예약하다"
+    ]
+  },
+  {
+    "id": 853,
+    "phrase": "confirm a booking",
+    "means": [
+      "예약을 확인하다"
+    ]
+  },
+  {
+    "id": 854,
+    "phrase": "change a reservation",
+    "means": [
+      "예약을 변경하다"
+    ]
+  },
+  {
+    "id": 855,
+    "phrase": "cancel a booking",
+    "means": [
+      "예약을 취소하다"
+    ]
+  },
+  {
+    "id": 856,
+    "phrase": "no-show",
+    "means": [
+      "예약 후 나타나지 않은 고객"
+    ]
+  },
+  {
+    "id": 857,
+    "phrase": "local time",
+    "means": [
+      "현지 시간"
+    ]
+  },
+  {
+    "id": 858,
+    "phrase": "landlord",
+    "means": [
+      "건물주"
+    ]
+  },
+  {
+    "id": 859,
+    "phrase": "staircase",
+    "means": [
+      "계단"
+    ]
+  },
+  {
+    "id": 860,
+    "phrase": "storage area",
+    "means": [
+      "보관 구역"
+    ]
+  },
+  {
+    "id": 861,
+    "phrase": "heater",
+    "means": [
+      "난방기"
+    ]
+  },
+  {
+    "id": 862,
+    "phrase": "air conditioner",
+    "means": [
+      "에어컨"
+    ]
+  },
+  {
+    "id": 863,
+    "phrase": "ventilation",
+    "means": [
+      "환기"
+    ]
+  },
+  {
+    "id": 864,
+    "phrase": "thermostat",
+    "means": [
+      "온도 조절 장치"
+    ]
+  },
+  {
+    "id": 865,
+    "phrase": "lighting",
+    "means": [
+      "조명"
+    ]
+  },
+  {
+    "id": 866,
+    "phrase": "water supply",
+    "means": [
+      "급수"
+    ]
+  },
+  {
+    "id": 867,
+    "phrase": "plumbing",
+    "means": [
+      "배관"
+    ]
+  },
+  {
+    "id": 868,
+    "phrase": "drainage",
+    "means": [
+      "배수"
+    ]
+  },
+  {
+    "id": 869,
+    "phrase": "appliance",
+    "means": [
+      "가전제품"
+    ]
+  },
+  {
+    "id": 870,
+    "phrase": "motor",
+    "means": [
+      "모터"
+    ]
+  },
+  {
+    "id": 871,
+    "phrase": "control panel",
+    "means": [
+      "제어판"
+    ]
+  },
+  {
+    "id": 872,
+    "phrase": "repair request",
+    "means": [
+      "수리 요청"
+    ]
+  },
+  {
+    "id": 873,
+    "phrase": "work order",
+    "means": [
+      "작업 지시서"
+    ]
+  },
+  {
+    "id": 874,
+    "phrase": "safety",
+    "means": [
+      "안전"
+    ]
+  },
+  {
+    "id": 875,
+    "phrase": "warning",
+    "means": [
+      "경고"
+    ]
+  },
+  {
+    "id": 876,
+    "phrase": "evacuation",
+    "means": [
+      "대피"
+    ]
+  },
+  {
+    "id": 877,
+    "phrase": "first aid",
+    "means": [
+      "응급 처치"
+    ]
+  },
+  {
+    "id": 878,
+    "phrase": "protective gear",
+    "means": [
+      "보호 장비"
+    ]
+  },
+  {
+    "id": 879,
+    "phrase": "spill",
+    "means": [
+      "유출",
+      "엎지르다"
+    ]
+  },
+  {
+    "id": 880,
+    "phrase": "leak",
+    "means": [
+      "누출"
+    ]
+  },
+  {
+    "id": 881,
+    "phrase": "slippery",
+    "means": [
+      "미끄러운"
+    ]
+  },
+  {
+    "id": 882,
+    "phrase": "authorized personnel",
+    "means": [
+      "인가된 직원"
+    ]
+  },
+  {
+    "id": 883,
+    "phrase": "dispose of",
+    "means": [
+      "~을 폐기하다"
+    ]
+  },
+  {
+    "id": 884,
+    "phrase": "recycle",
+    "means": [
+      "재활용하다"
+    ]
+  },
+  {
+    "id": 885,
+    "phrase": "cleaning supplies",
+    "means": [
+      "청소용품"
+    ]
+  },
+  {
+    "id": 886,
+    "phrase": "inspection report",
+    "means": [
+      "점검 보고서"
+    ]
+  },
+  {
+    "id": 887,
+    "phrase": "paperwork",
+    "means": [
+      "서류 작업"
+    ]
+  },
+  {
+    "id": 888,
+    "phrase": "permit",
+    "means": [
+      "허가증"
+    ]
+  },
+  {
+    "id": 889,
+    "phrase": "figure",
+    "means": [
+      "수치",
+      "그림",
+      "인물"
+    ]
+  },
+  {
+    "id": 890,
+    "phrase": "conclusion",
+    "means": [
+      "결론"
+    ]
+  },
+  {
+    "id": 891,
+    "phrase": "heading",
+    "means": [
+      "제목"
+    ]
+  },
+  {
+    "id": 892,
+    "phrase": "caption",
+    "means": [
+      "설명문"
+    ]
+  },
+  {
+    "id": 893,
+    "phrase": "version",
+    "means": [
+      "버전"
+    ]
+  },
+  {
+    "id": 894,
+    "phrase": "glitch",
+    "means": [
+      "일시적 오류"
+    ]
+  },
+  {
+    "id": 895,
+    "phrase": "connection issue",
+    "means": [
+      "연결 문제"
+    ]
+  },
+  {
+    "id": 896,
+    "phrase": "security",
+    "means": [
+      "보안"
+    ]
+  },
+  {
+    "id": 897,
+    "phrase": "privacy",
+    "means": [
+      "개인 정보 보호"
+    ]
+  },
+  {
+    "id": 898,
+    "phrase": "objective",
+    "means": [
+      "목표"
+    ]
+  },
+  {
+    "id": 899,
+    "phrase": "priority",
+    "means": [
+      "우선순위"
+    ]
+  },
+  {
+    "id": 900,
+    "phrase": "workflow",
+    "means": [
+      "작업 흐름"
+    ]
+  },
+  {
+    "id": 901,
+    "phrase": "implement",
+    "means": [
+      "시행하다"
+    ]
+  },
+  {
+    "id": 902,
+    "phrase": "organize",
+    "means": [
+      "조직하다"
+    ]
+  },
+  {
+    "id": 903,
+    "phrase": "establish",
+    "means": [
+      "설립하다"
+    ]
+  },
+  {
+    "id": 904,
+    "phrase": "expand",
+    "means": [
+      "확장하다"
+    ]
+  },
+  {
+    "id": 905,
+    "phrase": "increase",
+    "means": [
+      "증가하다"
+    ]
+  },
+  {
+    "id": 906,
+    "phrase": "decrease",
+    "means": [
+      "감소하다"
+    ]
+  },
+  {
+    "id": 907,
+    "phrase": "reduce",
+    "means": [
+      "줄이다"
+    ]
+  },
+  {
+    "id": 908,
+    "phrase": "maintain",
+    "means": [
+      "유지하다"
+    ]
+  },
+  {
+    "id": 909,
+    "phrase": "achieve",
+    "means": [
+      "달성하다"
+    ]
+  },
+  {
+    "id": 910,
+    "phrase": "exceed",
+    "means": [
+      "초과하다"
+    ]
+  },
+  {
+    "id": 911,
+    "phrase": "fall short of",
+    "means": [
+      "~에 미치지 못하다"
+    ]
+  },
+  {
+    "id": 912,
+    "phrase": "evaluate",
+    "means": [
+      "평가하다"
+    ]
+  },
+  {
+    "id": 913,
+    "phrase": "identify",
+    "means": [
+      "확인하다",
+      "식별하다"
+    ]
+  },
+  {
+    "id": 914,
+    "phrase": "set a goal",
+    "means": [
+      "목표를 정하다"
+    ]
+  },
+  {
+    "id": 915,
+    "phrase": "make progress",
+    "means": [
+      "진전을 이루다"
+    ]
+  },
+  {
+    "id": 916,
+    "phrase": "take action",
+    "means": [
+      "조치를 취하다"
+    ]
+  },
+  {
+    "id": 917,
+    "phrase": "carry out",
+    "means": [
+      "수행하다"
+    ]
+  },
+  {
+    "id": 918,
+    "phrase": "follow through",
+    "means": [
+      "끝까지 실행하다"
+    ]
+  },
+  {
+    "id": 919,
+    "phrase": "keep track of",
+    "means": [
+      "~을 계속 확인하다"
+    ]
+  },
+  {
+    "id": 920,
+    "phrase": "be in charge of",
+    "means": [
+      "~을 책임지다"
+    ]
+  },
+  {
+    "id": 921,
+    "phrase": "be assigned to",
+    "means": [
+      "~에 배정되다"
+    ]
+  },
+  {
+    "id": 922,
+    "phrase": "be scheduled to",
+    "means": [
+      "~할 예정이다"
+    ]
+  },
+  {
+    "id": 923,
+    "phrase": "growth",
+    "means": [
+      "성장"
+    ]
+  },
+  {
+    "id": 924,
+    "phrase": "decline",
+    "means": [
+      "감소"
+    ]
+  },
+  {
+    "id": 925,
+    "phrase": "development",
+    "means": [
+      "발전",
+      "개발"
+    ]
+  },
+  {
+    "id": 926,
+    "phrase": "outcome",
+    "means": [
+      "결과"
+    ]
+  },
+  {
+    "id": 927,
+    "phrase": "impact",
+    "means": [
+      "영향"
+    ]
+  },
+  {
+    "id": 928,
+    "phrase": "risk",
+    "means": [
+      "위험"
+    ]
+  },
+  {
+    "id": 929,
+    "phrase": "productivity",
+    "means": [
+      "생산성"
+    ]
+  },
+  {
+    "id": 930,
+    "phrase": "efficiency",
+    "means": [
+      "효율"
+    ]
+  },
+  {
+    "id": 931,
+    "phrase": "timeline",
+    "means": [
+      "일정표"
+    ]
+  },
+  {
+    "id": 932,
+    "phrase": "phase",
+    "means": [
+      "단계"
+    ]
+  },
+  {
+    "id": 933,
+    "phrase": "stage",
+    "means": [
+      "단계"
+    ]
+  },
+  {
+    "id": 934,
+    "phrase": "responsible",
+    "means": [
+      "책임이 있는"
+    ]
+  },
+  {
+    "id": 935,
+    "phrase": "capable",
+    "means": [
+      "유능한"
+    ]
+  },
+  {
+    "id": 936,
+    "phrase": "practical",
+    "means": [
+      "실용적인"
+    ]
+  },
+  {
+    "id": 937,
+    "phrase": "significant",
+    "means": [
+      "상당한"
+    ]
+  },
+  {
+    "id": 938,
+    "phrase": "overall",
+    "means": [
+      "전반적인"
+    ]
+  },
+  {
+    "id": 939,
+    "phrase": "although",
+    "means": [
+      "비록 ~이지만"
+    ]
+  },
+  {
+    "id": 940,
+    "phrase": "however",
+    "means": [
+      "그러나"
+    ]
+  },
+  {
+    "id": 941,
+    "phrase": "therefore",
+    "means": [
+      "따라서"
+    ]
+  },
+  {
+    "id": 942,
+    "phrase": "otherwise",
+    "means": [
+      "그렇지 않으면"
+    ]
+  },
+  {
+    "id": 943,
+    "phrase": "instead",
+    "means": [
+      "대신에"
+    ]
+  },
+  {
+    "id": 944,
+    "phrase": "because of",
+    "means": [
+      "~ 때문에"
+    ]
+  },
+  {
+    "id": 945,
+    "phrase": "due to",
+    "means": [
+      "~ 때문에"
+    ]
+  },
+  {
+    "id": 946,
+    "phrase": "as a result",
+    "means": [
+      "그 결과"
+    ]
+  },
+  {
+    "id": 947,
+    "phrase": "in addition",
+    "means": [
+      "게다가"
+    ]
+  },
+  {
+    "id": 948,
+    "phrase": "in contrast",
+    "means": [
+      "대조적으로"
+    ]
+  },
+  {
+    "id": 949,
+    "phrase": "for example",
+    "means": [
+      "예를 들어"
+    ]
+  },
+  {
+    "id": 950,
+    "phrase": "in particular",
+    "means": [
+      "특히"
+    ]
+  },
+  {
+    "id": 951,
+    "phrase": "in general",
+    "means": [
+      "일반적으로"
+    ]
+  },
+  {
+    "id": 952,
+    "phrase": "in terms of",
+    "means": [
+      "~의 관점에서"
+    ]
+  },
+  {
+    "id": 953,
+    "phrase": "despite",
+    "means": [
+      "~에도 불구하고"
+    ]
+  },
+  {
+    "id": 954,
+    "phrase": "regardless of",
+    "means": [
+      "~에 관계없이"
+    ]
+  },
+  {
+    "id": 955,
+    "phrase": "unless",
+    "means": [
+      "~하지 않는 한"
+    ]
+  },
+  {
+    "id": 956,
+    "phrase": "provided that",
+    "means": [
+      "~라는 조건으로"
+    ]
+  },
+  {
+    "id": 957,
+    "phrase": "as long as",
+    "means": [
+      "~하는 한"
+    ]
+  },
+  {
+    "id": 958,
+    "phrase": "whether",
+    "means": [
+      "~인지 아닌지"
+    ]
+  },
+  {
+    "id": 959,
+    "phrase": "while",
+    "means": [
+      "~하는 동안",
+      "반면에"
+    ]
+  },
+  {
+    "id": 960,
+    "phrase": "mandatory",
+    "means": [
+      "의무적인"
+    ]
+  },
+  {
+    "id": 961,
+    "phrase": "essential",
+    "means": [
+      "필수적인"
+    ]
+  },
+  {
+    "id": 962,
+    "phrase": "relevant",
+    "means": [
+      "관련 있는"
+    ]
+  },
+  {
+    "id": 963,
+    "phrase": "applicable",
+    "means": [
+      "적용 가능한"
+    ]
+  },
+  {
+    "id": 964,
+    "phrase": "available upon request",
+    "means": [
+      "요청 시 이용 가능한"
+    ]
+  },
+  {
+    "id": 965,
+    "phrase": "accurate",
+    "means": [
+      "정확한"
+    ]
+  },
+  {
+    "id": 966,
+    "phrase": "exact",
+    "means": [
+      "정확한"
+    ]
+  },
+  {
+    "id": 967,
+    "phrase": "approximate",
+    "means": [
+      "대략적인"
+    ]
+  },
+  {
+    "id": 968,
+    "phrase": "former",
+    "means": [
+      "이전의"
+    ]
+  },
+  {
+    "id": 969,
+    "phrase": "pending",
+    "means": [
+      "처리 중인"
+    ]
+  },
+  {
+    "id": 970,
+    "phrase": "outdated",
+    "means": [
+      "구식의",
+      "최신 정보가 아닌"
+    ]
+  },
+  {
+    "id": 971,
+    "phrase": "incomplete",
+    "means": [
+      "미완성의"
+    ]
+  },
+  {
+    "id": 972,
+    "phrase": "incorrect information",
+    "means": [
+      "잘못된 정보"
+    ]
+  },
+  {
+    "id": 973,
+    "phrase": "brief",
+    "means": [
+      "간결한"
+    ]
+  },
+  {
+    "id": 974,
+    "phrase": "domestic",
+    "means": [
+      "국내의"
+    ]
+  },
+  {
+    "id": 975,
+    "phrase": "overseas",
+    "means": [
+      "해외의"
+    ]
+  },
+  {
+    "id": 976,
+    "phrase": "conveniently located",
+    "means": [
+      "편리한 곳에 위치한"
+    ]
+  },
+  {
+    "id": 977,
+    "phrase": "aware",
+    "means": [
+      "알고 있는"
+    ]
+  },
+  {
+    "id": 978,
+    "phrase": "familiar",
+    "means": [
+      "익숙한"
+    ]
+  },
+  {
+    "id": 979,
+    "phrase": "confident",
+    "means": [
+      "확신하는"
+    ]
+  },
+  {
+    "id": 980,
+    "phrase": "highly",
+    "means": [
+      "매우"
+    ]
+  },
+  {
+    "id": 981,
+    "phrase": "mostly",
+    "means": [
+      "대체로"
+    ]
+  },
+  {
+    "id": 982,
+    "phrase": "nearly",
+    "means": [
+      "거의"
+    ]
+  },
+  {
+    "id": 983,
+    "phrase": "roughly",
+    "means": [
+      "대략"
+    ]
+  },
+  {
+    "id": 984,
+    "phrase": "relatively",
+    "means": [
+      "비교적"
+    ]
+  },
+  {
+    "id": 985,
+    "phrase": "particularly",
+    "means": [
+      "특히"
+    ]
+  },
+  {
+    "id": 986,
+    "phrase": "especially",
+    "means": [
+      "특히"
+    ]
+  },
+  {
+    "id": 987,
+    "phrase": "widely",
+    "means": [
+      "널리"
+    ]
+  },
+  {
+    "id": 988,
+    "phrase": "entirely",
+    "means": [
+      "완전히"
+    ]
+  },
+  {
+    "id": 989,
+    "phrase": "partly",
+    "means": [
+      "부분적으로"
+    ]
+  },
+  {
+    "id": 990,
+    "phrase": "carefully",
+    "means": [
+      "주의 깊게"
+    ]
+  },
+  {
+    "id": 991,
+    "phrase": "properly",
+    "means": [
+      "올바르게"
+    ]
+  },
+  {
+    "id": 992,
+    "phrase": "directly",
+    "means": [
+      "직접"
+    ]
+  },
+  {
+    "id": 993,
+    "phrase": "personally",
+    "means": [
+      "직접",
+      "개인적으로"
+    ]
+  },
+  {
+    "id": 994,
+    "phrase": "automatically",
+    "means": [
+      "자동으로"
+    ]
+  },
+  {
+    "id": 995,
+    "phrase": "manually",
+    "means": [
+      "수동으로",
+      "손으로"
+    ]
+  },
+  {
+    "id": 996,
+    "phrase": "electronically",
+    "means": [
+      "전자적으로"
+    ]
+  },
+  {
+    "id": 997,
+    "phrase": "officially",
+    "means": [
+      "공식적으로"
+    ]
+  },
+  {
+    "id": 998,
+    "phrase": "publicly",
+    "means": [
+      "공개적으로"
+    ]
+  },
+  {
+    "id": 999,
+    "phrase": "privately",
+    "means": [
+      "비공개로"
+    ]
+  },
+  {
+    "id": 1000,
+    "phrase": "acknowledge",
+    "means": [
+      "받았음을 알리다",
+      "인정하다"
+    ]
+  }
+]
