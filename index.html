@@ -2,8 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#e8e2d6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>단어장</title>
 <style>
   :root {
@@ -17,6 +19,7 @@
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     background: var(--bg);
@@ -104,6 +107,29 @@
     width: 0;
     background: var(--accent);
     border-radius: inherit;
+  }
+  .nav-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px 8px;
+  }
+  .nav-silhouette {
+    min-height: 26px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(34, 107, 73, 0.05);
+    color: rgba(28, 25, 22, 0.38);
+    border: 1px solid rgba(34, 107, 73, 0.08);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-silhouette strong {
+    color: rgba(28, 25, 22, 0.56);
+    font-weight: 600;
   }
   #status { margin: 8px 0 0; font-size: 13px; color: #8a3d2f; }
   #status:empty { display: none; }
@@ -209,6 +235,10 @@
       </div>
       <p id="status" role="status"></p>
     </header>
+    <div class="nav-preview" aria-live="polite">
+      <div class="nav-silhouette" id="prevSilhouette"><strong>이전</strong> ·</div>
+      <div class="nav-silhouette" id="nextSilhouette"><strong>다음</strong> ·</div>
+    </div>
     <main id="stage">
       <article id="card"><p class="loading">불러오는 중…</p></article>
     </main>
@@ -236,6 +266,8 @@ let swipeAt = 0;
 
 const cardEl = document.getElementById("card");
 const stage = document.getElementById("stage");
+const prevSilhouette = document.getElementById("prevSilhouette");
+const nextSilhouette = document.getElementById("nextSilhouette");
 
 function loadShow() {
   try {
@@ -266,6 +298,47 @@ function populateDatasetOptions() {
   ).join("");
   const chosen = DATA_FILES.some((entry) => entry.file === saved) ? saved : DATA_FILES[0].file;
   select.value = chosen;
+}
+
+function normalizeCard(item) {
+  if (!item || typeof item !== "object") return null;
+
+  const phrases = Array.isArray(item.phrases) ? item.phrases : [];
+  const single = item.phrase ? {
+    phrase: String(item.phrase),
+    means: Array.isArray(item.means) ? item.means.map(String).filter(Boolean) : []
+  } : null;
+
+  if (single) {
+    const list = [...phrases];
+    list.push(single);
+    return {
+      ...item,
+      key: item.key ? String(item.key) : String(single.phrase),
+      phrases: list.map((p) => ({
+        phrase: p && p.phrase ? String(p.phrase) : "",
+        means: Array.isArray(p && p.means) ? p.means.map(String).filter(Boolean) : []
+      })).filter((p) => p.phrase || p.means.length)
+    };
+  }
+
+  if (!item.key && !phrases.length) return null;
+
+  return {
+    ...item,
+    key: item.key ? String(item.key) : "",
+    phrases: phrases.map((p) => ({
+      phrase: p && p.phrase ? String(p.phrase) : "",
+      means: Array.isArray(p && p.means) ? p.means.map(String).filter(Boolean) : []
+    })).filter((p) => p.phrase || p.means.length)
+  };
+}
+
+function cardTitle(card) {
+  if (!card) return "";
+  const phrases = Array.isArray(card.phrases) ? card.phrases : [];
+  const title = String(card.key || card.phrase || (phrases[0] && phrases[0].phrase) || "").trim();
+  return title || "단어";
 }
 
 function esc(s) {
@@ -339,6 +412,19 @@ function paintToggles() {
   }
 }
 
+function updateSilhouettes() {
+  const prev = cards[i - 1] ? cardTitle(cards[i - 1]) : "";
+  const next = cards[i + 1] ? cardTitle(cards[i + 1]) : "";
+
+  prevSilhouette.innerHTML = prev
+    ? `<strong>이전</strong> · ${esc(prev)}`
+    : `<strong>이전</strong> · 마지막입니다`;
+
+  nextSilhouette.innerHTML = next
+    ? `<strong>다음</strong> · ${esc(next)}`
+    : `<strong>다음</strong> · 마지막입니다`;
+}
+
 function render(dir) {
   paintToggles();
   const total = cards.length;
@@ -354,6 +440,7 @@ function render(dir) {
   document.getElementById("next").disabled = total === 0;
   document.getElementById("next").textContent = done ? "처음부터" : "다음";
   document.title = total ? `단어장 ${shown}/${total}` : "단어장";
+  updateSilhouettes();
 
   if (!total) return;
   cardEl.innerHTML = done
@@ -385,7 +472,7 @@ function restart() {
 
 function setCards(data, restore) {
   if (!Array.isArray(data)) throw new Error("not array");
-  cards = data.filter((x) => x && typeof x === "object");
+  cards = data.map(normalizeCard).filter(Boolean);
   peek = {};
   document.getElementById("status").textContent = cards.length ? "" : "단어가 없습니다.";
   let n = 0;
