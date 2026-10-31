@@ -78,6 +78,23 @@
     min-width: 92px;
     min-height: 44px;
   }
+  .settings-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .settings-row label {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  #previewPosition {
+    border: 1px solid #d5cdc2;
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 7px 10px;
+    min-height: 38px;
+  }
   .toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .toggle {
     border: 1px solid #d5cdc2;
@@ -131,6 +148,7 @@
     color: rgba(28, 25, 22, 0.56);
     font-weight: 600;
   }
+  .nav-preview.hidden { display: none; }
   #status { margin: 8px 0 0; font-size: 13px; color: #8a3d2f; }
   #status:empty { display: none; }
   main {
@@ -220,6 +238,14 @@
         <select id="dataset" aria-label="학습 세트 선택"></select>
         <button type="button" id="load">불러오기</button>
       </div>
+      <div class="settings-row">
+        <label for="previewPosition">미리보기 위치</label>
+        <select id="previewPosition" aria-label="미리보기 위치 선택">
+          <option value="top">위</option>
+          <option value="bottom">아래</option>
+          <option value="hidden">숨김</option>
+        </select>
+      </div>
       <div class="toggles" id="toggles">
         <button type="button" class="toggle" data-toggle="word">단어</button>
         <button type="button" class="toggle" data-toggle="mean">뜻</button>
@@ -235,7 +261,7 @@
       </div>
       <p id="status" role="status"></p>
     </header>
-    <div class="nav-preview" aria-live="polite">
+    <div class="nav-preview" id="navPreview" aria-live="polite">
       <div class="nav-silhouette" id="prevSilhouette"><strong>이전</strong> ·</div>
       <div class="nav-silhouette" id="nextSilhouette"><strong>다음</strong> ·</div>
     </div>
@@ -256,6 +282,7 @@ const DATA_FILES = [
   { file: "toeic_intermediate_1000.json", label: "중급 1000" },
   { file: "toeic_advanced_1000.json", label: "고급 1000" }
 ];
+const DEFAULT_PREVIEW_POSITION = "top";
 
 let cards = [];
 let i = 0;
@@ -263,9 +290,11 @@ let peek = {};
 let show = loadShow();
 let drag = null;
 let swipeAt = 0;
+let previewPosition = loadPreviewPosition();
 
 const cardEl = document.getElementById("card");
 const stage = document.getElementById("stage");
+const navPreview = document.getElementById("navPreview");
 const prevSilhouette = document.getElementById("prevSilhouette");
 const nextSilhouette = document.getElementById("nextSilhouette");
 
@@ -282,11 +311,21 @@ function loadShow() {
   }
 }
 
+function loadPreviewPosition() {
+  try {
+    const saved = localStorage.getItem("vocab-preview-position");
+    return saved === "bottom" || saved === "hidden" ? saved : DEFAULT_PREVIEW_POSITION;
+  } catch {
+    return DEFAULT_PREVIEW_POSITION;
+  }
+}
+
 function save() {
   try {
     localStorage.setItem("vocab-i", String(i));
     localStorage.setItem("vocab-show", JSON.stringify(show));
     localStorage.setItem("vocab-dataset", document.getElementById("dataset")?.value || "");
+    localStorage.setItem("vocab-preview-position", previewPosition);
   } catch { /* private mode */ }
 }
 
@@ -298,6 +337,19 @@ function populateDatasetOptions() {
   ).join("");
   const chosen = DATA_FILES.some((entry) => entry.file === saved) ? saved : DATA_FILES[0].file;
   select.value = chosen;
+}
+
+function populatePreviewPosition() {
+  const select = document.getElementById("previewPosition");
+  select.value = previewPosition;
+}
+
+function applyPreviewPosition() {
+  const pos = previewPosition === "bottom" ? "bottom" : previewPosition === "hidden" ? "hidden" : "top";
+  navPreview.classList.toggle("hidden", pos === "hidden");
+  navPreview.style.order = pos === "bottom" ? "2" : "0";
+  const app = document.querySelector(".app");
+  app.dataset.previewPosition = pos;
 }
 
 function normalizeCard(item) {
@@ -507,6 +559,8 @@ function loadDataset(fileName) {
 
 async function loadDefault() {
   populateDatasetOptions();
+  populatePreviewPosition();
+  applyPreviewPosition();
   loadDataset(document.getElementById("dataset").value);
 }
 
@@ -527,6 +581,11 @@ document.getElementById("next").addEventListener("click", () => {
 });
 document.getElementById("load").addEventListener("click", () => loadDataset(document.getElementById("dataset").value));
 document.getElementById("dataset").addEventListener("change", () => loadDataset(document.getElementById("dataset").value));
+document.getElementById("previewPosition").addEventListener("change", (e) => {
+  previewPosition = e.target.value === "bottom" || e.target.value === "hidden" ? e.target.value : DEFAULT_PREVIEW_POSITION;
+  applyPreviewPosition();
+  save();
+});
 
 cardEl.addEventListener("click", (e) => {
   if (Date.now() - swipeAt < 450) return;
