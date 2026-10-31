@@ -359,6 +359,19 @@ function loadProgressPosition() {
   }
 }
 
+function getSavedIndex(defaultValue = 0) {
+  try {
+    const saved = Number(localStorage.getItem("vocab-i"));
+    const startSaved = Number(localStorage.getItem("vocab-start-index"));
+    const fallback = Number.isInteger(startSaved) ? startSaved : defaultValue;
+    if (Number.isInteger(saved) && saved >= 0) return saved;
+    if (Number.isInteger(startSaved) && startSaved >= 0) return startSaved;
+    return fallback;
+  } catch {
+    return defaultValue;
+  }
+}
+
 function save() {
   try {
     localStorage.setItem("vocab-i", String(i));
@@ -609,6 +622,7 @@ function setCards(data, restore) {
   i = cards.length ? n : 0;
   const startInput = document.getElementById("startIndex");
   if (startInput) startInput.value = String(i);
+  save();
   render(0);
 }
 
@@ -619,7 +633,8 @@ function fail(msg) {
   }
 }
 
-function loadDataset(fileName) {
+function loadDataset(fileName, options = {}) {
+  const { restore = true } = options;
   const name = fileName || document.getElementById("dataset").value;
   if (!name) return;
 
@@ -629,7 +644,7 @@ function loadDataset(fileName) {
       if (!res.ok) throw new Error(String(res.status));
       return res.json();
     })
-    .then((data) => setCards(data, false))
+    .then((data) => setCards(data, restore))
     .catch(() => fail(`${name}을 불러오지 못했습니다.`));
 }
 
@@ -639,11 +654,16 @@ async function loadDefault() {
   populateProgressPosition();
   applyPreviewPosition();
   applyProgressPosition();
+  const savedDataset = localStorage.getItem("vocab-dataset") || document.getElementById("dataset").value;
+  const select = document.getElementById("dataset");
+  if (savedDataset && DATA_FILES.some((entry) => entry.file === savedDataset)) {
+    select.value = savedDataset;
+  }
   const savedStart = Number(localStorage.getItem("vocab-start-index"));
   if (Number.isInteger(savedStart) && savedStart >= 0) {
     document.getElementById("startIndex").value = String(savedStart);
   }
-  loadDataset(document.getElementById("dataset").value);
+  loadDataset(document.getElementById("dataset").value, { restore: true });
 }
 
 document.getElementById("toggles").addEventListener("click", (e) => {
@@ -661,8 +681,8 @@ document.getElementById("next").addEventListener("click", () => {
   if (i >= cards.length) restart();
   else go(1);
 });
-document.getElementById("load").addEventListener("click", () => loadDataset(document.getElementById("dataset").value));
-document.getElementById("dataset").addEventListener("change", () => loadDataset(document.getElementById("dataset").value));
+document.getElementById("load").addEventListener("click", () => loadDataset(document.getElementById("dataset").value, { restore: false }));
+document.getElementById("dataset").addEventListener("change", () => loadDataset(document.getElementById("dataset").value, { restore: false }));
 document.getElementById("previewPosition").addEventListener("change", (e) => {
   previewPosition = e.target.value === "bottom" || e.target.value === "hidden" ? e.target.value : DEFAULT_PREVIEW_POSITION;
   applyPreviewPosition();
@@ -701,6 +721,7 @@ document.addEventListener("keydown", (e) => {
 stage.addEventListener("pointerdown", (e) => {
   if (!e.isPrimary || e.button !== 0 || !cards.length) return;
   drag = { id: e.pointerId, x: e.clientX, y: e.clientY, locked: "" };
+  stage.setPointerCapture?.(e.pointerId);
 });
 
 window.addEventListener("pointermove", (e) => {
