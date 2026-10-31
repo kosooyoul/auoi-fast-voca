@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#e8e2d6">
 <title>단어장</title>
 <style>
@@ -24,7 +24,8 @@
     font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  button, input, select { font: inherit; color: inherit; }
+  button, input, select { font: inherit; color: inherit; font-size: 16px; }
+  button, select, input { touch-action: manipulation; }
   button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   button:disabled { cursor: default; opacity: .38; }
@@ -63,7 +64,7 @@
     background: var(--paper);
     border-radius: 12px;
     padding: 9px 12px;
-    font-size: 14px;
+    min-height: 44px;
   }
   #load {
     border: 1px solid #d5cdc2;
@@ -71,8 +72,8 @@
     color: #f6f3ee;
     border-radius: 12px;
     padding: 9px 12px;
-    font-size: 14px;
     min-width: 92px;
+    min-height: 44px;
   }
   .toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .toggle {
@@ -81,7 +82,7 @@
     color: var(--muted);
     border-radius: 999px;
     padding: 6px 12px;
-    font-size: 14px;
+    min-height: 38px;
   }
   .toggle[aria-pressed="true"] {
     background: var(--ink);
@@ -163,7 +164,6 @@
   .nav {
     height: 52px;
     border-radius: 14px;
-    font-size: 16px;
     font-weight: 650;
   }
   #prev { flex: 1; background: transparent; border: 1px solid #d5cdc2; }
@@ -254,6 +254,7 @@ function save() {
   try {
     localStorage.setItem("vocab-i", String(i));
     localStorage.setItem("vocab-show", JSON.stringify(show));
+    localStorage.setItem("vocab-dataset", document.getElementById("dataset")?.value || "");
   } catch { /* private mode */ }
 }
 
