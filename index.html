@@ -55,51 +55,50 @@
   }
   .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   h1 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
-  .picker {
+  .toolbar {
     display: flex;
-    align-items: center;
+    align-items: end;
     gap: 8px;
     margin-top: 12px;
   }
-  #dataset {
+  .toolbar-compact { margin-top: 10px; }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     flex: 1;
+    min-width: 0;
+  }
+  .field label {
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .field-wide { flex: 1 1 180px; }
+  #dataset,
+  #previewPosition,
+  #progressPosition,
+  #startIndex {
+    width: 100%;
     border: 1px solid #d5cdc2;
     background: var(--paper);
     border-radius: 12px;
+    min-height: 42px;
     padding: 9px 12px;
-    min-height: 44px;
+  }
+  #startIndex {
+    text-align: center;
   }
   #load {
     border: 1px solid #d5cdc2;
     background: var(--ink);
     color: #f6f3ee;
     border-radius: 12px;
-    padding: 9px 12px;
+    min-height: 42px;
+    padding: 9px 14px;
     min-width: 92px;
-    min-height: 44px;
-  }
-  .settings-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .settings-row label {
-    font-size: 12px;
-    color: var(--muted);
-  }
-  #previewPosition,
-  #progressPosition,
-  #startIndex {
-    border: 1px solid #d5cdc2;
-    background: var(--paper);
-    border-radius: 10px;
-    padding: 7px 10px;
-    min-height: 38px;
-  }
-  #startIndex {
-    width: 84px;
-    text-align: center;
   }
   .toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .toggle {
@@ -240,31 +239,38 @@
       <div class="top">
         <h1>단어장</h1>
       </div>
-      <div class="picker">
-        <label class="sr-only" for="dataset">학습 세트 선택</label>
-        <select id="dataset" aria-label="학습 세트 선택"></select>
+
+      <div class="toolbar">
+        <div class="field field-wide">
+          <label for="dataset">문제집</label>
+          <select id="dataset" aria-label="학습 세트 선택"></select>
+        </div>
         <button type="button" id="load">불러오기</button>
       </div>
-      <div class="settings-row">
-        <label for="previewPosition">미리보기 위치</label>
-        <select id="previewPosition" aria-label="미리보기 위치 선택">
-          <option value="top">위</option>
-          <option value="bottom">아래</option>
-          <option value="hidden">숨김</option>
-        </select>
+
+      <div class="toolbar toolbar-compact">
+        <div class="field">
+          <label for="startIndex">시작</label>
+          <input id="startIndex" type="number" min="0" step="1" value="0" aria-label="시작 인덱스">
+        </div>
+        <div class="field">
+          <label for="previewPosition">미리보기</label>
+          <select id="previewPosition" aria-label="미리보기 위치 선택">
+            <option value="top">위</option>
+            <option value="bottom">아래</option>
+            <option value="hidden">숨김</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="progressPosition">진행</label>
+          <select id="progressPosition" aria-label="진행 표시 위치 선택">
+            <option value="top">위</option>
+            <option value="bottom">아래</option>
+            <option value="hidden">숨김</option>
+          </select>
+        </div>
       </div>
-      <div class="settings-row">
-        <label for="progressPosition">진행 표시 위치</label>
-        <select id="progressPosition" aria-label="진행 표시 위치 선택">
-          <option value="top">위</option>
-          <option value="bottom">아래</option>
-          <option value="hidden">숨김</option>
-        </select>
-      </div>
-      <div class="settings-row">
-        <label for="startIndex">시작 인덱스</label>
-        <input id="startIndex" type="number" min="0" step="1" value="0" aria-label="시작 인덱스">
-      </div>
+
       <div class="toggles" id="toggles">
         <button type="button" class="toggle" data-toggle="word">단어</button>
         <button type="button" class="toggle" data-toggle="mean">뜻</button>
