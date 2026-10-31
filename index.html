@@ -88,7 +88,8 @@
     font-size: 12px;
     color: var(--muted);
   }
-  #previewPosition {
+  #previewPosition,
+  #progressPosition {
     border: 1px solid #d5cdc2;
     background: var(--paper);
     border-radius: 10px;
@@ -111,6 +112,7 @@
   }
   .legend { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
   .prog { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .prog.hidden { display: none; }
   .pos { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 72px; }
   .track {
     flex: 1;
@@ -246,6 +248,14 @@
           <option value="hidden">숨김</option>
         </select>
       </div>
+      <div class="settings-row">
+        <label for="progressPosition">진행 표시 위치</label>
+        <select id="progressPosition" aria-label="진행 표시 위치 선택">
+          <option value="top">위</option>
+          <option value="bottom">아래</option>
+          <option value="hidden">숨김</option>
+        </select>
+      </div>
       <div class="toggles" id="toggles">
         <button type="button" class="toggle" data-toggle="word">단어</button>
         <button type="button" class="toggle" data-toggle="mean">뜻</button>
@@ -253,7 +263,7 @@
         <button type="button" class="toggle" data-toggle="ex">예문</button>
       </div>
       <p class="legend">켠 항목은 항상 표시 · 끈 항목은 눌러서 확인</p>
-      <div class="prog">
+      <div class="prog" id="prog">
         <span class="pos" id="pos">0 / 0</span>
         <div class="track" id="bar" role="progressbar" aria-valuemin="0" aria-valuenow="0" aria-valuemax="0" aria-label="진행">
           <div class="fill" id="fill"></div>
@@ -283,6 +293,7 @@ const DATA_FILES = [
   { file: "toeic_advanced_1000.json", label: "고급 1000" }
 ];
 const DEFAULT_PREVIEW_POSITION = "top";
+const DEFAULT_PROGRESS_POSITION = "top";
 
 let cards = [];
 let i = 0;
@@ -291,10 +302,14 @@ let show = loadShow();
 let drag = null;
 let swipeAt = 0;
 let previewPosition = loadPreviewPosition();
+let progressPosition = loadProgressPosition();
 
 const cardEl = document.getElementById("card");
 const stage = document.getElementById("stage");
+const header = document.querySelector("header");
 const navPreview = document.getElementById("navPreview");
+const prog = document.getElementById("prog");
+const status = document.getElementById("status");
 const prevSilhouette = document.getElementById("prevSilhouette");
 const nextSilhouette = document.getElementById("nextSilhouette");
 
@@ -320,12 +335,22 @@ function loadPreviewPosition() {
   }
 }
 
+function loadProgressPosition() {
+  try {
+    const saved = localStorage.getItem("vocab-progress-position");
+    return saved === "bottom" || saved === "hidden" ? saved : DEFAULT_PROGRESS_POSITION;
+  } catch {
+    return DEFAULT_PROGRESS_POSITION;
+  }
+}
+
 function save() {
   try {
     localStorage.setItem("vocab-i", String(i));
     localStorage.setItem("vocab-show", JSON.stringify(show));
     localStorage.setItem("vocab-dataset", document.getElementById("dataset")?.value || "");
     localStorage.setItem("vocab-preview-position", previewPosition);
+    localStorage.setItem("vocab-progress-position", progressPosition);
   } catch { /* private mode */ }
 }
 
@@ -344,12 +369,29 @@ function populatePreviewPosition() {
   select.value = previewPosition;
 }
 
+function populateProgressPosition() {
+  const select = document.getElementById("progressPosition");
+  select.value = progressPosition;
+}
+
 function applyPreviewPosition() {
   const pos = previewPosition === "bottom" ? "bottom" : previewPosition === "hidden" ? "hidden" : "top";
   navPreview.classList.toggle("hidden", pos === "hidden");
   navPreview.style.order = pos === "bottom" ? "2" : "0";
-  const app = document.querySelector(".app");
-  app.dataset.previewPosition = pos;
+}
+
+function applyProgressPosition() {
+  const pos = progressPosition === "bottom" ? "bottom" : progressPosition === "hidden" ? "hidden" : "top";
+  prog.classList.toggle("hidden", pos === "hidden");
+
+  const toggles = document.getElementById("toggles");
+  const legend = document.querySelector(".legend");
+
+  if (pos === "top") {
+    header.insertBefore(prog, toggles);
+  } else if (pos === "bottom") {
+    header.insertBefore(prog, status);
+  }
 }
 
 function normalizeCard(item) {
@@ -560,7 +602,9 @@ function loadDataset(fileName) {
 async function loadDefault() {
   populateDatasetOptions();
   populatePreviewPosition();
+  populateProgressPosition();
   applyPreviewPosition();
+  applyProgressPosition();
   loadDataset(document.getElementById("dataset").value);
 }
 
@@ -584,6 +628,11 @@ document.getElementById("dataset").addEventListener("change", () => loadDataset(
 document.getElementById("previewPosition").addEventListener("change", (e) => {
   previewPosition = e.target.value === "bottom" || e.target.value === "hidden" ? e.target.value : DEFAULT_PREVIEW_POSITION;
   applyPreviewPosition();
+  save();
+});
+document.getElementById("progressPosition").addEventListener("change", (e) => {
+  progressPosition = e.target.value === "bottom" || e.target.value === "hidden" ? e.target.value : DEFAULT_PROGRESS_POSITION;
+  applyProgressPosition();
   save();
 });
 
