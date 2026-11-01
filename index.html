@@ -114,6 +114,20 @@
     border-color: var(--ink);
     color: var(--paper);
   }
+  .mini-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .action {
+    border: 1px solid #d5cdc2;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 6px 12px;
+    min-height: 38px;
+  }
+  .action[aria-pressed="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
   .legend { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
   .prog { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
   .prog.hidden { display: none; }
@@ -174,6 +188,33 @@
     overscroll-behavior: contain;
   }
   main.dragging { user-select: none; }
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 8px;
+  }
+  .meta-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 5px 8px;
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    border: 1px solid transparent;
+  }
+  .meta-badge.learned {
+    background: rgba(34, 107, 73, 0.08);
+    border-color: rgba(34, 107, 73, 0.15);
+    color: var(--accent);
+  }
+  .meta-badge.bookmark {
+    background: rgba(143, 97, 28, 0.08);
+    border-color: rgba(143, 97, 28, 0.2);
+    color: #8a5a1d;
+  }
   .block { padding: 18px 22px 20px; }
   .block + .block { border-top: 1px solid var(--line); }
   .kicker { margin: 0 0 6px; font-size: 12px; letter-spacing: .08em; color: var(--muted); }
@@ -277,6 +318,10 @@
         <button type="button" class="toggle" data-toggle="exp">설명</button>
         <button type="button" class="toggle" data-toggle="ex">예문</button>
       </div>
+      <div class="mini-actions">
+        <button type="button" class="action" id="toggleLearned" aria-pressed="false">외움 표시</button>
+        <button type="button" class="action" id="toggleBookmark" aria-pressed="false">북마크</button>
+      </div>
       <p class="legend">켠 항목은 항상 표시 · 끈 항목은 눜러서 확인</p>
       <div class="prog" id="prog">
         <span class="pos" id="pos">0 / 0</span>
@@ -309,6 +354,9 @@ const DATA_FILES = [
 ];
 const DEFAULT_PREVIEW_POSITION = "top";
 const DEFAULT_PROGRESS_POSITION = "top";
+const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
+const MASTERED_PREFIX = "vocab-mastered-";
+const BOOKMARK_PREFIX = "vocab-bookmarks-";
 
 let cards = [];
 let i = 0;
@@ -318,6 +366,8 @@ let drag = null;
 let swipeAt = 0;
 let previewPosition = loadPreviewPosition();
 let progressPosition = loadProgressPosition();
+let learnedState = [];
+let bookmarkState = [];
 
 const cardEl = document.getElementById("card");
 const stage = document.getElementById("stage");
@@ -359,16 +409,63 @@ function loadProgressPosition() {
   }
 }
 
-function getSavedIndex(defaultValue = 0) {
+function getCurrentDatasetName() {
+  const name = document.getElementById("dataset")?.value || "";
+  return name.replace(/\.json$/i, "");
+}
+
+function encodeBitsToBase36(bits) {
+  if (!bits || !bits.length) return "";
+  const padded = [...bits];
+  while (padded.length % 5 !== 0) padded.push(false);
+  let out = "";
+  for (let i = 0; i < padded.length; i += 5) {
+    let value = 0;
+    for (let j = 0; j < 5; j++) {
+      if (padded[i + j]) value |= 1 << j;
+    }
+    out += BASE36[value] || "0";
+  }
+  return out;
+}
+
+function decodeBase36ToBits(str, expectedLength) {
+  const bits = [];
+  if (!str) return new Array(expectedLength || 0).fill(false);
+  let pos = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    const idx = BASE36.indexOf(char);
+    if (idx === -1) continue;
+    for (let bit = 0; bit < 5; bit++) {
+      bits.push(Boolean((idx >> bit) & 1));
+      if (bits.length >= (expectedLength || bits.length)) break;
+    }
+    if (bits.length >= (expectedLength || 0)) break;
+    pos += 1;
+  }
+  if (!expectedLength) return bits;
+  const final = new Array(expectedLength).fill(false);
+  for (let i = 0; i < expectedLength; i++) final[i] = Boolean(bits[i]);
+  return final;
+}
+
+function loadStateForDataset(prefix, datasetName, expectedLength) {
+  const key = `${prefix}${datasetName || "default"}`;
   try {
-    const saved = Number(localStorage.getItem("vocab-i"));
-    const startSaved = Number(localStorage.getItem("vocab-start-index"));
-    const fallback = Number.isInteger(startSaved) ? startSaved : defaultValue;
-    if (Number.isInteger(saved) && saved >= 0) return saved;
-    if (Number.isInteger(startSaved) && startSaved >= 0) return startSaved;
-    return fallback;
+    const raw = localStorage.getItem(key) || "";
+    return decodeBase36ToBits(raw, expectedLength);
   } catch {
-    return defaultValue;
+    return new Array(expectedLength || 0).fill(false);
+  }
+}
+
+function saveStateForDataset(prefix, datasetName, bits) {
+  const key = `${prefix}${datasetName || "default"}`;
+  try {
+    localStorage.setItem(key, encodeBitsToBase36(bits));
+  } catch {
+    // private mode
   }
 }
 
@@ -532,6 +629,20 @@ function paintToggles() {
   }
 }
 
+function updateActionButtons() {
+  const learnedBtn = document.getElementById("toggleLearned");
+  const bookmarkBtn = document.getElementById("toggleBookmark");
+  if (!learnedBtn || !bookmarkBtn) return;
+
+  const currentLearned = cards.length ? Boolean(learnedState[i]) : false;
+  const currentBookmarked = cards.length ? Boolean(bookmarkState[i]) : false;
+
+  learnedBtn.textContent = currentLearned ? "외움 취소" : "외움 표시";
+  learnedBtn.setAttribute("aria-pressed", currentLearned ? "true" : "false");
+  bookmarkBtn.textContent = currentBookmarked ? "북마크 해제" : "북마크";
+  bookmarkBtn.setAttribute("aria-pressed", currentBookmarked ? "true" : "false");
+}
+
 function updateSilhouettes() {
   const prev = cards[i - 1] ? cardTitle(cards[i - 1]) : "";
   const next = cards[i + 1] ? cardTitle(cards[i + 1]) : "";
@@ -547,6 +658,7 @@ function updateSilhouettes() {
 
 function render(dir) {
   paintToggles();
+  updateActionButtons();
   const total = cards.length;
   const done = total > 0 && i >= total;
   const shown = done ? total : Math.min(i + 1, total);
@@ -563,9 +675,15 @@ function render(dir) {
   updateSilhouettes();
 
   if (!total) return;
+
+  const meta = [];
+  if (learnedState[i]) meta.push('<span class="meta-badge learned">외움</span>');
+  if (bookmarkState[i]) meta.push('<span class="meta-badge bookmark">북마크</span>');
+  const metaHtml = meta.length ? `<div class="meta-bar">${meta.join("")}</div>` : "";
+
   cardEl.innerHTML = done
     ? `<div class="done"><p class="kicker">끝</p><h2 class="word">다 봤어요</h2><p class="exp">${total}개를 넘겼습니다.</p></div>`
-    : FIELDS.map((key) => section(cards[i], key)).join("");
+    : `${metaHtml}${FIELDS.map((key) => section(cards[i], key)).join("")}`;
 
   if (!dir) return;
   cardEl.classList.remove("from-right", "from-left");
@@ -610,6 +728,9 @@ function restart() {
 function setCards(data, restore) {
   if (!Array.isArray(data)) throw new Error("not array");
   cards = data.map(normalizeCard).filter(Boolean);
+  const datasetName = getCurrentDatasetName();
+  learnedState = loadStateForDataset(MASTERED_PREFIX, datasetName, cards.length);
+  bookmarkState = loadStateForDataset(BOOKMARK_PREFIX, datasetName, cards.length);
   peek = {};
   document.getElementById("status").textContent = cards.length ? "" : "단어가 없습니다.";
   let n = 0;
@@ -622,7 +743,6 @@ function setCards(data, restore) {
   i = cards.length ? n : 0;
   const startInput = document.getElementById("startIndex");
   if (startInput) startInput.value = String(i);
-  save();
   render(0);
 }
 
@@ -673,6 +793,20 @@ document.getElementById("toggles").addEventListener("click", (e) => {
   show[key] = !show[key];
   if (!show[key]) delete peek[key];
   save();
+  render(0);
+});
+
+document.getElementById("toggleLearned").addEventListener("click", () => {
+  if (!cards.length) return;
+  learnedState[i] = !learnedState[i];
+  saveStateForDataset(MASTERED_PREFIX, getCurrentDatasetName(), learnedState);
+  render(0);
+});
+
+document.getElementById("toggleBookmark").addEventListener("click", () => {
+  if (!cards.length) return;
+  bookmarkState[i] = !bookmarkState[i];
+  saveStateForDataset(BOOKMARK_PREFIX, getCurrentDatasetName(), bookmarkState);
   render(0);
 });
 
