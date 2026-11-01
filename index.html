@@ -368,6 +368,7 @@ let previewPosition = loadPreviewPosition();
 let progressPosition = loadProgressPosition();
 let learnedState = [];
 let bookmarkState = [];
+let lastSpokenSignature = "";
 
 const cardEl = document.getElementById("card");
 const stage = document.getElementById("stage");
@@ -377,6 +378,48 @@ const prog = document.getElementById("prog");
 const status = document.getElementById("status");
 const prevSilhouette = document.getElementById("prevSilhouette");
 const nextSilhouette = document.getElementById("nextSilhouette");
+
+function getCurrentDatasetName() {
+  const name = document.getElementById("dataset")?.value || "";
+  return name.replace(/\.json$/i, "");
+}
+
+function currentWordText() {
+  if (!cards.length || !cards[i]) return "";
+  const card = cards[i];
+  const phrases = phrasesOf(card);
+  const key = String(card.key || (phrases[0] && phrases[0].phrase) || "").trim();
+  return key;
+}
+
+function speakCurrentWord() {
+  if (!("speechSynthesis" in window)) return;
+  if (!cards.length) return;
+  const visible = show.word || peek.word;
+  if (!visible) return;
+
+  const word = currentWordText();
+  if (!word) return;
+
+  const signature = `${getCurrentDatasetName()}:${i}:${word}`;
+  if (signature === lastSpokenSignature) return;
+
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-US";
+  utterance.rate = 0.9;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find((v) => /en(-|_)?(us|gb|au)/i.test(v.lang))
+    || voices.find((v) => /^en/i.test(v.lang))
+    || voices[0];
+  if (preferred) utterance.voice = preferred;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+  lastSpokenSignature = signature;
+}
 
 function loadShow() {
   try {
@@ -409,11 +452,6 @@ function loadProgressPosition() {
   }
 }
 
-function getCurrentDatasetName() {
-  const name = document.getElementById("dataset")?.value || "";
-  return name.replace(/\.json$/i, "");
-}
-
 function encodeBitsToBase36(bits) {
   if (!bits || !bits.length) return "";
   const padded = [...bits];
@@ -432,21 +470,17 @@ function encodeBitsToBase36(bits) {
 function decodeBase36ToBits(str, expectedLength) {
   const bits = [];
   if (!str) return new Array(expectedLength || 0).fill(false);
-  let pos = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str[i];
-    const idx = BASE36.indexOf(char);
+  for (const ch of str) {
+    const idx = BASE36.indexOf(ch);
     if (idx === -1) continue;
     for (let bit = 0; bit < 5; bit++) {
       bits.push(Boolean((idx >> bit) & 1));
-      if (bits.length >= (expectedLength || bits.length)) break;
+      if (expectedLength && bits.length >= expectedLength) break;
     }
-    if (bits.length >= (expectedLength || 0)) break;
-    pos += 1;
+    if (expectedLength && bits.length >= expectedLength) break;
   }
-  if (!expectedLength) return bits;
-  const final = new Array(expectedLength).fill(false);
-  for (let i = 0; i < expectedLength; i++) final[i] = Boolean(bits[i]);
+  const final = new Array(expectedLength || bits.length).fill(false);
+  for (let i = 0; i < final.length; i++) final[i] = Boolean(bits[i]);
   return final;
 }
 
@@ -685,6 +719,10 @@ function render(dir) {
     ? `<div class="done"><p class="kicker">끝</p><h2 class="word">다 봤어요</h2><p class="exp">${total}개를 넘겼습니다.</p></div>`
     : `${metaHtml}${FIELDS.map((key) => section(cards[i], key)).join("")}`;
 
+  if (!done && (show.word || peek.word)) {
+    speakCurrentWord();
+  }
+
   if (!dir) return;
   cardEl.classList.remove("from-right", "from-left");
   void cardEl.offsetWidth;
@@ -743,6 +781,7 @@ function setCards(data, restore) {
   i = cards.length ? n : 0;
   const startInput = document.getElementById("startIndex");
   if (startInput) startInput.value = String(i);
+  lastSpokenSignature = "";
   render(0);
 }
 
@@ -887,6 +926,7 @@ function endDrag(e, cancel) {
 
 window.addEventListener("pointerup", (e) => endDrag(e, false));
 window.addEventListener("pointercancel", (e) => endDrag(e, true));
+window.speechSynthesis?.addEventListener?.("voiceschanged", () => {});
 
 loadDefault();
 </script>
