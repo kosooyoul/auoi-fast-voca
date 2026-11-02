@@ -718,37 +718,72 @@ function applyProgressPosition() {
   }
 }
 
+function normalizeTextList(value) {
+  if (value == null) return [];
+  if (Array.isArray(value)) {
+    return value
+      .map((entry) => (typeof entry === "string" ? entry.trim() : typeof entry === "number" || typeof entry === "boolean" ? String(entry) : ""))
+      .filter(Boolean);
+  }
+  const text = String(value).trim();
+  return text ? [text] : [];
+}
+
+function normalizeExampleEntry(entry) {
+  if (!entry || typeof entry !== "object") return "";
+  const sentence = String(entry.s || entry.sentence || entry.en || entry.text || "").trim();
+  const meaning = String(entry.m || entry.mean || entry.meaning || entry.kr || "").trim();
+  if (sentence && meaning) return `${sentence} — ${meaning}`;
+  return sentence || meaning;
+}
+
+function normalizeExampleList(value) {
+  if (!Array.isArray(value)) return [];
+  return value.map(normalizeExampleEntry).filter(Boolean);
+}
+
+function normalizePhraseList(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .map((entry) => {
+      if (!entry || typeof entry !== "object") return null;
+      const phrase = String(entry.ph || entry.phrase || "").trim();
+      const rawMeans = Array.isArray(entry.ms) ? entry.ms : Array.isArray(entry.means) ? entry.means : [];
+      const means = rawMeans.map((value) => String(value).trim()).filter(Boolean);
+      if (!phrase && !means.length) return null;
+      return { phrase, means };
+    })
+    .filter(Boolean);
+}
+
 function normalizeCard(item) {
   if (!item || typeof item !== "object") return null;
 
-  const phrases = Array.isArray(item.phrases) ? item.phrases : [];
-  const single = item.phrase ? {
-    phrase: String(item.phrase),
-    means: Array.isArray(item.means) ? item.means.map(String).filter(Boolean) : []
-  } : null;
+  const phrases = [...normalizePhraseList(item.phrases), ...normalizePhraseList(item.phs)];
+  const key = String(item.key || item.phrase || (phrases[0] && phrases[0].phrase) || "").trim();
 
-  if (single) {
-    const list = [...phrases];
-    list.push(single);
-    return {
-      ...item,
-      key: item.key ? String(item.key) : String(single.phrase),
-      phrases: list.map((p) => ({
-        phrase: p && p.phrase ? String(p.phrase) : "",
-        means: Array.isArray(p && p.means) ? p.means.map(String).filter(Boolean) : []
-      })).filter((p) => p.phrase || p.means.length)
-    };
-  }
+  const expSources = [
+    ...normalizeTextList(item.exp),
+    ...normalizePhraseList(item.phrases).map((entry) => (entry && entry.exp ? String(entry.exp) : "")).filter(Boolean),
+    ...normalizePhraseList(item.phs).map((entry) => (entry && entry.exp ? String(entry.exp) : "")).filter(Boolean)
+  ];
+  const exSources = [
+    ...normalizeExampleList(item.ex),
+    ...normalizePhraseList(item.phrases).flatMap((entry) => normalizeExampleList(entry.ex || [])),
+    ...normalizePhraseList(item.phs).flatMap((entry) => normalizeExampleList(entry.ex || []))
+  ];
 
-  if (!item.key && !phrases.length) return null;
+  const exp = [...new Set(expSources)];
+  const ex = [...new Set(exSources)];
+
+  if (!key && !phrases.length && !exp.length && !ex.length) return null;
 
   return {
     ...item,
-    key: item.key ? String(item.key) : "",
-    phrases: phrases.map((p) => ({
-      phrase: p && p.phrase ? String(p.phrase) : "",
-      means: Array.isArray(p && p.means) ? p.means.map(String).filter(Boolean) : []
-    })).filter((p) => p.phrase || p.means.length)
+    key,
+    phrases,
+    exp,
+    ex
   };
 }
 
@@ -760,7 +795,7 @@ function cardTitle(card) {
 }
 
 function esc(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({
+  return String(s).replace(/[&<>\"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   }[c]));
 }
