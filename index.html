@@ -111,7 +111,7 @@
     flex-direction: column;
     overflow-y: auto;
     scrollbar-width: none;
-    padding: calc(64px + env(safe-area-inset-top)) 80px 12px 22px;
+    padding: calc(40px + env(safe-area-inset-top)) 80px 12px 22px;
   }
   .body::-webkit-scrollbar { display: none; }
   .inner { margin-block: auto; width: 100%; }
@@ -203,8 +203,12 @@
     padding: 10px 80px calc(18px + env(safe-area-inset-bottom)) 22px;
     font-size: 14px;
   }
-  .handle { font-weight: 700; }
-  .no { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .handle { padding: 0; border: 0; background: none; font-weight: 700; }
+  .handle:active { opacity: .6; }
+  .pos { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pos .of, .no { font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .ftag { font-weight: 700; color: var(--mark); }
+  .ftag[data-f="todo"] { color: var(--accent); }
   .tags { display: contents; }
   .tag { font-weight: 700; }
   .tag.learned { color: var(--accent); }
@@ -236,27 +240,50 @@
     padding: calc(8px + env(safe-area-inset-top)) 14px 0;
     pointer-events: none;
   }
-  .bar { height: 3px; border-radius: 99px; background: var(--faint); overflow: hidden; }
-  .fill { height: 100%; width: 0; background: var(--ink); border-radius: inherit; transition: width .2s ease; }
-  .hud-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
-  .chip {
+  .scrub {
+    position: relative;
+    margin: -8px 0;
+    padding: 8px 0;
     pointer-events: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 7px 10px 7px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--glass-line);
-    background: var(--glass);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    font-size: 14px;
-    font-weight: 700;
+    touch-action: none;
+    cursor: pointer;
+    --pos: 0%;
   }
-  .chip svg { width: 16px; height: 16px; color: var(--muted); }
-  .filter-tag { font-size: 13px; font-weight: 700; color: var(--mark); }
-  .filter-tag[data-f="todo"] { color: var(--accent); }
-  .count { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .scrub:focus-visible { outline: none; }
+  .bar { height: 3px; border-radius: 99px; background: var(--faint); overflow: hidden; transition: height .15s ease; }
+  .fill { height: 100%; width: var(--pos); background: var(--ink); border-radius: inherit; transition: width .2s ease; }
+  .thumb {
+    position: absolute;
+    top: 50%;
+    left: var(--pos);
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: 50%;
+    background: var(--ink);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .25);
+    transform: scale(0);
+    transition: transform .15s ease;
+  }
+  .scrub:hover .bar, .scrub:focus-visible .bar, .scrub.dragging .bar { height: 6px; }
+  .scrub:hover .thumb, .scrub:focus-visible .thumb, .scrub.dragging .thumb { transform: scale(1); }
+  .scrub.dragging .fill { transition: none; }
+  .bubble {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    padding: 6px 11px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .bubble .w { font-weight: 500; opacity: .75; }
 
   .rail {
     position: absolute;
@@ -445,11 +472,10 @@
     <main class="feed" id="feed"></main>
 
     <header class="hud">
-      <div class="bar" id="bar" role="progressbar" aria-label="진행" aria-valuemin="0" aria-valuenow="0" aria-valuemax="0"><div class="fill" id="fill"></div></div>
-      <div class="hud-row">
-        <button type="button" class="chip" id="chip" aria-label="단어장 바꾸기"><span id="chipLabel">단어장</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <span class="filter-tag" id="filterTag" hidden></span>
-        <span class="count" id="count">0 / 0</span>
+      <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="위치" aria-valuemin="1" aria-valuenow="0" aria-valuemax="0">
+        <div class="bar"><div class="fill" id="fill"></div></div>
+        <div class="thumb" id="thumb"></div>
+        <div class="bubble" id="bubble" hidden></div>
       </div>
     </header>
 
@@ -571,6 +597,8 @@ let settleTimer = 0;
 let toastTimer = 0;
 let lastTap = { t: 0, x: 0, y: 0 };
 let sheetReturn = null;
+let scrubbing = null; // slide position under the finger while dragging the progress bar
+let lastN = 0;        // card.n of the last word shown, kept across filters
 const rendered = new Set();
 
 function store(key, value) {
@@ -747,11 +775,6 @@ function phraseHTML(ph, p, withHead, wordOn) {
   return `<div class="ph">${head}${out}</div>`;
 }
 
-function tagsHTML(n) {
-  return (learned[n] ? '<span class="tag learned">#외움</span>' : "") +
-    (marked[n] ? '<span class="tag marked">#북마크</span>' : "");
-}
-
 function slideHTML(card, p) {
   const wordOn = visible(p, "word");
   const head = wordOn
@@ -767,8 +790,25 @@ function slideHTML(card, p) {
   return `<div class="body"><div class="inner">${head}` +
     (phs ? `<div class="phs">${phs}</div>` : "") +
     (covers ? `<div class="covers">${covers}</div>` : "") +
-    `</div></div>` +
-    `<footer class="caption"><span class="handle">@${esc(datasetLabel())}</span><span class="no">No.${pad(card.n + 1)}</span><span class="tags">${tagsHTML(card.n)}</span></footer>`;
+    `</div></div>` + captionHTML(card, p);
+}
+
+function tagsHTML(n) {
+  return (learned[n] ? '<span class="tag learned">#외움</span>' : "") +
+    (marked[n] ? '<span class="tag marked">#북마크</span>' : "");
+}
+
+// the post's caption doubles as the header: list name opens settings, then position
+function captionHTML(card, p) {
+  const filtered = filter !== "all";
+  const label = filtered ? FILTERS.find((f) => f.value === filter).label : "";
+  return `<footer class="caption">` +
+    `<button type="button" class="handle" data-act="sheet" aria-label="${esc(datasetLabel())}, 설정 열기">@${esc(datasetLabel())}</button>` +
+    (filtered ? `<span class="ftag" data-f="${filter}">${label}</span>` : "") +
+    `<span class="pos">${p + 1}<span class="of"> / ${list.length}</span></span>` +
+    // a filter skips words, so the position no longer matches the word number
+    (filtered ? `<span class="no">No.${pad(card.n + 1)}</span>` : "") +
+    `<span class="tags">${tagsHTML(card.n)}</span></footer>`;
 }
 
 function endHTML() {
@@ -824,7 +864,8 @@ function message(title, text) {
 }
 
 function build(targetN) {
-  list = cards.filter((c) => filter === "all" || (filter === "todo" ? !learned[c.n] : marked[c.n])).map((c) => c.n);
+  lastN = Math.min(targetN, Math.max(0, cards.length - 1));
+  list =cards.filter((c) => filter === "all" || (filter === "todo" ? !learned[c.n] : marked[c.n])).map((c) => c.n);
   rendered.clear();
   peek = new Set();
   peekAt = -1;
@@ -845,17 +886,13 @@ function build(targetN) {
 function updateHud() {
   const total = list.length;
   const n = cur < total ? list[cur] : -1;
+  if (n >= 0) lastN = n;
   const shown = total ? Math.min(cur + 1, total) : 0;
-  $("count").textContent = `${shown} / ${total}`;
-  $("fill").style.width = total ? `${(shown / total) * 100}%` : "0%";
-  const bar = $("bar");
-  bar.setAttribute("aria-valuenow", String(shown));
-  bar.setAttribute("aria-valuemax", String(total));
-  $("chipLabel").textContent = datasetLabel();
-  const tag = $("filterTag");
-  tag.hidden = filter === "all";
-  tag.dataset.f = filter;
-  tag.textContent = filter === "all" ? "" : FILTERS.find((f) => f.value === filter).label;
+  const scrub = $("scrub");
+  if (scrubbing === null) scrub.style.setProperty("--pos", total ? `${(shown / total) * 100}%` : "0%");
+  scrub.setAttribute("aria-valuenow", String(shown));
+  scrub.setAttribute("aria-valuemax", String(total));
+  scrub.setAttribute("aria-valuetext", n >= 0 ? `${shown} / ${total}, No.${pad(n + 1)}` : `${shown} / ${total}`);
   learnBtn.disabled = markBtn.disabled = speakBtn.disabled = n < 0;
   learnBtn.setAttribute("aria-pressed", n >= 0 && learned[n] ? "true" : "false");
   markBtn.setAttribute("aria-pressed", n >= 0 && marked[n] ? "true" : "false");
@@ -906,6 +943,62 @@ feed.addEventListener("scroll", () => {
   clearTimeout(settleTimer);
   settleTimer = setTimeout(settle, 160);
 }, { passive: true });
+
+/* ---------- progress scrubber ---------- */
+
+function scrubAt(clientX) {
+  const r = $("scrub").getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+  return Math.max(0, Math.min(list.length - 1, Math.ceil(ratio * list.length) - 1));
+}
+
+function paintScrub(p) {
+  const scrub = $("scrub");
+  const bubble = $("bubble");
+  const card = cards[list[p]];
+  const ratio = (p + 1) / list.length;
+  scrub.style.setProperty("--pos", `${ratio * 100}%`);
+  // the word itself stays out when it is set to stay hidden
+  bubble.innerHTML = `${p + 1} <span class="w">/ ${list.length}</span>` +
+    (filter === "all" ? "" : ` <span class="w">· No.${pad(card.n + 1)}</span>`) +
+    (show.word ? ` · ${esc(card.key)}` : "");
+  bubble.hidden = false;
+  const width = scrub.clientWidth;
+  const half = bubble.offsetWidth / 2;
+  bubble.style.left = `${Math.max(half, Math.min(width - half, ratio * width))}px`;
+}
+
+function endScrub(jump) {
+  const p = scrubbing;
+  scrubbing = null;
+  $("scrub").classList.remove("dragging");
+  $("bubble").hidden = true;
+  if (jump && p !== null && p !== cur) scrollToPos(p, false);
+  else updateHud();
+}
+
+$("scrub").addEventListener("pointerdown", (e) => {
+  if (!list.length || (e.pointerType === "mouse" && e.button !== 0)) return;
+  e.preventDefault();
+  $("scrub").setPointerCapture(e.pointerId);
+  $("scrub").classList.add("dragging");
+  scrubbing = scrubAt(e.clientX);
+  paintScrub(scrubbing);
+});
+
+$("scrub").addEventListener("pointermove", (e) => {
+  if (scrubbing === null) return;
+  const p = scrubAt(e.clientX);
+  if (p !== scrubbing) {
+    scrubbing = p;
+    paintScrub(p);
+  }
+});
+
+$("scrub").addEventListener("pointerup", () => { if (scrubbing !== null) endScrub(true); });
+$("scrub").addEventListener("pointercancel", () => { if (scrubbing !== null) endScrub(false); });
+// released outside the window: the capture is lost without a pointerup
+$("scrub").addEventListener("lostpointercapture", () => { if (scrubbing !== null) endScrub(true); });
 
 window.addEventListener("resize", () => {
   requestAnimationFrame(() => { feed.scrollTop = cur * feed.clientHeight; });
@@ -964,7 +1057,7 @@ function unlockSpeech(e) {
   if (!canAutoPlay()) return;
   for (const t of ["pointerup", "keydown"]) window.removeEventListener(t, unlockSpeech, true);
   // a tap on something that speaks by itself should not be talked over
-  if (e.target.closest && e.target.closest("[data-say], #speakBtn, .sheet")) return;
+  if (e.target.closest && e.target.closest("[data-say], #speakBtn, .sheet, .scrub")) return;
   autoSpeak();
 }
 
@@ -1051,6 +1144,7 @@ feed.addEventListener("click", (e) => {
   const act = e.target.closest("[data-act]");
   if (act && act.dataset.act === "top") scrollToPos(0, false);
   if (act && act.dataset.act === "all") setFilter("all");
+  if (act && act.dataset.act === "sheet") openSheet();
 });
 
 // double tap on the post = bookmark (never un-bookmarks, like a "like")
@@ -1076,6 +1170,8 @@ document.addEventListener("keydown", (e) => {
   const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
   if (["ArrowDown", "ArrowRight", "PageDown", " ", "j"].includes(key)) { e.preventDefault(); step(1); }
   else if (["ArrowUp", "ArrowLeft", "PageUp", "k"].includes(key)) { e.preventDefault(); step(-1); }
+  else if (key === "Home") { e.preventDefault(); scrollToPos(0, false); }
+  else if (key === "End") { e.preventDefault(); scrollToPos(Math.max(0, list.length - 1), false); }
   else if (key === "m") learnBtn.click();
   else if (key === "b") markBtn.click();
   else if (key === "s") speakBtn.click();
@@ -1132,7 +1228,9 @@ function closeSheet() {
 }
 
 function currentN() {
-  return cur < list.length ? list[cur] : cards.length;
+  if (cur < list.length) return list[cur];
+  // an empty filter result has only the end slide: keep the word we came from
+  return list.length ? cards.length : lastN;
 }
 
 function setFilter(value) {
@@ -1200,7 +1298,6 @@ $("jumpForm").addEventListener("submit", (e) => {
 });
 
 $("setBtn").addEventListener("click", openSheet);
-$("chip").addEventListener("click", openSheet);
 $("closeSheet").addEventListener("click", closeSheet);
 $("scrim").addEventListener("click", closeSheet);
 
