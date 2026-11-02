@@ -418,6 +418,19 @@
     font-size: 16px;
   }
   .jump button { padding: 0 20px; border: 0; border-radius: 12px; background: var(--ink); color: var(--sheet); font-weight: 700; }
+  .voice { display: flex; gap: 8px; margin-top: 8px; }
+  .voice select {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--faint);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+  }
+  .voice button { padding: 0 16px; border: 1px solid var(--faint); border-radius: 12px; background: transparent; font-size: 14px; font-weight: 600; }
   .keys { margin: 22px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
   .keys kbd { padding: 1px 6px; border-radius: 5px; border: 1px solid var(--faint); font: inherit; font-size: 12px; }
 
@@ -493,6 +506,10 @@
       <div class="group">
         <h3>자동 발음</h3>
         <div class="seg" id="segSound"></div>
+        <div class="voice">
+          <select id="voiceSelect" aria-label="목소리"></select>
+          <button type="button" id="voiceTest">들어보기</button>
+        </div>
       </div>
       <div class="group">
         <h3>화면</h3>
@@ -896,25 +913,46 @@ window.addEventListener("resize", () => {
 
 /* ---------- speech ---------- */
 
+// macOS lists joke voices (Bahh, Bells, Zarvox…) as en-US; never pick them
+const NOVELTY_VOICE = /^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Organ|Pipe Organ|Princess|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Nicky)\b/;
+const PREFERRED_VOICES = [/^Samantha/, /^Google US English/, /^Alex$/, /^Microsoft (Aria|Jenny|Guy)/, /^(Ava|Allison|Susan|Tom|Zoe)\b/, /^Daniel/, /^Karen/, /^Google UK English/];
+
+let voices = [];
 let voice = null;
+let voiceName = store("vocab-voice") || "";
+
+function voiceRank(v) {
+  const i = PREFERRED_VOICES.findIndex((re) => re.test(v.name));
+  return (i < 0 ? 50 : i) + (/^en[-_]US/i.test(v.lang) ? 0 : 0.5);
+}
+
 function pickVoice() {
-  const voices = "speechSynthesis" in window ? speechSynthesis.getVoices() : [];
-  voice = voices.find((v) => /en(-|_)?(us|gb|au)/i.test(v.lang)) || voices.find((v) => /^en/i.test(v.lang)) || null;
+  const all = "speechSynthesis" in window ? speechSynthesis.getVoices() : [];
+  voices = all
+    .filter((v) => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name))
+    .sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name));
+  voice = voices.find((v) => v.name === voiceName) || voices[0] || null;
 }
 
 function speak(text) {
   if (!("speechSynthesis" in window) || !text) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
-  u.rate = 0.9;
   if (!voice) pickVoice();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = voice ? voice.lang : "en-US";
+  u.rate = 0.9;
   if (voice) u.voice = voice;
   speechSynthesis.cancel();
+  speechSynthesis.resume(); // Chrome can stay paused after the tab was hidden
   speechSynthesis.speak(u);
 }
 
+// browsers refuse speech until the page has had a tap or key press
+function canAutoPlay() {
+  return !navigator.userActivation || navigator.userActivation.hasBeenActive;
+}
+
 function autoSpeak() {
-  if (!soundEnabled || cur >= list.length || !visible(cur, "word")) return;
+  if (!soundEnabled || cur >= list.length || !visible(cur, "word") || !canAutoPlay()) return;
   const n = list[cur];
   const signature = `${datasetFile}:${n}`;
   if (signature === lastSpoken) return;
@@ -922,7 +960,23 @@ function autoSpeak() {
   speak(cards[n].key);
 }
 
-if ("speechSynthesis" in window) speechSynthesis.addEventListener?.("voiceschanged", pickVoice);
+function unlockSpeech(e) {
+  if (!canAutoPlay()) return;
+  for (const t of ["pointerup", "keydown"]) window.removeEventListener(t, unlockSpeech, true);
+  // a tap on something that speaks by itself should not be talked over
+  if (e.target.closest && e.target.closest("[data-say], #speakBtn, .sheet")) return;
+  autoSpeak();
+}
+
+for (const t of ["pointerup", "keydown"]) window.addEventListener(t, unlockSpeech, true);
+
+if ("speechSynthesis" in window) {
+  pickVoice();
+  speechSynthesis.addEventListener?.("voiceschanged", () => {
+    pickVoice();
+    if (app.classList.contains("sheet-open")) paintVoices();
+  });
+}
 
 /* ---------- actions ---------- */
 
@@ -1050,6 +1104,15 @@ function paintSheet() {
     ? `외움 <b>${nLearned}</b> / ${cards.length} · 북마크 <b>${nMarked}</b>`
     : "";
   $("jumpInput").max = String(cards.length || 1);
+  paintVoices();
+}
+
+function paintVoices() {
+  const select = $("voiceSelect");
+  select.innerHTML = voices.length
+    ? voices.map((v) => `<option value="${esc(v.name)}">${esc(v.name)} · ${esc(v.lang)}</option>`).join("")
+    : '<option value="">기본 목소리</option>';
+  select.value = voice ? voice.name : "";
 }
 
 function openSheet() {
@@ -1101,6 +1164,16 @@ seg("segSound", (value) => {
   store("vocab-sound-enabled", String(soundEnabled));
   if (!soundEnabled && "speechSynthesis" in window) speechSynthesis.cancel();
   lastSpoken = "";
+  autoSpeak();
+});
+$("voiceSelect").addEventListener("change", (e) => {
+  voiceName = e.target.value;
+  store("vocab-voice", voiceName);
+  pickVoice();
+  $("voiceTest").click();
+});
+$("voiceTest").addEventListener("click", () => {
+  speak(cur < list.length ? cards[list[cur]].key : "Hello");
 });
 seg("segTheme", (value) => {
   theme = value;
