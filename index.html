@@ -718,19 +718,38 @@ function applyProgressPosition() {
   }
 }
 
+function dedupeStrings(values) {
+  const seen = new Set();
+  const out = [];
+  for (const value of values) {
+    const clean = String(value).trim();
+    if (!clean || seen.has(clean)) continue;
+    seen.add(clean);
+    out.push(clean);
+  }
+  return out;
+}
+
 function normalizeTextList(value) {
   if (value == null) return [];
   if (Array.isArray(value)) {
-    return value
-      .map((entry) => (typeof entry === "string" ? entry.trim() : typeof entry === "number" || typeof entry === "boolean" ? String(entry) : ""))
-      .filter(Boolean);
+    return dedupeStrings(
+      value.map((entry) =>
+        typeof entry === "string" ? entry :
+        typeof entry === "number" || typeof entry === "boolean" ? String(entry) : ""
+      )
+    );
   }
   const text = String(value).trim();
   return text ? [text] : [];
 }
 
 function normalizeExampleEntry(entry) {
-  if (!entry || typeof entry !== "object") return "";
+  if (!entry || typeof entry !== "object") {
+    if (typeof entry === "string") return entry.trim();
+    return "";
+  }
+
   const sentence = String(entry.s || entry.sentence || entry.en || entry.text || "").trim();
   const meaning = String(entry.m || entry.mean || entry.meaning || entry.kr || "").trim();
   if (sentence && meaning) return `${sentence} — ${meaning}`;
@@ -739,21 +758,22 @@ function normalizeExampleEntry(entry) {
 
 function normalizeExampleList(value) {
   if (!Array.isArray(value)) return [];
-  return value.map(normalizeExampleEntry).filter(Boolean);
+  return dedupeStrings(value.map((entry) => normalizeExampleEntry(entry)));
 }
 
 function normalizePhraseList(list) {
   if (!Array.isArray(list)) return [];
-  return list
-    .map((entry) => {
-      if (!entry || typeof entry !== "object") return null;
-      const phrase = String(entry.ph || entry.phrase || "").trim();
-      const rawMeans = Array.isArray(entry.ms) ? entry.ms : Array.isArray(entry.means) ? entry.means : [];
-      const means = rawMeans.map((value) => String(value).trim()).filter(Boolean);
-      if (!phrase && !means.length) return null;
-      return { phrase, means };
-    })
-    .filter(Boolean);
+  const out = [];
+  for (const entry of list) {
+    if (!entry || typeof entry !== "object") continue;
+    const phrase = String(entry.ph || entry.phrase || "").trim();
+    const rawMeans = Array.isArray(entry.ms) ? entry.ms : Array.isArray(entry.means) ? entry.means : [];
+    const means = dedupeStrings(rawMeans.map((value) => String(value).trim()));
+    if (phrase || means.length) {
+      out.push({ phrase, means });
+    }
+  }
+  return out;
 }
 
 function normalizeCard(item) {
@@ -762,19 +782,26 @@ function normalizeCard(item) {
   const phrases = [...normalizePhraseList(item.phrases), ...normalizePhraseList(item.phs)];
   const key = String(item.key || item.phrase || (phrases[0] && phrases[0].phrase) || "").trim();
 
-  const expSources = [
-    ...normalizeTextList(item.exp),
-    ...normalizePhraseList(item.phrases).map((entry) => (entry && entry.exp ? String(entry.exp) : "")).filter(Boolean),
-    ...normalizePhraseList(item.phs).map((entry) => (entry && entry.exp ? String(entry.exp) : "")).filter(Boolean)
-  ];
-  const exSources = [
-    ...normalizeExampleList(item.ex),
-    ...normalizePhraseList(item.phrases).flatMap((entry) => normalizeExampleList(entry.ex || [])),
-    ...normalizePhraseList(item.phs).flatMap((entry) => normalizeExampleList(entry.ex || []))
-  ];
+  const expParts = [];
+  for (const entry of [...(Array.isArray(item.phs) ? item.phs : []), ...(Array.isArray(item.phrases) ? item.phrases : [])]) {
+    if (!entry || typeof entry !== "object") continue;
+    if (typeof entry.exp === "string") expParts.push(entry.exp);
+    if (Array.isArray(entry.ex)) expParts.push(...normalizeExampleList(entry.ex));
+  }
 
-  const exp = [...new Set(expSources)];
-  const ex = [...new Set(exSources)];
+  const exp = dedupeStrings([
+    ...normalizeTextList(item.exp),
+    ...normalizeTextList(item.description),
+    ...normalizeTextList(item.explanation),
+    ...expParts
+  ]);
+
+  const ex = dedupeStrings([
+    ...normalizeExampleList(item.ex),
+    ...normalizeExampleList(item.examples),
+    ...((Array.isArray(item.phs) ? item.phs : []).flatMap((entry) => normalizeExampleList(entry.ex || []))),
+    ...((Array.isArray(item.phrases) ? item.phrases : []).flatMap((entry) => normalizeExampleList(entry.ex || [])))
+  ]);
 
   if (!key && !phrases.length && !exp.length && !ex.length) return null;
 
