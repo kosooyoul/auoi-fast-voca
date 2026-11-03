@@ -624,8 +624,8 @@ let lastN = 0;        // card.n of the last word shown, kept across filters
 let autoplay = false;
 let playToken = 0;
 let playDriven = false; // the in-flight scroll was started by autoplay, not the user
-let playWordMean = store("vocab-play-word-mean") === "true";
-let playExMean = store("vocab-play-ex-mean") === "true";
+let playWordMean = store("vocab-play-word-mean") !== "false";
+let playExMean = store("vocab-play-ex-mean") !== "false";
 let wordRepeat = loadRepeat("vocab-play-word-n");
 let exRepeat = loadRepeat("vocab-play-ex-n");
 const rendered = new Set();
@@ -1052,52 +1052,98 @@ const PREFERRED_KO = [/^Yuna/, /^유나/, /^Google .*한국/, /^Nuri/, /^수진/
 
 let voices = [];
 let voice = null;
-let koVoice = null;
 let voiceName = store("vocab-voice") || "";
-let lastVoiceKey = "";
 let koMissingNoted = false;
 let utterGen = 0;
+const mouths = { en: null, ko: null };
+
+function log(...args) {
+  console.log("[단어장]", ...args);
+}
 
 function voiceRank(v) {
   const i = PREFERRED_VOICES.findIndex((re) => re.test(v.name));
   return (i < 0 ? 50 : i) + (/^en[-_]US/i.test(v.lang) ? 0 : 0.5);
 }
 
-function pickVoice() {
-  const all = "speechSynthesis" in window ? speechSynthesis.getVoices() : [];
+function rankedKo(all) {
   const ko = all.filter((v) => /^ko([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name));
   ko.sort((a, b) => {
     const ra = PREFERRED_KO.findIndex((re) => re.test(a.name));
     const rb = PREFERRED_KO.findIndex((re) => re.test(b.name));
     return (ra < 0 ? 50 : ra) - (rb < 0 ? 50 : rb) || a.name.localeCompare(b.name);
   });
-  koVoice = ko[0] || null;
+  return ko[0] || null;
+}
+
+function pickVoice() {
+  const all = "speechSynthesis" in window ? speechSynthesis.getVoices() : [];
   voices = all
     .filter((v) => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name))
     .sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name));
   voice = voices.find((v) => v.name === voiceName) || voices[0] || null;
 }
 
-// Chrome drops a cached SpeechSynthesisVoice and also ignores a lang that
-// doesn't match the voice exactly (macOS reports ko_KR, not ko-KR).
-function liveVoice(preferred) {
-  if (!preferred || !("speechSynthesis" in window)) return preferred;
-  const all = speechSynthesis.getVoices();
-  return all.find((v) => v.name === preferred.name && v.lang === preferred.lang)
-    || all.find((v) => v.name === preferred.name)
-    || preferred;
+function chooseVoice(win, lang) {
+  let all = [];
+  try { all = [...win.speechSynthesis.getVoices()]; } catch { return null; }
+  if (lang === "ko") return rankedKo(all);
+  return all.find((v) => v.name === voiceName && /^en([-_]|$)/i.test(v.lang))
+    || all.filter((v) => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name))
+      .sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name))[0]
+    || null;
+}
+
+// One speechSynthesis sticks to the first voice it used. Keep an English mouth
+// and a Korean mouth, and never change the voice on either.
+function mouth(lang) {
+  if (mouths[lang]) return mouths[lang];
+  const frame = document.createElement("iframe");
+  frame.setAttribute("aria-hidden", "true");
+  frame.tabIndex = -1;
+  frame.style.cssText = "position:fixed;width:1px;height:1px;opacity:0;border:0;pointer-events:none";
+  document.body.appendChild(frame);
+  const win = frame.contentWindow;
+  win.speechSynthesis.getVoices();
+  win.speechSynthesis.addEventListener?.("voiceschanged", () => win.speechSynthesis.getVoices());
+  mouths[lang] = win;
+  log("mouth", lang, "iframe 생성");
+  return win;
+}
+
+function hush() {
+  for (const lang of ["en", "ko"]) {
+    const win = mouths[lang];
+    if (!win) continue;
+    try { win.speechSynthesis.cancel(); } catch { /* stopped */ }
+  }
+  try { speechSynthesis.cancel(); } catch { /* stopped */ }
+}
+
+function arm(lang) {
+  const win = mouth(lang);
+  const all = [...win.speechSynthesis.getVoices()];
+  const v = chooseVoice(win, lang);
+  const mine = all.filter((x) => (lang === "ko" ? /^ko([-_]|$)/i : /^en([-_]|$)/i).test(x.lang));
+  log("arm", lang, {
+    voices: all.length,
+    matched: mine.length,
+    picked: v ? `${v.name} / ${v.lang}` : null,
+    names: mine.slice(0, 6).map((x) => `${x.name} / ${x.lang}`)
+  });
 }
 
 function speak(text) {
   if (!("speechSynthesis" in window) || !text) return;
   if (autoplay) setAutoplay(false);
-  if (!voice) pickVoice();
+  const use = chooseVoice(window, "en");
+  log("tap", use ? `${use.name} / ${use.lang}` : "기본", text.slice(0, 40));
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = voice ? voice.lang : "en-US";
+  if (use) { u.voice = use; u.lang = use.lang; }
+  else u.lang = "en-US";
   u.rate = 0.9;
-  if (voice) u.voice = voice;
-  speechSynthesis.cancel();
-  speechSynthesis.resume(); // Chrome can stay paused after the tab was hidden
+  hush();
+  if (speechSynthesis.paused) speechSynthesis.resume();
   speechSynthesis.speak(u);
 }
 
@@ -1128,12 +1174,20 @@ for (const t of ["pointerup", "keydown"]) window.addEventListener(t, unlockSpeec
 
 if ("speechSynthesis" in window) {
   pickVoice();
+  mouth("en");
+  mouth("ko");
   speechSynthesis.addEventListener?.("voiceschanged", () => {
     pickVoice();
     if (app.classList.contains("sheet-open")) paintVoices();
   });
   // Chrome pauses speechSynthesis after ~15s; autoplay reads longer than that
-  setInterval(() => { if (autoplay && speechSynthesis.speaking) speechSynthesis.resume(); }, 8000);
+  setInterval(() => {
+    if (!autoplay) return;
+    for (const lang of ["en", "ko"]) {
+      const synth = mouths[lang]?.speechSynthesis;
+      if (synth?.paused && synth.speaking) synth.resume();
+    }
+  }, 8000);
 }
 
 /* ---------- autoplay ---------- */
@@ -1151,23 +1205,17 @@ function playCues(card) {
   const repeat = (text, lang, anchor, n) => {
     for (let i = 0; i < n; i++) cues.push({ text, lang, anchor });
   };
-  if (card.key) repeat(card.key, "en", card.key, wordRepeat);
   if (playWordMean) {
     const gloss = wordMeans(card).join(", ");
-    if (gloss) {
-      cues.push({ text: gloss, lang: "ko", anchor: "mean" });
-      repeat(card.key, "en", card.key, wordRepeat);
-    }
+    if (gloss) cues.push({ text: gloss, lang: "ko", anchor: "mean" });
   }
+  if (card.key) repeat(card.key, "en", card.key, wordRepeat);
   const seen = new Set();
   for (const ph of card.phrases) for (const ex of ph.ex) {
     if (!ex.s || seen.has(ex.s)) continue;
     seen.add(ex.s);
+    if (playExMean && ex.m) cues.push({ text: ex.m, lang: "ko", anchor: ex.s });
     repeat(ex.s, "en", ex.s, exRepeat);
-    if (playExMean && ex.m) {
-      cues.push({ text: ex.m, lang: "ko", anchor: ex.s });
-      repeat(ex.s, "en", ex.s, exRepeat);
-    }
   }
   return cues;
 }
@@ -1194,41 +1242,44 @@ function follow(p, cue) {
 }
 
 function utter(text, lang, done) {
-  if (!voice || (lang === "ko" && !koVoice)) pickVoice();
-  const preferred = lang === "ko" ? koVoice : voice;
-  const key = preferred ? preferred.name + "/" + preferred.lang : lang;
   const gen = utterGen;
-  const go = () => {
-    if (gen !== utterGen || !autoplay) return;
-    const use = liveVoice(preferred);
-    if (lang === "ko" && !use && !koMissingNoted) {
-      koMissingNoted = true;
-      toast("한국어 목소리가 없어 뜻을 못 읽어요");
-    }
-    const u = new SpeechSynthesisUtterance(text);
-    if (use) {
-      u.voice = use;
-      u.lang = use.lang;
-    } else u.lang = lang === "ko" ? "ko-KR" : "en-US";
-    u.rate = lang === "ko" ? 1 : 0.9;
-    let once = false;
-    const fin = () => { if (once) return; once = true; clearTimeout(cap); done(); };
-    const cap = setTimeout(fin, 2500 + text.length * 120);
-    u.onend = fin;
-    // cancel() used to switch voices fires this; it is not a failed line
-    u.onerror = (ev) => { if (ev.error === "interrupted" || ev.error === "canceled") return; fin(); };
-    speechSynthesis.resume();
-    speechSynthesis.speak(u);
-  };
-  // Chrome keeps the previous voice unless the queue is cleared between languages.
-  if (lastVoiceKey && lastVoiceKey !== key) {
-    lastVoiceKey = key;
-    speechSynthesis.cancel();
-    setTimeout(go, 50);
-  } else {
-    lastVoiceKey = key;
-    go();
+  const win = mouth(lang);
+  const synth = win.speechSynthesis;
+  if (gen !== utterGen || !autoplay) {
+    log("skip", lang, { gen, utterGen, autoplay });
+    return;
   }
+  const use = chooseVoice(win, lang);
+  log("speak", lang, use ? `${use.name} / ${use.lang}` : "목소리 없음", text.slice(0, 50), {
+    speaking: synth.speaking, pending: synth.pending, paused: synth.paused
+  });
+  if (lang === "ko" && !use && !koMissingNoted) {
+    koMissingNoted = true;
+    toast("한국어 목소리가 없어 뜻을 못 읽어요");
+  }
+  const u = new win.SpeechSynthesisUtterance(text);
+  if (use) {
+    u.voice = use;
+    u.lang = use.lang;
+  } else u.lang = lang === "ko" ? "ko-KR" : "en-US";
+  u.rate = lang === "ko" ? 1 : 0.9;
+  let once = false;
+  const fin = () => { if (once) return; once = true; clearTimeout(cap); done(); };
+  const cap = setTimeout(fin, 4000 + text.length * 130);
+  u.onstart = () => log("start", lang, text.slice(0, 40));
+  u.onend = () => { log("end", lang, text.slice(0, 40)); fin(); };
+  u.onerror = (ev) => {
+    log("error", lang, ev.error || "unknown", text.slice(0, 40));
+    if (ev.error === "interrupted" || ev.error === "canceled") return;
+    if (lang === "ko" && ev.error === "not-allowed" && !koMissingNoted) {
+      koMissingNoted = true;
+      toast("한국어 목소리를 재생하지 못했어요");
+    }
+    fin();
+  };
+  if (synth.paused) synth.resume();
+  synth.speak(u);
+  setTimeout(() => log("after", lang, { speaking: synth.speaking, pending: synth.pending, paused: synth.paused }), 0);
 }
 
 function paintPlay() {
@@ -1245,20 +1296,35 @@ function setAutoplay(on) {
     utterGen++;
     playDriven = false;
     paintPlay();
-    if ("speechSynthesis" in window) speechSynthesis.cancel();
+    hush();
     return;
   }
   if (!("speechSynthesis" in window)) { toast("이 브라우저는 음성을 지원하지 않아요"); return; }
   if (!list.length) return;
   autoplay = true;
   paintPlay();
-  const p = cur < list.length ? cur : 0;
-  speechSynthesis.cancel();
-  if (p !== cur) {
-    playDriven = true;
-    scrollToPos(p, false);
-  }
-  speakLines(p);
+  beginPlay(cur < list.length ? cur : 0);
+}
+
+function beginPlay(p) {
+  const start = () => {
+    if (!autoplay) return;
+    arm("en");
+    arm("ko");
+    if (p !== cur) {
+      playDriven = true;
+      scrollToPos(p, false);
+    }
+    speakLines(p);
+  };
+  const busy = ["en", "ko"].some((lang) => {
+    const synth = mouths[lang]?.speechSynthesis;
+    return synth && (synth.speaking || synth.pending);
+  }) || speechSynthesis.speaking || speechSynthesis.pending;
+  log("begin", { card: p, busy });
+  if (!busy) { start(); return; }
+  hush();
+  setTimeout(start, 120);
 }
 
 function advancePlay(p) {
@@ -1278,8 +1344,9 @@ function advancePlay(p) {
 
 function replayPlay() {
   if (!autoplay || cur >= list.length) return;
-  if ("speechSynthesis" in window) speechSynthesis.cancel();
-  speakLines(cur);
+  playToken++;
+  utterGen++;
+  beginPlay(cur);
 }
 
 function speakLines(p) {
@@ -1499,7 +1566,7 @@ seg("segFilter", (value) => { if (value !== filter) setFilter(value); });
 seg("segSound", (value) => {
   soundEnabled = value === "on";
   store("vocab-sound-enabled", String(soundEnabled));
-  if (!soundEnabled && "speechSynthesis" in window) speechSynthesis.cancel();
+  if (!soundEnabled && "speechSynthesis" in window) hush();
   lastSpoken = "";
   autoSpeak();
 });
