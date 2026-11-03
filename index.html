@@ -662,7 +662,7 @@ function loadSoundEnabled() {
 
 function loadRepeat(key) {
   const n = Number(store(key));
-  return Number.isInteger(n) && n >= 1 && n <= 5 ? n : 1;
+  return Number.isInteger(n) && n >= 0 && n <= 5 ? n : 1;
 }
 
 function encodeBitsToBase36(bits) {
@@ -1531,7 +1531,7 @@ function paintSheet() {
   $("segSound").innerHTML = segHTML([{ value: "on", label: "켜기" }, { value: "off", label: "끄기" }], soundEnabled ? "on" : "off");
   $("segWordMean").innerHTML = segHTML([{ value: "on", label: "켜기" }, { value: "off", label: "끄기" }], playWordMean ? "on" : "off");
   $("segExMean").innerHTML = segHTML([{ value: "on", label: "켜기" }, { value: "off", label: "끄기" }], playExMean ? "on" : "off");
-  const repeatOpts = [1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: String(n) }));
+  const repeatOpts = [0, 1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: String(n) }));
   $("segWordN").innerHTML = segHTML(repeatOpts, String(wordRepeat));
   $("segExN").innerHTML = segHTML(repeatOpts, String(exRepeat));
   $("segTheme").innerHTML = segHTML(THEMES, theme);
