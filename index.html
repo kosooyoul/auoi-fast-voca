@@ -1054,8 +1054,12 @@ let voices = [];
 let voice = null;
 let voiceName = store("vocab-voice") || "";
 let koMissingNoted = false;
+let enMissingNoted = false;
 let utterGen = 0;
+let spokenLang = "";
 const mouths = { en: null, ko: null };
+// iPhone shares one speech engine. A hidden iframe plus rate 0.9 drops English and leaves Korean.
+const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
 function log(...args) {
   console.log("[단어장]", ...args);
@@ -1066,8 +1070,14 @@ function voiceRank(v) {
   return (i < 0 ? 50 : i) + (/^en[-_]US/i.test(v.lang) ? 0 : 0.5);
 }
 
+function preferLocal(list) {
+  if (!ios) return list;
+  const local = list.filter((v) => v.localService);
+  return local.length ? local : list;
+}
+
 function rankedKo(all) {
-  const ko = all.filter((v) => /^ko([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name));
+  const ko = preferLocal(all.filter((v) => /^ko([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name)));
   ko.sort((a, b) => {
     const ra = PREFERRED_KO.findIndex((re) => re.test(a.name));
     const rb = PREFERRED_KO.findIndex((re) => re.test(b.name));
@@ -1078,8 +1088,7 @@ function rankedKo(all) {
 
 function pickVoice() {
   const all = "speechSynthesis" in window ? speechSynthesis.getVoices() : [];
-  voices = all
-    .filter((v) => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name))
+  voices = preferLocal(all.filter((v) => /^en([-_]|$)/i.test(v.lang) && (ios || !NOVELTY_VOICE.test(v.name))))
     .sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name));
   voice = voices.find((v) => v.name === voiceName) || voices[0] || null;
 }
@@ -1088,10 +1097,14 @@ function chooseVoice(win, lang) {
   let all = [];
   try { all = [...win.speechSynthesis.getVoices()]; } catch { return null; }
   if (lang === "ko") return rankedKo(all);
-  return all.find((v) => v.name === voiceName && /^en([-_]|$)/i.test(v.lang))
-    || all.filter((v) => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name))
-      .sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name))[0]
+  const en = preferLocal(all.filter((v) => /^en([-_]|$)/i.test(v.lang) && (ios || !NOVELTY_VOICE.test(v.name))));
+  return en.find((v) => v.name === voiceName)
+    || en.sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name))[0]
     || null;
+}
+
+function speaker(lang) {
+  return ios ? window : mouth(lang);
 }
 
 // One speechSynthesis sticks to the first voice it used. Keep an English mouth
@@ -1112,6 +1125,7 @@ function mouth(lang) {
 }
 
 function hush() {
+  spokenLang = "";
   for (const lang of ["en", "ko"]) {
     const win = mouths[lang];
     if (!win) continue;
@@ -1121,7 +1135,7 @@ function hush() {
 }
 
 function arm(lang) {
-  const win = mouth(lang);
+  const win = speaker(lang);
   const all = [...win.speechSynthesis.getVoices()];
   const v = chooseVoice(win, lang);
   const mine = all.filter((x) => (lang === "ko" ? /^ko([-_]|$)/i : /^en([-_]|$)/i).test(x.lang));
@@ -1136,15 +1150,21 @@ function arm(lang) {
 function speak(text) {
   if (!("speechSynthesis" in window) || !text) return;
   if (autoplay) setAutoplay(false);
-  const use = chooseVoice(window, "en");
+  const win = speaker("en");
+  const use = chooseVoice(win, "en");
   log("tap", use ? `${use.name} / ${use.lang}` : "기본", text.slice(0, 40));
-  const u = new SpeechSynthesisUtterance(text);
-  if (use) { u.voice = use; u.lang = use.lang; }
-  else u.lang = "en-US";
-  u.rate = 0.9;
+  const run = () => {
+    const u = new win.SpeechSynthesisUtterance(text);
+    if (use) { u.voice = use; u.lang = use.lang; }
+    else u.lang = "en-US";
+    u.rate = ios ? 1 : 0.9;
+    const synth = win.speechSynthesis;
+    if (!ios && synth.paused) synth.resume();
+    synth.speak(u);
+  };
   hush();
-  if (speechSynthesis.paused) speechSynthesis.resume();
-  speechSynthesis.speak(u);
+  if (ios) setTimeout(run, 120);
+  else run();
 }
 
 // browsers refuse speech until the page has had a tap or key press
@@ -1174,8 +1194,11 @@ for (const t of ["pointerup", "keydown"]) window.addEventListener(t, unlockSpeec
 
 if ("speechSynthesis" in window) {
   pickVoice();
-  mouth("en");
-  mouth("ko");
+  speechSynthesis.getVoices();
+  if (!ios) {
+    mouth("en");
+    mouth("ko");
+  }
   speechSynthesis.addEventListener?.("voiceschanged", () => {
     pickVoice();
     if (app.classList.contains("sheet-open")) paintVoices();
@@ -1183,8 +1206,8 @@ if ("speechSynthesis" in window) {
   // Chrome pauses speechSynthesis after ~15s; autoplay reads longer than that
   setInterval(() => {
     if (!autoplay) return;
-    for (const lang of ["en", "ko"]) {
-      const synth = mouths[lang]?.speechSynthesis;
+    const synths = ios ? [speechSynthesis] : ["en", "ko"].map((lang) => mouths[lang]?.speechSynthesis);
+    for (const synth of synths) {
       if (synth?.paused && synth.speaking) synth.resume();
     }
   }, 8000);
@@ -1243,43 +1266,58 @@ function follow(p, cue) {
 
 function utter(text, lang, done) {
   const gen = utterGen;
-  const win = mouth(lang);
+  const win = speaker(lang);
   const synth = win.speechSynthesis;
   if (gen !== utterGen || !autoplay) {
     log("skip", lang, { gen, utterGen, autoplay });
     return;
   }
-  const use = chooseVoice(win, lang);
-  log("speak", lang, use ? `${use.name} / ${use.lang}` : "목소리 없음", text.slice(0, 50), {
-    speaking: synth.speaking, pending: synth.pending, paused: synth.paused
-  });
-  if (lang === "ko" && !use && !koMissingNoted) {
-    koMissingNoted = true;
-    toast("한국어 목소리가 없어 뜻을 못 읽어요");
-  }
-  const u = new win.SpeechSynthesisUtterance(text);
-  if (use) {
-    u.voice = use;
-    u.lang = use.lang;
-  } else u.lang = lang === "ko" ? "ko-KR" : "en-US";
-  u.rate = lang === "ko" ? 1 : 0.9;
-  let once = false;
-  const fin = () => { if (once) return; once = true; clearTimeout(cap); done(); };
-  const cap = setTimeout(fin, 4000 + text.length * 130);
-  u.onstart = () => log("start", lang, text.slice(0, 40));
-  u.onend = () => { log("end", lang, text.slice(0, 40)); fin(); };
-  u.onerror = (ev) => {
-    log("error", lang, ev.error || "unknown", text.slice(0, 40));
-    if (ev.error === "interrupted" || ev.error === "canceled") return;
-    if (lang === "ko" && ev.error === "not-allowed" && !koMissingNoted) {
+  const go = () => {
+    if (gen !== utterGen || !autoplay) return;
+    const use = chooseVoice(win, lang);
+    const rate = ios ? 1 : (lang === "ko" ? 1 : 0.9);
+    log("speak", lang, use ? `${use.name} / ${use.lang}` : "목소리 없음", `rate ${rate}`, text.slice(0, 50), {
+      speaking: synth.speaking, pending: synth.pending, paused: synth.paused
+    });
+    if (lang === "ko" && !use && !koMissingNoted) {
       koMissingNoted = true;
-      toast("한국어 목소리를 재생하지 못했어요");
+      toast("한국어 목소리가 없어 뜻을 못 읽어요");
     }
-    fin();
+    if (ios && lang === "en" && !use && synth.getVoices().length && !enMissingNoted) {
+      enMissingNoted = true;
+      toast("영어 목소리가 없어요. 설정에서 영어 음성을 받아 주세요");
+    }
+    const u = new win.SpeechSynthesisUtterance(text);
+    if (use) {
+      u.voice = use;
+      u.lang = use.lang;
+    } else u.lang = lang === "ko" ? "ko-KR" : "en-US";
+    u.rate = rate;
+    let once = false;
+    const fin = () => { if (once) return; once = true; clearTimeout(cap); done(); };
+    const cap = setTimeout(fin, 4000 + text.length * 130);
+    u.onstart = () => log("start", lang, text.slice(0, 40));
+    u.onend = () => { log("end", lang, text.slice(0, 40)); fin(); };
+    u.onerror = (ev) => {
+      log("error", lang, ev.error || "unknown", text.slice(0, 40));
+      if (ev.error === "interrupted" || ev.error === "canceled") return;
+      if (lang === "ko" && ev.error === "not-allowed" && !koMissingNoted) {
+        koMissingNoted = true;
+        toast("한국어 목소리를 재생하지 못했어요");
+      }
+      fin();
+    };
+    if (!ios && synth.paused) synth.resume();
+    synth.speak(u);
+    spokenLang = lang;
+    setTimeout(() => log("after", lang, { speaking: synth.speaking, pending: synth.pending, paused: synth.paused }), 0);
   };
-  if (synth.paused) synth.resume();
-  synth.speak(u);
-  setTimeout(() => log("after", lang, { speaking: synth.speaking, pending: synth.pending, paused: synth.paused }), 0);
+  if (ios && spokenLang && spokenLang !== lang) {
+    try { synth.cancel(); } catch { /* stopped */ }
+    setTimeout(go, 200);
+    return;
+  }
+  go();
 }
 
 function paintPlay() {
