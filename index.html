@@ -54,6 +54,11 @@
     }
   }
   * { box-sizing: border-box; }
+  @property --scene-h {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 40;
+  }
   html, body { height: 100%; margin: 0; overflow: hidden; }
   body {
     background: var(--bg);
@@ -74,6 +79,12 @@
     margin: 0 auto;
     overflow: hidden;
     container-type: inline-size;
+    --scene-h: 40;
+    background:
+      radial-gradient(120% 70% at 15% 0%, hsl(var(--scene-h) var(--slide-s) var(--slide-l2)), transparent 62%),
+      radial-gradient(90% 60% at 100% 100%, hsl(calc(var(--scene-h) + 40) var(--slide-s) var(--slide-l2)), transparent 60%),
+      hsl(var(--scene-h) calc(var(--slide-s) * .5) var(--slide-l));
+    transition: --scene-h .55s cubic-bezier(.22, .61, .36, 1);
   }
   @media (min-width: 520px) {
     .app { box-shadow: 0 0 0 1px var(--glass-line), 0 24px 64px rgba(0, 0, 0, .14); }
@@ -99,10 +110,7 @@
     flex-direction: column;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    background:
-      radial-gradient(120% 70% at 15% 0%, hsl(var(--h, 40) var(--slide-s) var(--slide-l2)), transparent 62%),
-      radial-gradient(90% 60% at 100% 100%, hsl(calc(var(--h, 40) + 40) var(--slide-s) var(--slide-l2)), transparent 60%),
-      hsl(var(--h, 40) calc(var(--slide-s) * .5) var(--slide-l));
+    background: transparent;
   }
   .body {
     flex: 1;
@@ -111,7 +119,9 @@
     flex-direction: column;
     overflow-y: auto;
     scrollbar-width: none;
-    padding: calc(40px + env(safe-area-inset-top)) 80px 12px 22px;
+    /* The action rail floats above the slide, so only reserve enough room to
+       keep body text clear of the icon edge instead of its full 80px lane. */
+    padding: calc(40px + env(safe-area-inset-top)) 50px 12px 22px;
   }
   .body::-webkit-scrollbar { display: none; }
   .inner { margin-block: auto; width: 100%; }
@@ -200,7 +210,7 @@
     flex-wrap: wrap;
     align-items: baseline;
     gap: 4px 10px;
-    padding: 10px 80px calc(18px + env(safe-area-inset-bottom)) 22px;
+    padding: 10px 50px calc(18px + env(safe-area-inset-bottom)) 22px;
     font-size: 14px;
   }
   .handle { padding: 0; border: 0; background: none; font-weight: 700; }
@@ -310,15 +320,19 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 1px solid var(--glass-line);
-    background: var(--glass);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
+    border: 0;
+    background: transparent;
     transition: transform .15s ease;
   }
   .act .ico svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
   .act:active .ico { transform: scale(.9); }
   .act .lbl { font-size: 11.5px; font-weight: 700; }
+  .top-settings {
+    position: absolute;
+    top: calc(22px + env(safe-area-inset-top));
+    right: 10px;
+    z-index: 5;
+  }
   .act.learn[aria-pressed="true"] { color: var(--accent); }
   .act.learn[aria-pressed="true"] circle { fill: var(--accent); }
   .act.learn[aria-pressed="true"] path { stroke: #fff; }
@@ -467,7 +481,7 @@
   .keys kbd { padding: 1px 6px; border-radius: 5px; border: 1px solid var(--faint); font: inherit; font-size: 12px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .sheet, .scrim, .toast, .fill { transition: none; }
+    .app, .sheet, .scrim, .toast, .fill { transition: none; }
     .pop.go, .act.bump .ico { animation: none; }
   }
 </style>
@@ -493,19 +507,16 @@
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.3-6.5 4.3v-16a1 1 0 0 1 1-1z"/></svg></span>
         <span class="lbl">북마크</span>
       </button>
-      <button type="button" class="act" id="speakBtn" aria-label="발음 듣기">
-        <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18.2 6.4a7.6 7.6 0 0 1 0 11.2"/></svg></span>
-        <span class="lbl">발음</span>
-      </button>
       <button type="button" class="act play" id="playBtn" aria-pressed="false" aria-label="자동 재생">
         <span class="ico"><svg viewBox="0 0 24 24"><path class="play" d="M8 5.5v13l11-6.5z"/><path class="pause" d="M8 5.5v13M16 5.5v13"/></svg></span>
         <span class="lbl">재생</span>
       </button>
-      <button type="button" class="act" id="setBtn" aria-label="설정 열기" aria-haspopup="dialog">
-        <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span>
-        <span class="lbl">설정</span>
-      </button>
     </nav>
+
+    <button type="button" class="act top-settings" id="setBtn" aria-label="설정 열기" aria-haspopup="dialog">
+      <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span>
+      <span class="lbl">설정</span>
+    </button>
 
     <div class="pop" id="pop" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.3-6.5 4.3v-16a1 1 0 0 1 1-1z"/></svg></div>
     <div class="toast" id="toast" role="status"></div>
@@ -561,7 +572,7 @@
         <h3>화면</h3>
         <div class="seg" id="segTheme"></div>
       </div>
-      <p class="keys">위아래로 넘기기 · 두 번 탭해서 북마크<br><kbd>↑</kbd> <kbd>↓</kbd> 이동 · <kbd>M</kbd> 외움 · <kbd>B</kbd> 북마크 · <kbd>S</kbd> 발음 · <kbd>P</kbd> 재생 · <kbd>,</kbd> 설정</p>
+      <p class="keys">위아래로 넘기기 · 두 번 탭해서 북마크<br><kbd>↑</kbd> <kbd>↓</kbd> 이동 · <kbd>M</kbd> 외움 · <kbd>B</kbd> 북마크 · <kbd>P</kbd> 재생 · <kbd>,</kbd> 설정</p>
     </section>
   </div>
 <script>
@@ -596,7 +607,6 @@ const app = $("app");
 const feed = $("feed");
 const learnBtn = $("learnBtn");
 const markBtn = $("markBtn");
-const speakBtn = $("speakBtn");
 const playBtn = $("playBtn");
 const legacy = { file: store("vocab-dataset"), i: store("vocab-i") };
 
@@ -906,7 +916,7 @@ function build(targetN) {
   peekAt = -1;
   pending = null;
   lastSpoken = "";
-  const slides = list.map((n, p) => `<section class="slide" data-p="${p}" style="--h:${(n * 47) % 360}"></section>`);
+  const slides = list.map((n, p) => `<section class="slide" data-p="${p}"></section>`);
   slides.push(`<section class="slide flat" data-p="${list.length}"></section>`);
   feed.innerHTML = slides.join("");
   let p = list.findIndex((n) => n >= targetN);
@@ -922,13 +932,14 @@ function updateHud() {
   const total = list.length;
   const n = cur < total ? list[cur] : -1;
   if (n >= 0) lastN = n;
+  if (n >= 0) app.style.setProperty("--scene-h", String((n * 47) % 360));
   const shown = total ? Math.min(cur + 1, total) : 0;
   const scrub = $("scrub");
   if (scrubbing === null) scrub.style.setProperty("--pos", total ? `${(shown / total) * 100}%` : "0%");
   scrub.setAttribute("aria-valuenow", String(shown));
   scrub.setAttribute("aria-valuemax", String(total));
   scrub.setAttribute("aria-valuetext", n >= 0 ? `${shown} / ${total}, No.${pad(n + 1)}` : `${shown} / ${total}`);
-  learnBtn.disabled = markBtn.disabled = speakBtn.disabled = n < 0;
+  learnBtn.disabled = markBtn.disabled = n < 0;
   playBtn.disabled = !total;
   learnBtn.setAttribute("aria-pressed", n >= 0 && learned[n] ? "true" : "false");
   markBtn.setAttribute("aria-pressed", n >= 0 && marked[n] ? "true" : "false");
@@ -1186,7 +1197,7 @@ function unlockSpeech(e) {
   for (const t of ["pointerup", "keydown"]) window.removeEventListener(t, unlockSpeech, true);
   // a tap on something that speaks by itself should not be talked over
   if (e.type === "keydown" && String(e.key).toLowerCase() === "p") return;
-  if (e.target.closest && e.target.closest("[data-say], #speakBtn, #playBtn, .sheet, .scrub")) return;
+  if (e.target.closest && e.target.closest("[data-say], #playBtn, .sheet, .scrub")) return;
   autoSpeak();
 }
 
@@ -1463,9 +1474,6 @@ function reveal(p, field) {
 
 learnBtn.addEventListener("click", () => setFlag("learned", !learned[list[cur]]));
 markBtn.addEventListener("click", () => setFlag("marked", !marked[list[cur]]));
-speakBtn.addEventListener("click", () => {
-  if (cur < list.length) speak(cards[list[cur]].key);
-});
 playBtn.addEventListener("click", () => setAutoplay(!autoplay));
 
 feed.addEventListener("click", (e) => {
@@ -1512,7 +1520,6 @@ document.addEventListener("keydown", (e) => {
   else if (key === "End") { e.preventDefault(); scrollToPos(Math.max(0, list.length - 1), false); }
   else if (key === "m") learnBtn.click();
   else if (key === "b") markBtn.click();
-  else if (key === "s") speakBtn.click();
   else if (key === "p") playBtn.click();
   else if (key === ",") openSheet();
 });
