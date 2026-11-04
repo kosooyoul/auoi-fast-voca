@@ -5,6 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f3efe8">
 <title>단어장</title>
+<script>
+  (function (window) {
+    "use strict";
+
+    var STORAGE_KEY = "_";
+
+    function generateClientId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (character) {
+        var random = Math.floor(Math.random() * 16);
+        var value = character === "x" ? random : (random & 0x3) | 0x8;
+        return value.toString(16);
+      });
+    }
+
+    function getOrCreateClientId() {
+      var clientId = null;
+
+      try {
+        clientId = window.localStorage.getItem(STORAGE_KEY);
+        if (!clientId) {
+          clientId = generateClientId();
+          window.localStorage.setItem(STORAGE_KEY, clientId);
+        }
+      } catch (error) {
+        clientId = generateClientId();
+      }
+
+      return clientId;
+    }
+
+    var clientId = getOrCreateClientId();
+
+    function obtainClientID() {
+      return clientId;
+    }
+
+    window.obtainClientID = obtainClientID;
+
+    Object.defineProperty(window, "________", {
+      get: function () {
+        return obtainClientID();
+      },
+      configurable: false
+    });
+
+    Object.defineProperty(window, "momozClientId", {
+      get: function () {
+        return obtainClientID();
+      },
+      configurable: false
+    });
+  })(window);
+</script>
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0];
+    var j = d.createElement(s);
+    var dl = l !== "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-N5VTZS4B");
+</script>
+<!-- End Google Tag Manager -->
+<script>
+  window.dataLayer.push({
+    event: "client_id_ready",
+    client_id: window.obtainClientID()
+  });
+</script>
 <style>
   :root {
     --bg: #f3efe8;
@@ -487,6 +564,10 @@
 </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N5VTZS4B"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <div class="app" id="app">
     <main class="feed" id="feed"></main>
 
