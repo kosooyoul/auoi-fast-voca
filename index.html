@@ -2,499 +2,578 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#e7efe8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3efe8">
 <title>단어장</title>
 <style>
   :root {
-    --bg: #eef3ec;
-    --bg-strong: #e0e8dc;
-    --paper: #fffdfb;
-    --paper-strong: #f5f0ea;
-    --ink: #1d2a24;
-    --ink-soft: #53635b;
-    --muted: #6e7b73;
-    --line: #dfe9df;
-    --accent: #2d6a4f;
-    --accent-strong: #1d4d3a;
-    --accent-soft: #eaf3ee;
-    --gold: #b7772a;
-    --gold-soft: #f9f1e7;
-    --shadow: rgba(27, 51, 39, 0.12);
-    --shadow-strong: rgba(27, 51, 39, 0.18);
+    --bg: #f3efe8;
+    --ink: #17140f;
+    --muted: #776e62;
+    --faint: rgba(23, 20, 15, .08);
+    --glass: rgba(255, 255, 255, .58);
+    --glass-line: rgba(23, 20, 15, .08);
+    --accent: #1d7a52;
+    --mark: #d99400;
+    --sheet: #fffdf9;
+    --slide-s: 46%;
+    --slide-l: 92%;
+    --slide-l2: 84%;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c0b0a;
+    --ink: #f4f0e8;
+    --muted: #a59c90;
+    --faint: rgba(255, 255, 255, .1);
+    --glass: rgba(255, 255, 255, .08);
+    --glass-line: rgba(255, 255, 255, .12);
+    --accent: #3fbf86;
+    --mark: #f2b630;
+    --sheet: #1b1917;
+    --slide-s: 30%;
+    --slide-l: 8%;
+    --slide-l2: 17%;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c0b0a;
+      --ink: #f4f0e8;
+      --muted: #a59c90;
+      --faint: rgba(255, 255, 255, .1);
+      --glass: rgba(255, 255, 255, .08);
+      --glass-line: rgba(255, 255, 255, .12);
+      --accent: #3fbf86;
+      --mark: #f2b630;
+      --sheet: #1b1917;
+      --slide-s: 30%;
+      --slide-l: 8%;
+      --slide-l2: 17%;
+      color-scheme: dark;
+    }
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  html { -webkit-text-size-adjust: 100%; }
+  @property --scene-h {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 40;
+  }
+  html, body { height: 100%; margin: 0; overflow: hidden; }
   body {
-    margin: 0;
-    background:
-      radial-gradient(circle at top left, rgba(45, 106, 79, 0.11), transparent 30%),
-      linear-gradient(180deg, var(--bg) 0%, var(--bg-strong) 100%);
+    background: var(--bg);
     color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  button, input, select { font: inherit; color: inherit; font-size: 16px; }
-  button, select, input { touch-action: manipulation; }
+  button, input { font: inherit; color: inherit; }
   button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  button:disabled { cursor: default; opacity: .38; }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button:disabled { cursor: default; opacity: .35; }
+  svg { display: block; }
+
   .app {
-    width: min(560px, 100%);
-    min-height: 100dvh;
+    position: relative;
+    width: min(480px, 100%);
+    height: 100dvh;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 8px;
-  }
-  header {
-    padding: calc(14px + env(safe-area-inset-top)) 16px 10px;
-  }
-  .top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 4px 2px;
-  }
-  h1 {
-    margin: 0;
-    font-size: clamp(1.2rem, 2.6vw, 1.7rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-  }
-  .toolbar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 10px;
-    align-items: end;
-    margin-top: 14px;
-  }
-  .toolbar-compact {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: 10px;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 0;
-  }
-  .field label {
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: 0.09em;
-    color: var(--muted);
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-  .field-wide { flex: 1 1 180px; }
-  #dataset,
-  #previewPosition,
-  #progressPosition,
-  #startIndex {
-    width: 100%;
-    border: 1px solid rgba(45, 106, 79, 0.16);
-    background: rgba(255, 253, 251, 0.9);
-    border-radius: 14px;
-    min-height: 46px;
-    padding: 10px 12px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
-    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-  }
-  #dataset:focus,
-  #previewPosition:focus,
-  #progressPosition:focus,
-  #startIndex:focus {
-    border-color: rgba(45, 106, 79, 0.45);
-    box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.08);
-  }
-  #startIndex {
-    text-align: center;
-    font-variant-numeric: tabular-nums;
-  }
-  #load {
-    border: 0;
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
-    color: #f4fbf6;
-    border-radius: 14px;
-    min-height: 46px;
-    padding: 9px 16px;
-    min-width: 96px;
-    font-weight: 700;
-    box-shadow: 0 10px 18px rgba(29, 77, 58, 0.2);
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  #load:active { transform: translateY(1px); }
-  .toggles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .toggle {
-    border: 1px solid rgba(45, 106, 79, 0.14);
-    background: rgba(255,255,255,0.44);
-    color: var(--ink-soft);
-    border-radius: 999px;
-    padding: 7px 12px;
-    min-height: 36px;
-    font-weight: 600;
-    transition: all .15s ease;
-  }
-  .toggle[aria-pressed="true"] {
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
-    border-color: transparent;
-    color: #f5fdf7;
-    box-shadow: 0 6px 12px rgba(29, 77, 58, 0.16);
-  }
-  .mini-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .action {
-    border: 1px solid rgba(45, 106, 79, 0.12);
-    background: rgba(255,255,255,0.42);
-    color: var(--ink-soft);
-    border-radius: 999px;
-    padding: 7px 12px;
-    min-height: 36px;
-    font-weight: 600;
-  }
-  .action[aria-pressed="true"] {
-    background: linear-gradient(180deg, var(--gold) 0%, #a6671d 100%);
-    border-color: transparent;
-    color: #fffaf5;
-    box-shadow: 0 6px 12px rgba(183, 119, 42, 0.18);
-  }
-  .legend {
-    margin: 10px 0 0;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: -0.01em;
-  }
-  .prog {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 12px;
-    padding: 10px 12px;
-    background: rgba(255,255,255,0.38);
-    border: 1px solid rgba(45, 106, 79, 0.08);
-    border-radius: 16px;
-  }
-  .prog.hidden { display: none; }
-  .pos {
-    font-size: 12px;
-    color: var(--ink-soft);
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    min-width: 62px;
-  }
-  .track {
-    flex: 1;
-    height: 8px;
-    background: rgba(95, 116, 105, 0.14);
-    border-radius: 99px;
     overflow: hidden;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    container-type: inline-size;
+    --scene-h: 40;
+    background:
+      radial-gradient(120% 70% at 15% 0%, hsl(var(--scene-h) var(--slide-s) var(--slide-l2)), transparent 62%),
+      radial-gradient(90% 60% at 100% 100%, hsl(calc(var(--scene-h) + 40) var(--slide-s) var(--slide-l2)), transparent 60%),
+      hsl(var(--scene-h) calc(var(--slide-s) * .5) var(--slide-l));
+    transition: --scene-h .55s cubic-bezier(.22, .61, .36, 1);
   }
-  .fill {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, var(--accent) 0%, #76b08f 100%);
-    border-radius: inherit;
-    transition: width .2s ease;
+  @media (min-width: 520px) {
+    .app { box-shadow: 0 0 0 1px var(--glass-line), 0 24px 64px rgba(0, 0, 0, .14); }
   }
-  .nav-preview {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding: 0 16px 10px;
-  }
-  .nav-silhouette {
-    min-height: 30px;
-    padding: 8px 10px;
-    border-radius: 12px;
-    background: rgba(45, 106, 79, 0.05);
-    color: rgba(29, 42, 36, 0.5);
-    border: 1px solid rgba(45, 106, 79, 0.08);
-    font-size: 12px;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .nav-silhouette strong {
-    color: rgba(29, 42, 36, 0.74);
-    font-weight: 700;
-  }
-  .nav-preview.hidden { display: none; }
-  #status {
-    margin: 10px 0 0;
-    font-size: 13px;
-    color: #9b4a3a;
-    font-weight: 600;
-    min-height: 1.2em;
-  }
-  #status:empty { display: none; }
-  main {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    padding: 6px 16px 8px;
-    touch-action: pan-y;
-  }
-  #card {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9));
-    border: 1px solid rgba(45, 106, 79, 0.08);
-    border-radius: 28px;
-    box-shadow: 0 18px 34px var(--shadow), 0 6px 18px rgba(15, 18, 20, 0.05);
+
+  /* feed */
+  .feed {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
     overscroll-behavior: contain;
+    scrollbar-width: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  main.dragging { user-select: none; }
-  .meta-bar {
+  .feed::-webkit-scrollbar { display: none; }
+  .slide {
+    position: relative;
+    height: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 0 0 12px;
-    padding: 18px 22px 0;
+    flex-direction: column;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    background: transparent;
   }
-  .meta-badge {
+  .body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* The action rail floats above the slide, so only reserve enough room to
+       keep body text clear of the icon edge instead of its full 80px lane. */
+    padding: calc(40px + env(safe-area-inset-top)) 50px 12px 22px;
+  }
+  .body::-webkit-scrollbar { display: none; }
+  .inner { margin-block: auto; width: 100%; }
+
+  .word {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: left;
+    font-size: clamp(30px, calc((100cqw - 110px) / (var(--len, 6) * .6)), 60px);
+    font-weight: 800;
+    letter-spacing: -.035em;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+  .word:active { opacity: .7; }
+  .forms { margin: 10px 0 0; font-size: 16px; color: var(--muted); line-height: 1.45; }
+  .phs { margin-top: 18px; }
+  .ph + .ph { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--faint); }
+  .ph-word { margin: 0 0 4px; font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: .01em; }
+  .mean { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.38; letter-spacing: -.02em; }
+  .exp { margin: 8px 0 0; font-size: 15.5px; line-height: 1.6; color: var(--muted); }
+  .ex {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-line);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  .ex .s {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+  .ex .s:active { opacity: .7; }
+  .ex .s .say {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 6px;
+    vertical-align: -2px;
+    color: var(--muted);
+  }
+  .ex mark { background: none; color: inherit; box-shadow: inset 0 -.42em 0 color-mix(in srgb, var(--accent) 28%, transparent); }
+  .ex .m { margin: 5px 0 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+  .covers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .cover {
     display: inline-flex;
     align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
     border-radius: 999px;
-    padding: 6px 10px;
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: 0.08em;
-    font-weight: 800;
-    border: 1px solid transparent;
-    text-transform: uppercase;
-  }
-  .meta-badge.learned {
-    background: rgba(45, 106, 79, 0.08);
-    border-color: rgba(45, 106, 79, 0.12);
-    color: var(--accent);
-  }
-  .meta-badge.bookmark {
-    background: rgba(183, 119, 42, 0.08);
-    border-color: rgba(183, 119, 42, 0.15);
-    color: var(--gold);
-  }
-  .block {
-    padding: 18px 22px 20px;
-  }
-  .block + .block { border-top: 1px solid var(--line); }
-  .kicker {
-    margin: 0 0 8px;
-    font-size: 11px;
-    letter-spacing: .12em;
+    border: 1px dashed color-mix(in srgb, var(--ink) 26%, transparent);
+    background: var(--glass);
     color: var(--muted);
-    text-transform: uppercase;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 600;
   }
-  .word {
-    margin: 0;
-    font-size: clamp(2.1rem, 9vw, 3rem);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    line-height: 1.1;
-    overflow-wrap: anywhere;
-    color: var(--ink);
-  }
-  .forms {
-    margin: 8px 0 0;
-    color: var(--ink-soft);
-    font-size: 15px;
-    line-height: 1.45;
-    letter-spacing: -0.01em;
-  }
-  .def { font-size: 19px; line-height: 1.5; color: var(--ink); }
-  .def.big { margin: 0; font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.03em; }
-  .mean-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  .mean-list li { display: flex; flex-direction: column; gap: 4px; }
-  .form {
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-    font-weight: 700;
-  }
-  .exp, .ex, .empty, .loading { margin: 0; font-size: 17px; line-height: 1.6; overflow-wrap: anywhere; color: var(--ink); }
-  .exp + .exp, .ex + .ex { margin-top: 10px; }
-  .ex {
-    padding-left: 12px;
-    border-left: 3px solid rgba(45, 106, 79, 0.45);
-    color: var(--ink-soft);
-  }
-  .empty, .loading {
-    color: var(--muted);
-  }
-  .loading, .done, .error { padding: 28px 22px; }
-  .cover {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: linear-gradient(180deg, rgba(45, 106, 79, 0.025), rgba(45, 106, 79, 0.01));
-    border: 1px dashed rgba(45, 106, 79, 0.18);
-    border-radius: 18px;
-    min-height: 90px;
-    margin: 0 22px 18px;
-    padding: 18px 20px;
-    width: calc(100% - 44px);
-    transition: background .15s ease, transform .15s ease;
-  }
-  .cover .hint {
-    display: block;
-    margin-top: 6px;
-    font-size: 15px;
-    color: var(--accent);
-    font-weight: 700;
-  }
-  .cover:active { background: rgba(45, 106, 79, 0.05); }
-  footer {
+  .cover svg { width: 16px; height: 16px; }
+  .cover:active { transform: scale(.97); }
+  .cover-word {
     display: flex;
-    gap: 10px;
-    padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    padding: 18px 20px;
+    border-radius: 20px;
   }
-  .nav {
-    height: 54px;
-    border-radius: 16px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    transition: transform .15s ease, box-shadow .15s ease;
+  .cover-word .dots { font-size: 30px; letter-spacing: .12em; color: color-mix(in srgb, var(--ink) 22%, transparent); }
+
+  .caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    padding: 10px 50px calc(18px + env(safe-area-inset-bottom)) 22px;
+    font-size: 14px;
   }
-  #prev {
-    flex: 1;
-    background: rgba(255,255,255,0.8);
-    border: 1px solid rgba(45, 106, 79, 0.12);
-    color: var(--ink);
-    box-shadow: 0 4px 10px rgba(20, 28, 26, 0.04);
-  }
-  #next {
-    flex: 1.6;
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
-    color: #f4fff8;
+  .handle { padding: 0; border: 0; background: none; font-weight: 700; }
+  .handle:active { opacity: .6; }
+  .pos { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pos .of, .no { font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .ftag { font-weight: 700; color: var(--mark); }
+  .ftag[data-f="todo"] { color: var(--accent); }
+  .tags { display: contents; }
+  .tag { font-weight: 700; }
+  .tag.learned { color: var(--accent); }
+  .tag.marked { color: var(--mark); }
+
+  .end { text-align: center; }
+  .end .kicker { margin: 0 0 6px; font-size: 13px; color: var(--muted); letter-spacing: .08em; }
+  .end h2 { margin: 0; font-size: 32px; letter-spacing: -.03em; }
+  .end p { margin: 10px 0 0; font-size: 15px; line-height: 1.55; color: var(--muted); }
+  .btn {
+    margin-top: 20px;
+    padding: 12px 22px;
     border: 0;
-    box-shadow: 0 12px 22px rgba(29, 77, 58, 0.18);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 15px;
+    font-weight: 700;
   }
-  .nav:active { transform: translateY(1px); }
-  .from-right { animation: from-right .22s ease; }
-  .from-left { animation: from-left .22s ease; }
-  @keyframes from-right {
-    from { transform: translateX(28px); opacity: .38; }
-    to { transform: none; opacity: 1; }
+  .slide.flat .body { padding-right: 22px; }
+
+  /* overlays */
+  .hud {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 4;
+    padding: calc(8px + env(safe-area-inset-top)) 14px 0;
+    pointer-events: none;
   }
-  @keyframes from-left {
-    from { transform: translateX(-28px); opacity: .38; }
-    to { transform: none; opacity: 1; }
+  .scrub {
+    position: relative;
+    margin: -8px 0;
+    padding: 8px 0;
+    pointer-events: auto;
+    touch-action: none;
+    cursor: pointer;
+    --pos: 0%;
   }
-  @media (max-width: 460px) {
-    .toolbar {
-      grid-template-columns: 1fr;
-    }
-    .toolbar-compact {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .field { min-width: 0; }
-    .nav-preview {
-      grid-template-columns: 1fr;
-    }
+  .scrub:focus-visible { outline: none; }
+  .bar { height: 3px; border-radius: 99px; background: var(--faint); overflow: hidden; transition: height .15s ease; }
+  .fill { height: 100%; width: var(--pos); background: var(--ink); border-radius: inherit; transition: width .2s ease; }
+  .thumb {
+    position: absolute;
+    top: 50%;
+    left: var(--pos);
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: 50%;
+    background: var(--ink);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .25);
+    transform: scale(0);
+    transition: transform .15s ease;
   }
+  .scrub:hover .bar, .scrub:focus-visible .bar, .scrub.dragging .bar { height: 6px; }
+  .scrub:hover .thumb, .scrub:focus-visible .thumb, .scrub.dragging .thumb { transform: scale(1); }
+  .scrub.dragging .fill { transition: none; }
+  .bubble {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    padding: 6px 11px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .bubble .w { font-weight: 500; opacity: .75; }
+
+  .rail {
+    position: absolute;
+    right: 10px;
+    bottom: calc(60px + env(safe-area-inset-bottom));
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .act {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 58px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .act .ico {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 0;
+    background: transparent;
+    transition: transform .15s ease;
+  }
+  .act .ico svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .act:active .ico { transform: scale(.9); }
+  .act .lbl { font-size: 11.5px; font-weight: 700; }
+  .top-settings {
+    position: absolute;
+    top: calc(22px + env(safe-area-inset-top));
+    right: 10px;
+    z-index: 5;
+  }
+  .act.learn[aria-pressed="true"] { color: var(--accent); }
+  .act.learn[aria-pressed="true"] circle { fill: var(--accent); }
+  .act.learn[aria-pressed="true"] path { stroke: #fff; }
+  .act.mark[aria-pressed="true"] { color: var(--mark); }
+  .act.mark[aria-pressed="true"] path { fill: var(--mark); }
+  .act.play[aria-pressed="true"] { color: var(--accent); }
+  .act.play .pause { display: none; }
+  .act.play[aria-pressed="true"] .play { display: none; }
+  .act.play[aria-pressed="true"] .pause { display: block; }
+  .act.bump .ico { animation: bump .32s ease; }
+  @keyframes bump { 40% { transform: scale(1.18); } }
+
+  .pop {
+    position: absolute;
+    z-index: 6;
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
+    color: var(--mark);
+    pointer-events: none;
+    opacity: 0;
+  }
+  .pop svg { width: 100%; height: 100%; fill: currentColor; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .25)); }
+  .pop.go { animation: pop .7s ease forwards; }
+  @keyframes pop {
+    0% { opacity: 0; transform: scale(.4); }
+    25% { opacity: 1; transform: scale(1.12); }
+    45% { transform: scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-30px) scale(.9); }
+  }
+
+  .toast {
+    position: absolute;
+    left: 50%;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    z-index: 6;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    transform: translate(-50%, 10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* settings sheet */
+  .scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    background: rgba(0, 0, 0, .38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 8;
+    max-height: 88%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 8px 18px calc(20px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    background: var(--sheet);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, .18);
+    transform: translateY(105%);
+    transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+  }
+  .app.sheet-open .scrim { opacity: 1; pointer-events: auto; }
+  .app.sheet-open .sheet { transform: none; }
+  .grab { width: 40px; height: 5px; margin: 0 auto 10px; border-radius: 99px; background: var(--faint); }
+  .sheet-head { display: flex; align-items: center; justify-content: space-between; }
+  .sheet-head h2 { margin: 0; font-size: 20px; letter-spacing: -.02em; }
+  .x { display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--faint); }
+  .x svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  .stats { margin: 6px 0 0; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .stats b { color: var(--ink); }
+  .group { margin-top: 20px; }
+  .group h3 { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+  .note { margin: -4px 0 8px; font-size: 12.5px; color: var(--muted); }
+  .note.sub { margin-top: 14px; }
+  .seg {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 13px;
+    background: var(--faint);
+  }
+  .seg button {
+    padding: 10px 6px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .seg button[aria-pressed="true"] { background: var(--sheet); color: var(--ink); box-shadow: 0 1px 4px rgba(0, 0, 0, .12); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button {
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--faint);
+    background: transparent;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--sheet); }
+  .jump { display: flex; gap: 8px; }
+  .jump input {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 14px;
+    border: 1px solid var(--faint);
+    border-radius: 12px;
+    background: transparent;
+    font-size: 16px;
+  }
+  .jump button { padding: 0 20px; border: 0; border-radius: 12px; background: var(--ink); color: var(--sheet); font-weight: 700; }
+  .voice { display: flex; gap: 8px; margin-top: 8px; }
+  .voice select {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--faint);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+  }
+  .voice button { padding: 0 16px; border: 1px solid var(--faint); border-radius: 12px; background: transparent; font-size: 14px; font-weight: 600; }
+  .keys { margin: 22px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+  .keys kbd { padding: 1px 6px; border-radius: 5px; border: 1px solid var(--faint); font: inherit; font-size: 12px; }
+
   @media (prefers-reduced-motion: reduce) {
-    .from-right, .from-left { animation: none; }
+    .app, .sheet, .scrim, .toast, .fill { transition: none; }
+    .pop.go, .act.bump .ico { animation: none; }
   }
 </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="top">
-        <h1>단어장</h1>
-      </div>
+  <div class="app" id="app">
+    <main class="feed" id="feed"></main>
 
-      <div class="toolbar">
-        <div class="field field-wide">
-          <label for="dataset">문제집</label>
-          <select id="dataset" aria-label="학습 세트 선택"></select>
-        </div>
-        <button type="button" id="load">불러오기</button>
+    <header class="hud">
+      <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="위치" aria-valuemin="1" aria-valuenow="0" aria-valuemax="0">
+        <div class="bar"><div class="fill" id="fill"></div></div>
+        <div class="thumb" id="thumb"></div>
+        <div class="bubble" id="bubble" hidden></div>
       </div>
-
-      <div class="toolbar toolbar-compact">
-        <div class="field">
-          <label for="startIndex">시작</label>
-          <input id="startIndex" type="number" min="0" step="1" value="0" aria-label="시작 인덱스">
-        </div>
-        <div class="field">
-          <label for="previewPosition">미리보기</label>
-          <select id="previewPosition" aria-label="미리보기 위치 선택">
-            <option value="top">위</option>
-            <option value="bottom">아래</option>
-            <option value="hidden">숨김</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="progressPosition">진행</label>
-          <select id="progressPosition" aria-label="진행 표시 위치 선택">
-            <option value="top">위</option>
-            <option value="bottom">아래</option>
-            <option value="hidden">숨김</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="toggles" id="toggles">
-        <button type="button" class="toggle" data-toggle="word">단어</button>
-        <button type="button" class="toggle" data-toggle="mean">뜻</button>
-        <button type="button" class="toggle" data-toggle="exp">설명</button>
-        <button type="button" class="toggle" data-toggle="ex">예문</button>
-        <button type="button" class="toggle" data-toggle="sound">소리</button>
-      </div>
-      <div class="mini-actions">
-        <button type="button" class="action" id="toggleLearned" aria-pressed="false">외움 표시</button>
-        <button type="button" class="action" id="toggleBookmark" aria-pressed="false">북마크</button>
-      </div>
-      <p class="legend">켠 항목은 항상 표시 · 끈 항목은 눜러서 확인</p>
-      <div class="prog" id="prog">
-        <span class="pos" id="pos">0 / 0</span>
-        <div class="track" id="bar" role="progressbar" aria-valuemin="0" aria-valuenow="0" aria-valuemax="0" aria-label="진행">
-          <div class="fill" id="fill"></div>
-        </div>
-      </div>
-      <p id="status" role="status"></p>
     </header>
-    <div class="nav-preview" id="navPreview" aria-live="polite">
-      <div class="nav-silhouette" id="prevSilhouette"><strong>이전</strong> ·</div>
-      <div class="nav-silhouette" id="nextSilhouette"><strong>다음</strong> ·</div>
-    </div>
-    <main id="stage">
-      <article id="card"><p class="loading">불러오는 중…</p></article>
-    </main>
-    <footer>
-      <button type="button" class="nav" id="prev" disabled>이전</button>
-      <button type="button" class="nav" id="next" disabled>다음</button>
-    </footer>
+
+    <nav class="rail" id="rail" aria-label="단어 동작">
+      <button type="button" class="act learn" id="learnBtn" aria-pressed="false" aria-label="외움 표시">
+        <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.4 2.8 2.8 5.4-5.6"/></svg></span>
+        <span class="lbl">외움</span>
+      </button>
+      <button type="button" class="act mark" id="markBtn" aria-pressed="false" aria-label="북마크">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.3-6.5 4.3v-16a1 1 0 0 1 1-1z"/></svg></span>
+        <span class="lbl">북마크</span>
+      </button>
+      <button type="button" class="act play" id="playBtn" aria-pressed="false" aria-label="자동 재생">
+        <span class="ico"><svg viewBox="0 0 24 24"><path class="play" d="M8 5.5v13l11-6.5z"/><path class="pause" d="M8 5.5v13M16 5.5v13"/></svg></span>
+        <span class="lbl">재생</span>
+      </button>
+    </nav>
+
+    <button type="button" class="act top-settings" id="setBtn" aria-label="설정 열기" aria-haspopup="dialog">
+      <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span>
+      <span class="lbl">설정</span>
+    </button>
+
+    <div class="pop" id="pop" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.3-6.5 4.3v-16a1 1 0 0 1 1-1z"/></svg></div>
+    <div class="toast" id="toast" role="status"></div>
+
+    <div class="scrim" id="scrim"></div>
+    <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" inert>
+      <div class="grab"></div>
+      <div class="sheet-head">
+        <h2 id="sheetTitle">설정</h2>
+        <button type="button" class="x" id="closeSheet" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <p class="stats" id="stats"></p>
+      <div class="group">
+        <h3>단어장</h3>
+        <div class="seg" id="segData"></div>
+      </div>
+      <div class="group">
+        <h3>목록</h3>
+        <div class="seg" id="segFilter"></div>
+      </div>
+      <div class="group">
+        <h3>항상 보이기</h3>
+        <p class="note">끈 항목은 가려두고, 탭해서 확인해요.</p>
+        <div class="chips" id="chipsShow"></div>
+      </div>
+      <div class="group">
+        <h3>번호로 이동</h3>
+        <form class="jump" id="jumpForm">
+          <input id="jumpInput" type="number" inputmode="numeric" min="1" placeholder="No." aria-label="이동할 단어 번호">
+          <button type="submit">이동</button>
+        </form>
+      </div>
+      <div class="group">
+        <h3>자동 발음</h3>
+        <div class="seg" id="segSound"></div>
+        <div class="voice">
+          <select id="voiceSelect" aria-label="목소리"></select>
+          <button type="button" id="voiceTest">들어보기</button>
+        </div>
+      </div>
+      <div class="group">
+        <h3>자동 재생</h3>
+        <p class="note">단어 뜻</p>
+        <div class="seg" id="segWordMean"></div>
+        <p class="note sub">예문 뜻</p>
+        <div class="seg" id="segExMean"></div>
+        <p class="note sub">단어 반복</p>
+        <div class="seg" id="segWordN"></div>
+        <p class="note sub">예문 반복</p>
+        <div class="seg" id="segExN"></div>
+      </div>
+      <div class="group">
+        <h3>화면</h3>
+        <div class="seg" id="segTheme"></div>
+      </div>
+      <p class="keys">위아래로 넘기기 · 두 번 탭해서 북마크<br><kbd>↑</kbd> <kbd>↓</kbd> 이동 · <kbd>M</kbd> 외움 · <kbd>B</kbd> 북마크 · <kbd>P</kbd> 재생 · <kbd>,</kbd> 설정</p>
+    </section>
   </div>
 <script>
 const FIELDS = ["word", "mean", "exp", "ex"];
@@ -504,82 +583,78 @@ const DEFAULT_SOUND_ENABLED = true;
 const DATA_FILES = [
   { file: "toeic_beginner_1500.json", label: "초급 1500" },
   { file: "toeic_intermediate_1000.json", label: "중급 1000" },
-  { file: "toeic_advanced_1000.json", label: "고급 1000" }
+  { file: "toeic_advanced_1000.json", label: "상급 1000" },
+  { file: "toeic_high_1000.json", label: "고급 1000" }
 ];
-const DEFAULT_PREVIEW_POSITION = "top";
-const DEFAULT_PROGRESS_POSITION = "top";
+const FILTERS = [
+  { value: "all", label: "전체" },
+  { value: "todo", label: "안 외운 것" },
+  { value: "marked", label: "북마크" }
+];
+const THEMES = [
+  { value: "auto", label: "자동" },
+  { value: "light", label: "라이트" },
+  { value: "dark", label: "다크" }
+];
 const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
 const MASTERED_PREFIX = "vocab-mastered-";
 const BOOKMARK_PREFIX = "vocab-bookmarks-";
+const EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></svg>';
+const SAY = '<svg class="say" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6"/></svg>';
 
-let cards = [];
-let i = 0;
-let peek = {};
+const $ = (id) => document.getElementById(id);
+const app = $("app");
+const feed = $("feed");
+const learnBtn = $("learnBtn");
+const markBtn = $("markBtn");
+const playBtn = $("playBtn");
+const legacy = { file: store("vocab-dataset"), i: store("vocab-i") };
+
+let datasetFile = "";
+let cards = [];     // normalized cards; card.n is the index used by the mastered/bookmark bitsets
+let list = [];      // card.n values visible under the current filter
+let learned = [];
+let marked = [];
+let cur = 0;        // slide position in list (list.length = end slide)
+let pending = null; // slide position a smooth scroll is heading to
+let peekAt = -1;    // slide whose hidden fields were tapped open
+let peek = new Set();
 let show = loadShow();
-let drag = null;
-let swipeAt = 0;
-let previewPosition = loadPreviewPosition();
-let progressPosition = loadProgressPosition();
 let soundEnabled = loadSoundEnabled();
-let learnedState = [];
-let bookmarkState = [];
-let lastSpokenSignature = "";
+let filter = pick(store("vocab-filter"), FILTERS, "all");
+let theme = pick(store("vocab-theme"), THEMES, "auto");
+let lastSpoken = "";
+let ticking = false;
+let settleTimer = 0;
+let toastTimer = 0;
+let lastTap = { t: 0, x: 0, y: 0 };
+let sheetReturn = null;
+let scrubbing = null; // slide position under the finger while dragging the progress bar
+let lastN = 0;        // card.n of the last word shown, kept across filters
+let autoplay = false;
+let playToken = 0;
+let playDriven = false; // the in-flight scroll was started by autoplay, not the user
+let playWordMean = store("vocab-play-word-mean") !== "false";
+let playExMean = store("vocab-play-ex-mean") !== "false";
+let wordRepeat = loadRepeat("vocab-play-word-n");
+let exRepeat = loadRepeat("vocab-play-ex-n");
+const rendered = new Set();
 
-const cardEl = document.getElementById("card");
-const stage = document.getElementById("stage");
-const header = document.querySelector("header");
-const navPreview = document.getElementById("navPreview");
-const prog = document.getElementById("prog");
-const status = document.getElementById("status");
-const prevSilhouette = document.getElementById("prevSilhouette");
-const nextSilhouette = document.getElementById("nextSilhouette");
-
-function getCurrentDatasetName() {
-  const name = document.getElementById("dataset")?.value || "";
-  return name.replace(/\.json$/i, "");
+function store(key, value) {
+  try {
+    if (value === undefined) return localStorage.getItem(key);
+    localStorage.setItem(key, value);
+  } catch { /* private mode */ }
+  return null;
 }
 
-function currentWordText() {
-  if (!cards.length || !cards[i]) return "";
-  const card = cards[i];
-  const phrases = phrasesOf(card);
-  const key = String(card.key || (phrases[0] && phrases[0].phrase) || "").trim();
-  return key;
-}
-
-function speakCurrentWord() {
-  if (!("speechSynthesis" in window)) return;
-  if (!soundEnabled) return;
-  if (!cards.length) return;
-  const visible = show.word || peek.word;
-  if (!visible) return;
-
-  const word = currentWordText();
-  if (!word) return;
-
-  const signature = `${getCurrentDatasetName()}:${i}:${word}`;
-  if (signature === lastSpokenSignature) return;
-
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = "en-US";
-  utterance.rate = 0.9;
-  utterance.pitch = 1;
-  utterance.volume = 1;
-
-  const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find((v) => /en(-|_)?(us|gb|au)/i.test(v.lang))
-    || voices.find((v) => /^en/i.test(v.lang))
-    || voices[0];
-  if (preferred) utterance.voice = preferred;
-
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-  lastSpokenSignature = signature;
+function pick(value, options, fallback) {
+  return options.some((o) => o.value === value) ? value : fallback;
 }
 
 function loadShow() {
   try {
-    const saved = JSON.parse(localStorage.getItem("vocab-show") || "null");
+    const saved = JSON.parse(store("vocab-show") || "null");
     const next = { ...DEFAULT_SHOW };
     for (const key of FIELDS) {
       if (saved && typeof saved[key] === "boolean") next[key] = saved[key];
@@ -591,31 +666,13 @@ function loadShow() {
 }
 
 function loadSoundEnabled() {
-  try {
-    const saved = localStorage.getItem("vocab-sound-enabled");
-    if (saved === null) return DEFAULT_SOUND_ENABLED;
-    return saved === "true";
-  } catch {
-    return DEFAULT_SOUND_ENABLED;
-  }
+  const saved = store("vocab-sound-enabled");
+  return saved === null ? DEFAULT_SOUND_ENABLED : saved === "true";
 }
 
-function loadPreviewPosition() {
-  try {
-    const saved = localStorage.getItem("vocab-preview-position");
-    return saved === "bottom" || saved === "hidden" ? saved : DEFAULT_PREVIEW_POSITION;
-  } catch {
-    return DEFAULT_PREVIEW_POSITION;
-  }
-}
-
-function loadProgressPosition() {
-  try {
-    const saved = localStorage.getItem("vocab-progress-position");
-    return saved === "bottom" || saved === "hidden" ? saved : DEFAULT_PROGRESS_POSITION;
-  } catch {
-    return DEFAULT_PROGRESS_POSITION;
-  }
+function loadRepeat(key) {
+  const n = Number(store(key));
+  return Number.isInteger(n) && n >= 0 && n <= 5 ? n : 1;
 }
 
 function encodeBitsToBase36(bits) {
@@ -635,546 +692,1029 @@ function encodeBitsToBase36(bits) {
 
 function decodeBase36ToBits(str, expectedLength) {
   const bits = [];
-  if (!str) return new Array(expectedLength || 0).fill(false);
-  for (const ch of str) {
+  for (const ch of str || "") {
     const idx = BASE36.indexOf(ch);
     if (idx === -1) continue;
-    for (let bit = 0; bit < 5; bit++) {
-      bits.push(Boolean((idx >> bit) & 1));
-      if (expectedLength && bits.length >= expectedLength) break;
-    }
-    if (expectedLength && bits.length >= expectedLength) break;
+    for (let bit = 0; bit < 5; bit++) bits.push(Boolean((idx >> bit) & 1));
   }
-  const final = new Array(expectedLength || bits.length).fill(false);
-  for (let i = 0; i < final.length; i++) final[i] = Boolean(bits[i]);
-  return final;
+  return Array.from({ length: expectedLength }, (_, i) => Boolean(bits[i]));
 }
 
-function loadStateForDataset(prefix, datasetName, expectedLength) {
-  const key = `${prefix}${datasetName || "default"}`;
-  try {
-    const raw = localStorage.getItem(key) || "";
-    return decodeBase36ToBits(raw, expectedLength);
-  } catch {
-    return new Array(expectedLength || 0).fill(false);
-  }
+function datasetName() {
+  return datasetFile.replace(/\.json$/i, "") || "default";
 }
 
-function saveStateForDataset(prefix, datasetName, bits) {
-  const key = `${prefix}${datasetName || "default"}`;
-  try {
-    localStorage.setItem(key, encodeBitsToBase36(bits));
-  } catch {
-    // private mode
-  }
+function datasetLabel() {
+  const entry = DATA_FILES.find((d) => d.file === datasetFile);
+  return entry ? entry.label : "단어장";
 }
 
-function save() {
-  try {
-    localStorage.setItem("vocab-i", String(i));
-    localStorage.setItem("vocab-show", JSON.stringify(show));
-    localStorage.setItem("vocab-sound-enabled", String(soundEnabled));
-    localStorage.setItem("vocab-dataset", document.getElementById("dataset")?.value || "");
-    localStorage.setItem("vocab-preview-position", previewPosition);
-    localStorage.setItem("vocab-progress-position", progressPosition);
-    localStorage.setItem("vocab-start-index", String(document.getElementById("startIndex")?.value || 0));
-  } catch { /* private mode */ }
+function loadBits(prefix) {
+  return decodeBase36ToBits(store(prefix + datasetName()) || "", cards.length);
 }
 
-function populateDatasetOptions() {
-  const select = document.getElementById("dataset");
-  const saved = localStorage.getItem("vocab-dataset");
-  select.innerHTML = DATA_FILES.map((entry) =>
-    `<option value="${entry.file}">${entry.label}</option>`
-  ).join("");
-  const chosen = DATA_FILES.some((entry) => entry.file === saved) ? saved : DATA_FILES[0].file;
-  select.value = chosen;
+function saveBits(prefix, bits) {
+  store(prefix + datasetName(), encodeBitsToBase36(bits));
 }
 
-function populatePreviewPosition() {
-  const select = document.getElementById("previewPosition");
-  select.value = previewPosition;
-}
+/* ---------- data ---------- */
 
-function populateProgressPosition() {
-  const select = document.getElementById("progressPosition");
-  select.value = progressPosition;
-}
-
-function applyPreviewPosition() {
-  const pos = previewPosition === "bottom" ? "bottom" : previewPosition === "hidden" ? "hidden" : "top";
-  navPreview.classList.toggle("hidden", pos === "hidden");
-  navPreview.style.order = pos === "bottom" ? "2" : "0";
-}
-
-function applyProgressPosition() {
-  const pos = progressPosition === "bottom" ? "bottom" : progressPosition === "hidden" ? "hidden" : "top";
-  prog.classList.toggle("hidden", pos === "hidden");
-
-  if (pos === "top") {
-    header.insertBefore(prog, document.getElementById("toggles"));
-  } else if (pos === "bottom") {
-    header.insertBefore(prog, status);
-  }
-}
-
-function dedupeStrings(values) {
-  const seen = new Set();
+function dedupe(values) {
   const out = [];
   for (const value of values) {
-    const clean = String(value).trim();
-    if (!clean || seen.has(clean)) continue;
-    seen.add(clean);
-    out.push(clean);
+    const clean = String(value ?? "").trim();
+    if (clean && !out.includes(clean)) out.push(clean);
   }
   return out;
 }
 
-function normalizeTextList(value) {
+function textList(value) {
   if (value == null) return [];
-  if (Array.isArray(value)) {
-    return dedupeStrings(
-      value.map((entry) =>
-        typeof entry === "string" ? entry :
-        typeof entry === "number" || typeof entry === "boolean" ? String(entry) : ""
-      )
-    );
-  }
-  const text = String(value).trim();
-  return text ? [text] : [];
+  const raw = Array.isArray(value) ? value : [value];
+  return dedupe(raw.filter((v) => ["string", "number"].includes(typeof v)));
 }
 
-function normalizeExampleEntry(entry) {
-  if (!entry || typeof entry !== "object") {
-    if (typeof entry === "string") return entry.trim();
-    return "";
-  }
-
-  const sentence = String(entry.s || entry.sentence || entry.en || entry.text || "").trim();
-  const meaning = String(entry.m || entry.mean || entry.meaning || entry.kr || "").trim();
-  if (sentence && meaning) return `${sentence} — ${meaning}`;
-  return sentence || meaning;
+function normalizeExample(entry) {
+  if (typeof entry === "string") return entry.trim() ? { s: entry.trim(), m: "" } : null;
+  if (!entry || typeof entry !== "object") return null;
+  const s = String(entry.s || entry.sentence || entry.en || entry.text || "").trim();
+  const m = String(entry.m || entry.mean || entry.meaning || entry.kr || "").trim();
+  return s || m ? { s, m } : null;
 }
 
-function normalizeExampleList(value) {
-  if (!Array.isArray(value)) return [];
-  return dedupeStrings(value.map((entry) => normalizeExampleEntry(entry)));
+function exampleList(value) {
+  if (value == null) return [];
+  return (Array.isArray(value) ? value : [value]).map(normalizeExample).filter(Boolean);
 }
 
-function normalizePhraseList(list) {
-  if (!Array.isArray(list)) return [];
-  const out = [];
-  for (const entry of list) {
-    if (!entry || typeof entry !== "object") continue;
-    const phrase = String(entry.ph || entry.phrase || "").trim();
-    const rawMeans = Array.isArray(entry.ms) ? entry.ms : Array.isArray(entry.means) ? entry.means : [];
-    const means = dedupeStrings(rawMeans.map((value) => String(value).trim()));
-    if (phrase || means.length) {
-      out.push({ phrase, means });
-    }
-  }
-  return out;
+function normalizePhrase(entry) {
+  if (!entry || typeof entry !== "object") return null;
+  const phrase = String(entry.ph || entry.phrase || "").trim();
+  const means = dedupe(Array.isArray(entry.ms) ? entry.ms : Array.isArray(entry.means) ? entry.means : []);
+  const exp = textList(entry.exp);
+  const ex = exampleList(entry.ex);
+  return phrase || means.length || exp.length || ex.length ? { phrase, means, exp, ex } : null;
 }
 
 function normalizeCard(item) {
   if (!item || typeof item !== "object") return null;
+  const raw = [...(Array.isArray(item.phs) ? item.phs : []), ...(Array.isArray(item.phrases) ? item.phrases : [])];
+  const phrases = raw.map(normalizePhrase).filter(Boolean);
 
-  const phrases = [...normalizePhraseList(item.phrases), ...normalizePhraseList(item.phs)];
+  // legacy: explanation / examples on the card itself
+  const exp = dedupe([...textList(item.exp), ...textList(item.description), ...textList(item.explanation)]);
+  const ex = [...exampleList(item.ex), ...exampleList(item.examples)];
+  if (exp.length || ex.length) phrases.push({ phrase: "", means: [], exp, ex });
+
   const key = String(item.key || item.phrase || (phrases[0] && phrases[0].phrase) || "").trim();
-
-  const expParts = [];
-  for (const entry of [...(Array.isArray(item.phs) ? item.phs : []), ...(Array.isArray(item.phrases) ? item.phrases : [])]) {
-    if (!entry || typeof entry !== "object") continue;
-    if (typeof entry.exp === "string") expParts.push(entry.exp);
-    if (Array.isArray(entry.ex)) expParts.push(...normalizeExampleList(entry.ex));
-  }
-
-  const exp = dedupeStrings([
-    ...normalizeTextList(item.exp),
-    ...normalizeTextList(item.description),
-    ...normalizeTextList(item.explanation),
-    ...expParts
-  ]);
-
-  const ex = dedupeStrings([
-    ...normalizeExampleList(item.ex),
-    ...normalizeExampleList(item.examples),
-    ...((Array.isArray(item.phs) ? item.phs : []).flatMap((entry) => normalizeExampleList(entry.ex || []))),
-    ...((Array.isArray(item.phrases) ? item.phrases : []).flatMap((entry) => normalizeExampleList(entry.ex || [])))
-  ]);
-
-  if (!key && !phrases.length && !exp.length && !ex.length) return null;
-
-  return {
-    ...item,
-    key,
-    phrases,
-    exp,
-    ex
-  };
+  if (!key && !phrases.length) return null;
+  const forms = dedupe(phrases.map((p) => p.phrase)).filter((p) => p !== key);
+  const len = Math.max(5, ...key.split(/\s+/).map((w) => w.length));
+  return { key, forms, phrases, len };
 }
 
-function cardTitle(card) {
-  if (!card) return "";
-  const phrases = Array.isArray(card.phrases) ? card.phrases : [];
-  const title = String(card.key || card.phrase || (phrases[0] && phrases[0].phrase) || "").trim();
-  return title || "단어";
+function has(card, field) {
+  if (field === "word") return Boolean(card.key);
+  if (field === "mean") return card.phrases.some((p) => p.means.length);
+  if (field === "exp") return card.phrases.some((p) => p.exp.length);
+  return card.phrases.some((p) => p.ex.length);
 }
+
+/* ---------- rendering ---------- */
 
 function esc(s) {
-  return String(s).replace(/[&<>\"']/g, (c) => ({
+  return String(s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   }[c]));
 }
 
-function lines(v) {
-  if (v == null) return [];
-  const list = Array.isArray(v) ? v : [v];
-  return list.map((x) => String(x).trim()).filter(Boolean);
+function pad(n) {
+  return String(n).padStart(4, "0");
 }
 
-function phrasesOf(card) {
-  const list = Array.isArray(card.phrases) ? card.phrases : [];
-  return list.map((p) => ({
-    phrase: p && p.phrase ? String(p.phrase) : "",
-    means: Array.isArray(p && p.means) ? p.means.map(String).filter(Boolean) : []
-  })).filter((p) => p.phrase || p.means.length);
+function visible(p, field) {
+  return show[field] || (peekAt === p && peek.has(field));
 }
 
-function hasField(card, key) {
-  if (key === "word") return Boolean(card.key) || phrasesOf(card).some((p) => p.phrase);
-  if (key === "mean") return phrasesOf(card).some((p) => p.means.length);
-  if (key === "exp") return lines(card.exp).length > 0;
-  return lines(card.ex).length > 0;
+function highlight(html, phrase) {
+  const stem = esc(phrase).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  if (!stem) return html;
+  return html.replace(new RegExp(`\\b${stem}(?:s|es|d|ed|ing)?\\b`, "gi"), "<mark>$&</mark>");
 }
 
-function wordHTML(card) {
-  const ps = phrasesOf(card);
-  const key = String(card.key || (ps[0] && ps[0].phrase) || "").trim();
-  const forms = [];
-  for (const p of ps) {
-    if (p.phrase && p.phrase !== key && !forms.includes(p.phrase)) forms.push(p.phrase);
-  }
-  return `<p class="kicker">단어</p><h2 class="word">${esc(key)}</h2>` +
-    (forms.length ? `<p class="forms">${forms.map(esc).join(" · ")}</p>` : "");
+function exampleHTML(x, phrase, wordOn) {
+  const s = x.s
+    ? `<button type="button" class="s" data-say="${esc(x.s)}">${wordOn ? highlight(esc(x.s), phrase) : esc(x.s)}${SAY}</button>`
+    : "";
+  return `<div class="ex">${s}${x.m ? `<p class="m">${esc(x.m)}</p>` : ""}</div>`;
 }
 
-function meanHTML(card) {
-  const ps = phrasesOf(card).filter((p) => p.means.length);
-  const wordOpen = show.word || peek.word;
-  if (!wordOpen || ps.length < 2) {
-    const defs = [];
-    for (const p of ps) for (const m of p.means) if (!defs.includes(m)) defs.push(m);
-    return `<p class="kicker">뜻</p><p class="def big">${esc(defs.join(", "))}</p>`;
-  }
-  return `<p class="kicker">뜻</p><ul class="mean-list">` + ps.map((p) =>
-    `<li><span class="form">${esc(p.phrase)}</span><span class="def">${esc(p.means.join(", "))}</span></li>`
-  ).join("") + `</ul>`;
+function phraseHTML(ph, p, withHead, wordOn) {
+  let out = "";
+  if (ph.means.length && visible(p, "mean")) out += `<p class="mean">${ph.means.map(esc).join(", ")}</p>`;
+  if (ph.exp.length && visible(p, "exp")) out += ph.exp.map((t) => `<p class="exp">${esc(t)}</p>`).join("");
+  if (ph.ex.length && visible(p, "ex")) out += ph.ex.map((x) => exampleHTML(x, ph.phrase, wordOn)).join("");
+  if (!out) return "";
+  const head = withHead && ph.phrase ? `<p class="ph-word">${esc(ph.phrase)}</p>` : "";
+  return `<div class="ph">${head}${out}</div>`;
 }
 
-function textHTML(card, key, cls) {
-  const bits = lines(card[key]).map((t) => `<p class="${cls}">${esc(t)}</p>`).join("");
-  return `<p class="kicker">${LABELS[key]}</p>${bits}`;
+function slideHTML(card, p) {
+  const wordOn = visible(p, "word");
+  const head = wordOn
+    ? `<button type="button" class="word" style="--len:${card.len}" data-say="${esc(card.key)}" aria-label="${esc(card.key)}, 발음 듣기">${esc(card.key)}</button>` +
+      (card.forms.length ? `<p class="forms">${card.forms.map(esc).join(" · ")}</p>` : "")
+    : `<button type="button" class="cover cover-word" data-reveal="word"><span class="dots">●●●●●</span><span>단어 보기</span></button>`;
+  const multi = card.phrases.filter((ph) => ph.phrase).length > 1;
+  const phs = card.phrases.map((ph) => phraseHTML(ph, p, multi && wordOn, wordOn)).join("");
+  const covers = ["mean", "exp", "ex"]
+    .filter((f) => has(card, f) && !visible(p, f))
+    .map((f) => `<button type="button" class="cover" data-reveal="${f}">${EYE}${LABELS[f]}</button>`)
+    .join("");
+  return `<div class="body"><div class="inner">${head}` +
+    (phs ? `<div class="phs">${phs}</div>` : "") +
+    (covers ? `<div class="covers">${covers}</div>` : "") +
+    `</div></div>` + captionHTML(card, p);
 }
 
-function section(card, key) {
-  if (!hasField(card, key)) return "";
-  if (show[key] || peek[key]) {
-    const html = key === "word" ? wordHTML(card) : key === "mean" ? meanHTML(card) : textHTML(card, key, key);
-    return `<section class="block">${html}</section>`;
-  }
-  return `<button type="button" class="block cover" data-reveal="${key}"><span class="kicker">${LABELS[key]}</span><span class="hint">눌러서 보기</span></button>`;
+function tagsHTML(n) {
+  return (learned[n] ? '<span class="tag learned">#외움</span>' : "") +
+    (marked[n] ? '<span class="tag marked">#북마크</span>' : "");
 }
 
-function paintToggles() {
-  for (const key of FIELDS) {
-    const toggle = document.querySelector(`[data-toggle="${key}"]`);
-    if (toggle) toggle.setAttribute("aria-pressed", show[key] ? "true" : "false");
-  }
-
-  const soundToggle = document.querySelector('[data-toggle="sound"]');
-  if (soundToggle) soundToggle.setAttribute("aria-pressed", soundEnabled ? "true" : "false");
+// the post's caption doubles as the header: list name opens settings, then position
+function captionHTML(card, p) {
+  const filtered = filter !== "all";
+  const label = filtered ? FILTERS.find((f) => f.value === filter).label : "";
+  return `<footer class="caption">` +
+    `<button type="button" class="handle" data-act="sheet" aria-label="${esc(datasetLabel())}, 설정 열기">@${esc(datasetLabel())}</button>` +
+    (filtered ? `<span class="ftag" data-f="${filter}">${label}</span>` : "") +
+    `<span class="pos">${p + 1}<span class="of"> / ${list.length}</span></span>` +
+    // a filter skips words, so the position no longer matches the word number
+    (filtered ? `<span class="no">No.${pad(card.n + 1)}</span>` : "") +
+    `<span class="tags">${tagsHTML(card.n)}</span></footer>`;
 }
 
-function updateActionButtons() {
-  const learnedBtn = document.getElementById("toggleLearned");
-  const bookmarkBtn = document.getElementById("toggleBookmark");
-  if (!learnedBtn || !bookmarkBtn) return;
-
-  const currentLearned = cards.length ? Boolean(learnedState[i]) : false;
-  const currentBookmarked = cards.length ? Boolean(bookmarkState[i]) : false;
-
-  learnedBtn.textContent = currentLearned ? "외움 취소" : "외움 표시";
-  learnedBtn.setAttribute("aria-pressed", currentLearned ? "true" : "false");
-  bookmarkBtn.textContent = currentBookmarked ? "북마크 해제" : "북마크";
-  bookmarkBtn.setAttribute("aria-pressed", currentBookmarked ? "true" : "false");
-}
-
-function updateSilhouettes() {
-  const prev = cards[i - 1] ? cardTitle(cards[i - 1]) : "";
-  const next = cards[i + 1] ? cardTitle(cards[i + 1]) : "";
-
-  prevSilhouette.innerHTML = prev
-    ? `<strong>이전</strong> · ${esc(prev)}`
-    : `<strong>이전</strong> · 마지막입니다`;
-
-  nextSilhouette.innerHTML = next
-    ? `<strong>다음</strong> · ${esc(next)}`
-    : `<strong>다음</strong> · 마지막입니다`;
-}
-
-function render(dir) {
-  paintToggles();
-  updateActionButtons();
-  const total = cards.length;
-  const done = total > 0 && i >= total;
-  const shown = done ? total : Math.min(i + 1, total);
-  document.getElementById("pos").textContent = total ? `${shown} / ${total}` : "0 / 0";
-  document.getElementById("fill").style.width = total ? `${(shown / total) * 100}%` : "0%";
-  const bar = document.getElementById("bar");
-  bar.setAttribute("aria-valuenow", String(shown));
-  bar.setAttribute("aria-valuemax", String(total));
-  bar.setAttribute("aria-valuetext", total ? `${shown} / ${total}` : "0 / 0");
-  document.getElementById("prev").disabled = i <= 0;
-  document.getElementById("next").disabled = total === 0;
-  document.getElementById("next").textContent = done ? "처음부터" : "다음";
-  document.title = total ? `단어장 ${shown}/${total}` : "단어장";
-  updateSilhouettes();
-
-  if (!total) return;
-
-  const meta = [];
-  if (learnedState[i]) meta.push('<span class="meta-badge learned">외움</span>');
-  if (bookmarkState[i]) meta.push('<span class="meta-badge bookmark">북마크</span>');
-  const metaHtml = meta.length ? `<div class="meta-bar">${meta.join("")}</div>` : "";
-
-  cardEl.innerHTML = done
-    ? `<div class="done"><p class="kicker">끝</p><h2 class="word">다 봤어요</h2><p class="exp">${total}개를 넘겼습니다.</p></div>`
-    : `${metaHtml}${FIELDS.map((key) => section(cards[i], key)).join("")}`;
-
-  if (!done && soundEnabled && (show.word || peek.word)) {
-    speakCurrentWord();
-  } else if (!soundEnabled) {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
+function endHTML() {
+  let title = "다 봤어요";
+  let text = `${list.length}개를 넘겼습니다.`;
+  let action = '<button type="button" class="btn" data-act="top">처음으로</button>';
+  if (!list.length) {
+    action = '<button type="button" class="btn" data-act="all">전체 보기</button>';
+    if (filter === "marked") {
+      title = "북마크가 비어 있어요";
+      text = "단어를 두 번 탭하거나 북마크 버튼을 누르면 여기에 모여요.";
+    } else if (filter === "todo") {
+      title = "모두 외웠어요";
+      text = "이 단어장에 남은 단어가 없습니다.";
+    } else {
+      title = "단어가 없어요";
+      text = "";
+      action = "";
     }
-    lastSpokenSignature = "";
   }
-
-  if (!dir) return;
-  cardEl.classList.remove("from-right", "from-left");
-  void cardEl.offsetWidth;
-  cardEl.classList.add(dir > 0 ? "from-right" : "from-left");
+  return `<div class="body"><div class="inner end"><p class="kicker">끝</p><h2>${title}</h2>${text ? `<p>${text}</p>` : ""}${action}</div></div>`;
 }
 
-function setStartIndexFromInput() {
-  const input = document.getElementById("startIndex");
-  if (!input) return;
-  const raw = Number(input.value);
-  const max = Math.max(0, cards.length - 1);
-  const next = Number.isFinite(raw) ? Math.max(0, Math.min(raw, max)) : 0;
-  input.value = String(next);
-  i = next;
-  peek = {};
-  save();
-  render(0);
+function renderSlide(p) {
+  const el = feed.children[p];
+  if (!el) return;
+  const scroller = el.querySelector(".body");
+  const top = scroller ? scroller.scrollTop : 0;
+  el.innerHTML = p >= list.length ? endHTML() : slideHTML(cards[list[p]], p);
+  if (top) el.querySelector(".body").scrollTop = top;
+  rendered.add(p);
 }
 
-function go(delta) {
+function fillAround() {
+  for (const p of [...rendered]) {
+    if (Math.abs(p - cur) > 4) {
+      feed.children[p].innerHTML = "";
+      rendered.delete(p);
+    }
+  }
+  const last = feed.children.length - 1;
+  for (let p = Math.max(0, cur - 2); p <= Math.min(last, cur + 2); p++) {
+    if (!rendered.has(p)) renderSlide(p);
+  }
+}
+
+function message(title, text) {
+  list = [];
+  cur = 0;
+  rendered.clear();
+  feed.innerHTML = `<section class="slide flat"><div class="body"><div class="inner end"><h2>${esc(title)}</h2>${text ? `<p>${esc(text)}</p>` : ""}</div></div></section>`;
+  updateHud();
+}
+
+function build(targetN) {
+  if (autoplay) setAutoplay(false);
+  lastN = Math.min(targetN, Math.max(0, cards.length - 1));
+  list =cards.filter((c) => filter === "all" || (filter === "todo" ? !learned[c.n] : marked[c.n])).map((c) => c.n);
+  rendered.clear();
+  peek = new Set();
+  peekAt = -1;
+  pending = null;
+  lastSpoken = "";
+  const slides = list.map((n, p) => `<section class="slide" data-p="${p}"></section>`);
+  slides.push(`<section class="slide flat" data-p="${list.length}"></section>`);
+  feed.innerHTML = slides.join("");
+  let p = list.findIndex((n) => n >= targetN);
+  if (p < 0) p = targetN >= cards.length ? list.length : Math.max(0, list.length - 1);
+  cur = p;
+  feed.scrollTop = p * feed.clientHeight;
+  fillAround();
+  updateHud();
+  settle();
+}
+
+function updateHud() {
+  const total = list.length;
+  const n = cur < total ? list[cur] : -1;
+  if (n >= 0) lastN = n;
+  if (n >= 0) app.style.setProperty("--scene-h", String((n * 47) % 360));
+  const shown = total ? Math.min(cur + 1, total) : 0;
+  const scrub = $("scrub");
+  if (scrubbing === null) scrub.style.setProperty("--pos", total ? `${(shown / total) * 100}%` : "0%");
+  scrub.setAttribute("aria-valuenow", String(shown));
+  scrub.setAttribute("aria-valuemax", String(total));
+  scrub.setAttribute("aria-valuetext", n >= 0 ? `${shown} / ${total}, No.${pad(n + 1)}` : `${shown} / ${total}`);
+  learnBtn.disabled = markBtn.disabled = n < 0;
+  playBtn.disabled = !total;
+  learnBtn.setAttribute("aria-pressed", n >= 0 && learned[n] ? "true" : "false");
+  markBtn.setAttribute("aria-pressed", n >= 0 && marked[n] ? "true" : "false");
+  document.title = total && n >= 0 ? `${cards[n].key} · 단어장 ${shown}/${total}` : "단어장";
+}
+
+/* ---------- navigation ---------- */
+
+function settle() {
+  pending = null;
+  if (peekAt >= 0 && peekAt !== cur) {
+    const old = peekAt;
+    peekAt = -1;
+    peek = new Set();
+    if (rendered.has(old)) renderSlide(old);
+  }
   if (!cards.length) return;
-  const n = i + delta;
-  if (n < 0 || n > cards.length) return;
-  i = n;
-  const startInput = document.getElementById("startIndex");
-  if (startInput) startInput.value = String(i);
-  peek = {};
-  save();
-  render(delta);
+  store(`vocab-i-${datasetName()}`, String(cur < list.length ? list[cur] : cards.length));
+  if (!autoplay) autoSpeak();
 }
 
-function restart() {
-  i = 0;
-  const startInput = document.getElementById("startIndex");
-  if (startInput) startInput.value = "0";
-  peek = {};
-  save();
-  render(-1);
+function scrollToPos(p, smooth) {
+  const last = feed.children.length - 1;
+  const target = Math.max(0, Math.min(p, last));
+  pending = target;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  feed.scrollTo({ top: target * feed.clientHeight, behavior: smooth && !reduce ? "smooth" : "auto" });
 }
 
-function setCards(data, restore) {
-  if (!Array.isArray(data)) throw new Error("not array");
-  cards = data.map(normalizeCard).filter(Boolean);
-  const datasetName = getCurrentDatasetName();
-  learnedState = loadStateForDataset(MASTERED_PREFIX, datasetName, cards.length);
-  bookmarkState = loadStateForDataset(BOOKMARK_PREFIX, datasetName, cards.length);
-  peek = {};
-  document.getElementById("status").textContent = cards.length ? "" : "단어가 없습니다.";
-  let n = 0;
-  if (restore) {
-    const saved = Number(localStorage.getItem("vocab-i"));
-    const startSaved = Number(localStorage.getItem("vocab-start-index"));
-    n = Number.isInteger(saved) && saved >= 0 && saved <= cards.length ? saved : (Number.isInteger(startSaved) ? startSaved : 0);
-    if (!Number.isInteger(n) || n < 0 || n > cards.length) n = 0;
+function step(delta) {
+  scrollToPos((pending ?? cur) + delta, true);
+}
+
+feed.addEventListener("scroll", () => {
+  if (!ticking) {
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const h = feed.clientHeight || 1;
+      const p = Math.max(0, Math.min(Math.round(feed.scrollTop / h), feed.children.length - 1));
+      if (p !== cur) {
+        const mine = playDriven && p === pending;
+        playDriven = false;
+        if (autoplay && !mine) setAutoplay(false);
+        cur = p;
+        fillAround();
+        updateHud();
+      }
+    });
   }
-  i = cards.length ? n : 0;
-  const startInput = document.getElementById("startIndex");
-  if (startInput) startInput.value = String(i);
-  lastSpokenSignature = "";
-  render(0);
+  clearTimeout(settleTimer);
+  settleTimer = setTimeout(settle, 160);
+}, { passive: true });
+
+/* ---------- progress scrubber ---------- */
+
+function scrubAt(clientX) {
+  const r = $("scrub").getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+  return Math.max(0, Math.min(list.length - 1, Math.ceil(ratio * list.length) - 1));
 }
 
-function fail(msg) {
-  document.getElementById("status").textContent = msg;
-  if (!cards.length) {
-    cardEl.innerHTML = `<div class="error"><p class="exp">${esc(msg)}</p></div>`;
+function paintScrub(p) {
+  const scrub = $("scrub");
+  const bubble = $("bubble");
+  const card = cards[list[p]];
+  const ratio = (p + 1) / list.length;
+  scrub.style.setProperty("--pos", `${ratio * 100}%`);
+  // the word itself stays out when it is set to stay hidden
+  bubble.innerHTML = `${p + 1} <span class="w">/ ${list.length}</span>` +
+    (filter === "all" ? "" : ` <span class="w">· No.${pad(card.n + 1)}</span>`) +
+    (show.word ? ` · ${esc(card.key)}` : "");
+  bubble.hidden = false;
+  const width = scrub.clientWidth;
+  const half = bubble.offsetWidth / 2;
+  bubble.style.left = `${Math.max(half, Math.min(width - half, ratio * width))}px`;
+}
+
+function endScrub(jump) {
+  const p = scrubbing;
+  scrubbing = null;
+  $("scrub").classList.remove("dragging");
+  $("bubble").hidden = true;
+  if (jump && p !== null && p !== cur) scrollToPos(p, false);
+  else updateHud();
+}
+
+$("scrub").addEventListener("pointerdown", (e) => {
+  if (!list.length || (e.pointerType === "mouse" && e.button !== 0)) return;
+  e.preventDefault();
+  $("scrub").setPointerCapture(e.pointerId);
+  $("scrub").classList.add("dragging");
+  scrubbing = scrubAt(e.clientX);
+  paintScrub(scrubbing);
+});
+
+$("scrub").addEventListener("pointermove", (e) => {
+  if (scrubbing === null) return;
+  const p = scrubAt(e.clientX);
+  if (p !== scrubbing) {
+    scrubbing = p;
+    paintScrub(p);
   }
+});
+
+$("scrub").addEventListener("pointerup", () => { if (scrubbing !== null) endScrub(true); });
+$("scrub").addEventListener("pointercancel", () => { if (scrubbing !== null) endScrub(false); });
+// released outside the window: the capture is lost without a pointerup
+$("scrub").addEventListener("lostpointercapture", () => { if (scrubbing !== null) endScrub(true); });
+
+window.addEventListener("resize", () => {
+  requestAnimationFrame(() => { feed.scrollTop = cur * feed.clientHeight; });
+});
+
+/* ---------- speech ---------- */
+
+// macOS lists joke voices (Bahh, Bells, Zarvox…) as en-US; never pick them
+const NOVELTY_VOICE = /^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Eddy|Flo|Fred|Good News|Grandma|Grandpa|Hysterical|Jester|Junior|Kathy|Nicky|Organ|Pipe Organ|Princess|Ralph|Reed|Rocko|Sandy|Shelley|Superstar|Trinoids|Whisper|Wobble|Zarvox)\b/;
+const PREFERRED_VOICES = [/^Samantha/, /^Google US English/, /^Alex$/, /^Microsoft (Aria|Jenny|Guy)/, /^(Ava|Allison|Susan|Tom|Zoe)\b/, /^Daniel/, /^Karen/, /^Google UK English/];
+const PREFERRED_KO = [/^Yuna/, /^유나/, /^Google .*한국/, /^Nuri/, /^수진/];
+
+let voices = [];
+let voice = null;
+let voiceName = store("vocab-voice") || "";
+let koMissingNoted = false;
+let enMissingNoted = false;
+let utterGen = 0;
+let spokenLang = "";
+const mouths = { en: null, ko: null };
+// iPhone shares one speech engine. A hidden iframe plus rate 0.9 drops English and leaves Korean.
+const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+function log(...args) {
+  console.log("[단어장]", ...args);
 }
 
-function loadDataset(fileName, options = {}) {
-  const { restore = true } = options;
-  const name = fileName || document.getElementById("dataset").value;
-  if (!name) return;
-
-  localStorage.setItem("vocab-dataset", name);
-  fetch(`./data/${name}`, { cache: "no-store" })
-    .then((res) => {
-      if (!res.ok) throw new Error(String(res.status));
-      return res.json();
-    })
-    .then((data) => setCards(data, restore))
-    .catch(() => fail(`${name}을 불러오지 못했습니다.`));
+function voiceRank(v) {
+  const i = PREFERRED_VOICES.findIndex((re) => re.test(v.name));
+  return (i < 0 ? 50 : i) + (/^en[-_]US/i.test(v.lang) ? 0 : 0.5);
 }
 
-async function loadDefault() {
-  populateDatasetOptions();
-  populatePreviewPosition();
-  populateProgressPosition();
-  applyPreviewPosition();
-  applyProgressPosition();
-  const savedDataset = localStorage.getItem("vocab-dataset") || document.getElementById("dataset").value;
-  const select = document.getElementById("dataset");
-  if (savedDataset && DATA_FILES.some((entry) => entry.file === savedDataset)) {
-    select.value = savedDataset;
+function preferLocal(list) {
+  if (!ios) return list;
+  const local = list.filter((v) => v.localService);
+  return local.length ? local : list;
+}
+
+function rankedKo(all) {
+  const ko = preferLocal(all.filter((v) => /^ko([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name)));
+  ko.sort((a, b) => {
+    const ra = PREFERRED_KO.findIndex((re) => re.test(a.name));
+    const rb = PREFERRED_KO.findIndex((re) => re.test(b.name));
+    return (ra < 0 ? 50 : ra) - (rb < 0 ? 50 : rb) || a.name.localeCompare(b.name);
+  });
+  return ko[0] || null;
+}
+
+function pickVoice() {
+  const all = "speechSynthesis" in window ? speechSynthesis.getVoices() : [];
+  voices = preferLocal(all.filter((v) => /^en([-_]|$)/i.test(v.lang) && (ios || !NOVELTY_VOICE.test(v.name))))
+    .sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name));
+  voice = voices.find((v) => v.name === voiceName) || voices[0] || null;
+}
+
+function chooseVoice(win, lang) {
+  let all = [];
+  try { all = [...win.speechSynthesis.getVoices()]; } catch { return null; }
+  if (lang === "ko") return rankedKo(all);
+  const en = preferLocal(all.filter((v) => /^en([-_]|$)/i.test(v.lang) && (ios || !NOVELTY_VOICE.test(v.name))));
+  return en.find((v) => v.name === voiceName)
+    || en.sort((a, b) => voiceRank(a) - voiceRank(b) || a.name.localeCompare(b.name))[0]
+    || null;
+}
+
+function speaker(lang) {
+  return ios ? window : mouth(lang);
+}
+
+// One speechSynthesis sticks to the first voice it used. Keep an English mouth
+// and a Korean mouth, and never change the voice on either.
+function mouth(lang) {
+  if (mouths[lang]) return mouths[lang];
+  const frame = document.createElement("iframe");
+  frame.setAttribute("aria-hidden", "true");
+  frame.tabIndex = -1;
+  frame.style.cssText = "position:fixed;width:1px;height:1px;opacity:0;border:0;pointer-events:none";
+  document.body.appendChild(frame);
+  const win = frame.contentWindow;
+  win.speechSynthesis.getVoices();
+  win.speechSynthesis.addEventListener?.("voiceschanged", () => win.speechSynthesis.getVoices());
+  mouths[lang] = win;
+  log("mouth", lang, "iframe 생성");
+  return win;
+}
+
+function hush() {
+  spokenLang = "";
+  for (const lang of ["en", "ko"]) {
+    const win = mouths[lang];
+    if (!win) continue;
+    try { win.speechSynthesis.cancel(); } catch { /* stopped */ }
   }
-  const savedStart = Number(localStorage.getItem("vocab-start-index"));
-  if (Number.isInteger(savedStart) && savedStart >= 0) {
-    document.getElementById("startIndex").value = String(savedStart);
-  }
-  loadDataset(document.getElementById("dataset").value, { restore: true });
+  try { speechSynthesis.cancel(); } catch { /* stopped */ }
 }
 
-document.getElementById("toggles").addEventListener("click", (e) => {
-  const b = e.target.closest("[data-toggle]");
-  if (!b) return;
-  const key = b.dataset.toggle;
+function arm(lang) {
+  const win = speaker(lang);
+  const all = [...win.speechSynthesis.getVoices()];
+  const v = chooseVoice(win, lang);
+  const mine = all.filter((x) => (lang === "ko" ? /^ko([-_]|$)/i : /^en([-_]|$)/i).test(x.lang));
+  log("arm", lang, {
+    voices: all.length,
+    matched: mine.length,
+    picked: v ? `${v.name} / ${v.lang}` : null,
+    names: mine.slice(0, 6).map((x) => `${x.name} / ${x.lang}`)
+  });
+}
 
-  if (key === "sound") {
-    soundEnabled = !soundEnabled;
-    save();
-    render(0);
+function speak(text) {
+  if (!("speechSynthesis" in window) || !text) return;
+  if (autoplay) setAutoplay(false);
+  const win = speaker("en");
+  const use = chooseVoice(win, "en");
+  log("tap", use ? `${use.name} / ${use.lang}` : "기본", text.slice(0, 40));
+  const run = () => {
+    const u = new win.SpeechSynthesisUtterance(text);
+    if (use) { u.voice = use; u.lang = use.lang; }
+    else u.lang = "en-US";
+    u.rate = ios ? 1 : 0.9;
+    const synth = win.speechSynthesis;
+    if (!ios && synth.paused) synth.resume();
+    synth.speak(u);
+  };
+  hush();
+  if (ios) setTimeout(run, 120);
+  else run();
+}
+
+// browsers refuse speech until the page has had a tap or key press
+function canAutoPlay() {
+  return !navigator.userActivation || navigator.userActivation.hasBeenActive;
+}
+
+function autoSpeak() {
+  if (autoplay || !soundEnabled || cur >= list.length || !visible(cur, "word") || !canAutoPlay()) return;
+  const n = list[cur];
+  const signature = `${datasetFile}:${n}`;
+  if (signature === lastSpoken) return;
+  lastSpoken = signature;
+  speak(cards[n].key);
+}
+
+function unlockSpeech(e) {
+  if (!canAutoPlay()) return;
+  for (const t of ["pointerup", "keydown"]) window.removeEventListener(t, unlockSpeech, true);
+  // a tap on something that speaks by itself should not be talked over
+  if (e.type === "keydown" && String(e.key).toLowerCase() === "p") return;
+  if (e.target.closest && e.target.closest("[data-say], #playBtn, .sheet, .scrub")) return;
+  autoSpeak();
+}
+
+for (const t of ["pointerup", "keydown"]) window.addEventListener(t, unlockSpeech, true);
+
+if ("speechSynthesis" in window) {
+  pickVoice();
+  speechSynthesis.getVoices();
+  if (!ios) {
+    mouth("en");
+    mouth("ko");
+  }
+  speechSynthesis.addEventListener?.("voiceschanged", () => {
+    pickVoice();
+    if (app.classList.contains("sheet-open")) paintVoices();
+  });
+  // Chrome pauses speechSynthesis after ~15s; autoplay reads longer than that
+  setInterval(() => {
+    if (!autoplay) return;
+    const synths = ios ? [speechSynthesis] : ["en", "ko"].map((lang) => mouths[lang]?.speechSynthesis);
+    for (const synth of synths) {
+      if (synth?.paused && synth.speaking) synth.resume();
+    }
+  }, 8000);
+}
+
+/* ---------- autoplay ---------- */
+
+function wordMeans(card) {
+  const own = card.phrases.filter((ph) => ph.phrase === card.key);
+  const source = own.some((ph) => ph.means.length) ? own : card.phrases;
+  const means = [];
+  for (const ph of source) for (const m of ph.means) if (m && !means.includes(m)) means.push(m);
+  return means;
+}
+
+function playCues(card) {
+  const cues = [];
+  const repeat = (text, lang, anchor, n) => {
+    for (let i = 0; i < n; i++) cues.push({ text, lang, anchor });
+  };
+  if (playWordMean) {
+    const gloss = wordMeans(card).join(", ");
+    if (gloss) cues.push({ text: gloss, lang: "ko", anchor: "mean" });
+  }
+  if (card.key) repeat(card.key, "en", card.key, wordRepeat);
+  const seen = new Set();
+  for (const ph of card.phrases) for (const ex of ph.ex) {
+    if (!ex.s || seen.has(ex.s)) continue;
+    seen.add(ex.s);
+    if (playExMean && ex.m) cues.push({ text: ex.m, lang: "ko", anchor: ex.s });
+    repeat(ex.s, "en", ex.s, exRepeat);
+  }
+  return cues;
+}
+
+function expose(p) {
+  const old = peekAt;
+  peek = new Set(["word", "ex"]);
+  if (playWordMean) peek.add("mean");
+  peekAt = p;
+  if (old >= 0 && old !== p && rendered.has(old)) renderSlide(old);
+  renderSlide(p);
+}
+
+function follow(p, cue) {
+  const slide = feed.children[p];
+  const body = slide && slide.querySelector(".body");
+  if (!body) return;
+  const el = cue.anchor === "mean"
+    ? slide.querySelector(".mean")
+    : [...slide.querySelectorAll("[data-say]")].find((n) => n.dataset.say === cue.anchor);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top - body.getBoundingClientRect().top;
+  if (top < 0 || top > body.clientHeight - 48) body.scrollTop += top - 24;
+}
+
+function utter(text, lang, done) {
+  const gen = utterGen;
+  const win = speaker(lang);
+  const synth = win.speechSynthesis;
+  if (gen !== utterGen || !autoplay) {
+    log("skip", lang, { gen, utterGen, autoplay });
     return;
   }
-
-  show[key] = !show[key];
-  if (!show[key]) delete peek[key];
-  save();
-  render(0);
-});
-
-document.getElementById("toggleLearned").addEventListener("click", () => {
-  if (!cards.length) return;
-  learnedState[i] = !learnedState[i];
-  saveStateForDataset(MASTERED_PREFIX, getCurrentDatasetName(), learnedState);
-  render(0);
-});
-
-document.getElementById("toggleBookmark").addEventListener("click", () => {
-  if (!cards.length) return;
-  bookmarkState[i] = !bookmarkState[i];
-  saveStateForDataset(BOOKMARK_PREFIX, getCurrentDatasetName(), bookmarkState);
-  render(0);
-});
-
-document.getElementById("prev").addEventListener("click", () => go(-1));
-document.getElementById("next").addEventListener("click", () => {
-  if (i >= cards.length) restart();
-  else go(1);
-});
-document.getElementById("load").addEventListener("click", () => loadDataset(document.getElementById("dataset").value, { restore: false }));
-document.getElementById("dataset").addEventListener("change", () => loadDataset(document.getElementById("dataset").value, { restore: false }));
-document.getElementById("previewPosition").addEventListener("change", (e) => {
-  previewPosition = e.target.value === "bottom" || e.target.value === "hidden" ? e.target.value : DEFAULT_PREVIEW_POSITION;
-  applyPreviewPosition();
-  save();
-});
-document.getElementById("progressPosition").addEventListener("change", (e) => {
-  progressPosition = e.target.value === "bottom" || e.target.value === "hidden" ? e.target.value : DEFAULT_PROGRESS_POSITION;
-  applyProgressPosition();
-  save();
-});
-document.getElementById("startIndex").addEventListener("change", setStartIndexFromInput);
-document.getElementById("startIndex").addEventListener("input", () => {
-  const input = document.getElementById("startIndex");
-  if (!input) return;
-  if (input.value === "") return;
-  const n = Number(input.value);
-  if (!Number.isFinite(n) || n < 0) {
-    input.value = "0";
+  const go = () => {
+    if (gen !== utterGen || !autoplay) return;
+    const use = chooseVoice(win, lang);
+    const rate = ios ? 1 : (lang === "ko" ? 1 : 0.9);
+    log("speak", lang, use ? `${use.name} / ${use.lang}` : "목소리 없음", `rate ${rate}`, text.slice(0, 50), {
+      speaking: synth.speaking, pending: synth.pending, paused: synth.paused
+    });
+    if (lang === "ko" && !use && !koMissingNoted) {
+      koMissingNoted = true;
+      toast("한국어 목소리가 없어 뜻을 못 읽어요");
+    }
+    if (ios && lang === "en" && !use && synth.getVoices().length && !enMissingNoted) {
+      enMissingNoted = true;
+      toast("영어 목소리가 없어요. 설정에서 영어 음성을 받아 주세요");
+    }
+    const u = new win.SpeechSynthesisUtterance(text);
+    if (use) {
+      u.voice = use;
+      u.lang = use.lang;
+    } else u.lang = lang === "ko" ? "ko-KR" : "en-US";
+    u.rate = rate;
+    let once = false;
+    const fin = () => { if (once) return; once = true; clearTimeout(cap); done(); };
+    const cap = setTimeout(fin, 4000 + text.length * 130);
+    u.onstart = () => log("start", lang, text.slice(0, 40));
+    u.onend = () => { log("end", lang, text.slice(0, 40)); fin(); };
+    u.onerror = (ev) => {
+      log("error", lang, ev.error || "unknown", text.slice(0, 40));
+      if (ev.error === "interrupted" || ev.error === "canceled") return;
+      if (lang === "ko" && ev.error === "not-allowed" && !koMissingNoted) {
+        koMissingNoted = true;
+        toast("한국어 목소리를 재생하지 못했어요");
+      }
+      fin();
+    };
+    if (!ios && synth.paused) synth.resume();
+    synth.speak(u);
+    spokenLang = lang;
+    setTimeout(() => log("after", lang, { speaking: synth.speaking, pending: synth.pending, paused: synth.paused }), 0);
+  };
+  if (ios && spokenLang && spokenLang !== lang) {
+    try { synth.cancel(); } catch { /* stopped */ }
+    setTimeout(go, 200);
+    return;
   }
+  go();
+}
+
+function paintPlay() {
+  playBtn.setAttribute("aria-pressed", autoplay ? "true" : "false");
+  playBtn.setAttribute("aria-label", autoplay ? "자동 재생 정지" : "자동 재생");
+  playBtn.querySelector(".lbl").textContent = autoplay ? "정지" : "재생";
+}
+
+function setAutoplay(on) {
+  if (!on) {
+    if (!autoplay) return;
+    autoplay = false;
+    playToken++;
+    utterGen++;
+    playDriven = false;
+    paintPlay();
+    hush();
+    return;
+  }
+  if (!("speechSynthesis" in window)) { toast("이 브라우저는 음성을 지원하지 않아요"); return; }
+  if (!list.length) return;
+  autoplay = true;
+  paintPlay();
+  beginPlay(cur < list.length ? cur : 0);
+}
+
+function beginPlay(p) {
+  const start = () => {
+    if (!autoplay) return;
+    arm("en");
+    arm("ko");
+    if (p !== cur) {
+      playDriven = true;
+      scrollToPos(p, false);
+    }
+    speakLines(p);
+  };
+  const busy = ["en", "ko"].some((lang) => {
+    const synth = mouths[lang]?.speechSynthesis;
+    return synth && (synth.speaking || synth.pending);
+  }) || speechSynthesis.speaking || speechSynthesis.pending;
+  log("begin", { card: p, busy });
+  if (!busy) { start(); return; }
+  hush();
+  setTimeout(start, 120);
+}
+
+function advancePlay(p) {
+  if (!autoplay) return;
+  const n = p + 1;
+  if (n >= list.length) {
+    setAutoplay(false);
+    playDriven = true;
+    scrollToPos(list.length, false);
+    toast("끝까지 재생했어요");
+    return;
+  }
+  playDriven = true;
+  scrollToPos(n, false);
+  speakLines(n);
+}
+
+function replayPlay() {
+  if (!autoplay || cur >= list.length) return;
+  playToken++;
+  utterGen++;
+  beginPlay(cur);
+}
+
+function speakLines(p) {
+  if (!autoplay || p < 0 || p >= list.length) return;
+  const card = cards[list[p]];
+  if (!card) return;
+  const token = ++playToken;
+  utterGen++;
+  const cues = playCues(card);
+  expose(p);
+  let i = 0;
+  const stepCue = () => {
+    if (token !== playToken || !autoplay) return;
+    if (i >= cues.length) { advancePlay(p); return; }
+    const cue = cues[i++];
+    const next = cues[i];
+    const gap = !next ? 650 : next.text === cue.text ? 280 : 420;
+    follow(p, cue);
+    utter(cue.text, cue.lang, () => setTimeout(stepCue, gap));
+  };
+  stepCue();
+}
+
+/* ---------- actions ---------- */
+
+function toast(text) {
+  const el = $("toast");
+  el.textContent = text;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 1400);
+}
+
+function bump(btn) {
+  btn.classList.remove("bump");
+  void btn.offsetWidth;
+  btn.classList.add("bump");
+}
+
+function setFlag(kind, value) {
+  if (cur >= list.length) return;
+  const n = list[cur];
+  const bits = kind === "learned" ? learned : marked;
+  if (bits[n] === value) return;
+  bits[n] = value;
+  saveBits(kind === "learned" ? MASTERED_PREFIX : BOOKMARK_PREFIX, bits);
+  const tags = feed.children[cur]?.querySelector(".tags");
+  if (tags) tags.innerHTML = tagsHTML(n);
+  updateHud();
+  bump(kind === "learned" ? learnBtn : markBtn);
+  if (kind === "learned") toast(value ? "외운 단어로 표시했어요" : "외움 표시를 지웠어요");
+  else toast(value ? "북마크에 담았어요" : "북마크를 해제했어요");
+}
+
+function popAt(x, y) {
+  const el = $("pop");
+  const box = app.getBoundingClientRect();
+  el.style.left = `${x - box.left}px`;
+  el.style.top = `${y - box.top}px`;
+  el.classList.remove("go");
+  void el.offsetWidth;
+  el.classList.add("go");
+}
+
+function reveal(p, field) {
+  if (peekAt !== p) {
+    const old = peekAt;
+    peek = new Set();
+    peekAt = p;
+    if (old >= 0 && rendered.has(old)) renderSlide(old);
+  }
+  peek.add(field);
+  renderSlide(p);
+  if (field === "word" && p === cur) autoSpeak();
+}
+
+learnBtn.addEventListener("click", () => setFlag("learned", !learned[list[cur]]));
+markBtn.addEventListener("click", () => setFlag("marked", !marked[list[cur]]));
+playBtn.addEventListener("click", () => setAutoplay(!autoplay));
+
+feed.addEventListener("click", (e) => {
+  const r = e.target.closest("[data-reveal]");
+  if (r) {
+    reveal(Number(r.closest(".slide").dataset.p), r.dataset.reveal);
+    return;
+  }
+  const say = e.target.closest("[data-say]");
+  if (say) {
+    speak(say.dataset.say);
+    return;
+  }
+  const act = e.target.closest("[data-act]");
+  if (act && act.dataset.act === "top") scrollToPos(0, false);
+  if (act && act.dataset.act === "all") setFilter("all");
+  if (act && act.dataset.act === "sheet") openSheet();
 });
 
-cardEl.addEventListener("click", (e) => {
-  if (Date.now() - swipeAt < 450) return;
-  const b = e.target.closest("[data-reveal]");
-  if (!b) return;
-  peek[b.dataset.reveal] = true;
-  render(0);
+// double tap on the post = bookmark (never un-bookmarks, like a "like")
+feed.addEventListener("pointerup", (e) => {
+  if (e.button !== 0 || e.target.closest("button, a, input")) return;
+  const now = performance.now();
+  if (now - lastTap.t < 320 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30) {
+    lastTap.t = 0;
+    if (cur >= list.length) return;
+    setFlag("marked", true);
+    popAt(e.clientX, e.clientY);
+    return;
+  }
+  lastTap = { t: now, x: e.clientX, y: e.clientY };
 });
 
 document.addEventListener("keydown", (e) => {
-  if (e.target.closest("input, textarea, select")) return;
-  if (e.key === "ArrowRight") { e.preventDefault(); if (i >= cards.length) restart(); else go(1); }
-  if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-});
-
-stage.addEventListener("pointerdown", (e) => {
-  if (!e.isPrimary || e.button !== 0 || !cards.length) return;
-  drag = { id: e.pointerId, x: e.clientX, y: e.clientY, locked: "" };
-  stage.setPointerCapture?.(e.pointerId);
-});
-
-window.addEventListener("pointermove", (e) => {
-  if (!drag || e.pointerId !== drag.id) return;
-  const dx = e.clientX - drag.x;
-  const dy = e.clientY - drag.y;
-  if (!drag.locked) {
-    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
-    drag.locked = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-    if (drag.locked === "y") { drag = null; cardEl.style.transform = ""; stage.classList.remove("dragging"); return; }
+  if (app.classList.contains("sheet-open")) {
+    if (e.key === "Escape") closeSheet();
+    return;
   }
-  stage.classList.add("dragging");
-  cardEl.style.transform = `translateX(${Math.max(-96, Math.min(96, dx * 0.4))}px)`;
+  if (e.target.closest("input, textarea, select") || e.metaKey || e.ctrlKey || e.altKey) return;
+  const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  if (["ArrowDown", "ArrowRight", "PageDown", " ", "j"].includes(key)) { e.preventDefault(); step(1); }
+  else if (["ArrowUp", "ArrowLeft", "PageUp", "k"].includes(key)) { e.preventDefault(); step(-1); }
+  else if (key === "Home") { e.preventDefault(); scrollToPos(0, false); }
+  else if (key === "End") { e.preventDefault(); scrollToPos(Math.max(0, list.length - 1), false); }
+  else if (key === "m") learnBtn.click();
+  else if (key === "b") markBtn.click();
+  else if (key === "p") playBtn.click();
+  else if (key === ",") openSheet();
 });
 
-function endDrag(e, cancel) {
-  if (!drag || e.pointerId !== drag.id) return;
-  const dx = e.clientX - drag.x;
-  const dy = e.clientY - drag.y;
-  const swipe = !cancel && drag.locked === "x" && Math.abs(dx) > 64 && Math.abs(dx) > Math.abs(dy);
-  drag = null;
-  cardEl.style.transform = "";
-  stage.classList.remove("dragging");
-  if (!swipe) return;
-  swipeAt = Date.now();
-  if (dx < 0) { if (i >= cards.length) return; go(1); }
-  else go(-1);
+/* ---------- settings ---------- */
+
+function segHTML(options, value) {
+  return options.map((o) =>
+    `<button type="button" data-value="${o.value}" aria-pressed="${o.value === value}">${o.label}</button>`
+  ).join("");
 }
 
-window.addEventListener("pointerup", (e) => endDrag(e, false));
-window.addEventListener("pointercancel", (e) => endDrag(e, true));
-window.speechSynthesis?.addEventListener?.("voiceschanged", () => {});
+function paintSheet() {
+  $("segData").innerHTML = segHTML(DATA_FILES.map((d) => ({ value: d.file, label: d.label })), datasetFile);
+  $("segFilter").innerHTML = segHTML(FILTERS, filter);
+  $("segSound").innerHTML = segHTML([{ value: "on", label: "켜기" }, { value: "off", label: "끄기" }], soundEnabled ? "on" : "off");
+  $("segWordMean").innerHTML = segHTML([{ value: "on", label: "켜기" }, { value: "off", label: "끄기" }], playWordMean ? "on" : "off");
+  $("segExMean").innerHTML = segHTML([{ value: "on", label: "켜기" }, { value: "off", label: "끄기" }], playExMean ? "on" : "off");
+  const repeatOpts = [0, 1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: String(n) }));
+  $("segWordN").innerHTML = segHTML(repeatOpts, String(wordRepeat));
+  $("segExN").innerHTML = segHTML(repeatOpts, String(exRepeat));
+  $("segTheme").innerHTML = segHTML(THEMES, theme);
+  $("chipsShow").innerHTML = FIELDS.map((f) =>
+    `<button type="button" data-value="${f}" aria-pressed="${show[f]}">${LABELS[f]}</button>`
+  ).join("");
+  const nLearned = learned.filter(Boolean).length;
+  const nMarked = marked.filter(Boolean).length;
+  $("stats").innerHTML = cards.length
+    ? `외움 <b>${nLearned}</b> / ${cards.length} · 북마크 <b>${nMarked}</b>`
+    : "";
+  $("jumpInput").max = String(cards.length || 1);
+  paintVoices();
+}
 
-loadDefault();
+function paintVoices() {
+  const select = $("voiceSelect");
+  select.innerHTML = voices.length
+    ? voices.map((v) => `<option value="${esc(v.name)}">${esc(v.name)} · ${esc(v.lang)}</option>`).join("")
+    : '<option value="">기본 목소리</option>';
+  select.value = voice ? voice.name : "";
+}
+
+function openSheet() {
+  paintSheet();
+  sheetReturn = document.activeElement;
+  app.classList.add("sheet-open");
+  $("sheet").inert = false;
+  feed.inert = $("rail").inert = true;
+  $("closeSheet").focus({ preventScroll: true });
+}
+
+function closeSheet() {
+  app.classList.remove("sheet-open");
+  $("sheet").inert = true;
+  feed.inert = $("rail").inert = false;
+  if (sheetReturn && sheetReturn.focus) sheetReturn.focus({ preventScroll: true });
+}
+
+function currentN() {
+  if (cur < list.length) return list[cur];
+  // an empty filter result has only the end slide: keep the word we came from
+  return list.length ? cards.length : lastN;
+}
+
+function setFilter(value) {
+  filter = value;
+  store("vocab-filter", value);
+  build(currentN());
+}
+
+function applyTheme() {
+  if (theme === "auto") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = theme;
+  const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+  document.querySelector('meta[name="theme-color"]').content = bg;
+}
+
+function seg(id, handler) {
+  $(id).addEventListener("click", (e) => {
+    const b = e.target.closest("[data-value]");
+    if (!b) return;
+    handler(b.dataset.value);
+    paintSheet();
+  });
+}
+
+seg("segData", (file) => { if (file !== datasetFile) loadDataset(file); });
+seg("segFilter", (value) => { if (value !== filter) setFilter(value); });
+seg("segSound", (value) => {
+  soundEnabled = value === "on";
+  store("vocab-sound-enabled", String(soundEnabled));
+  if (!soundEnabled && "speechSynthesis" in window) hush();
+  lastSpoken = "";
+  autoSpeak();
+});
+function savePlay(key, value) {
+  store(key, String(value));
+  replayPlay();
+}
+seg("segWordMean", (value) => {
+  const on = value === "on";
+  if (on === playWordMean) return;
+  playWordMean = on;
+  savePlay("vocab-play-word-mean", on);
+});
+seg("segExMean", (value) => {
+  const on = value === "on";
+  if (on === playExMean) return;
+  playExMean = on;
+  savePlay("vocab-play-ex-mean", on);
+});
+seg("segWordN", (value) => {
+  const n = Number(value);
+  if (n === wordRepeat) return;
+  wordRepeat = n;
+  savePlay("vocab-play-word-n", n);
+});
+seg("segExN", (value) => {
+  const n = Number(value);
+  if (n === exRepeat) return;
+  exRepeat = n;
+  savePlay("vocab-play-ex-n", n);
+});
+$("voiceSelect").addEventListener("change", (e) => {
+  voiceName = e.target.value;
+  store("vocab-voice", voiceName);
+  pickVoice();
+  $("voiceTest").click();
+});
+$("voiceTest").addEventListener("click", () => {
+  speak(cur < list.length ? cards[list[cur]].key : "Hello");
+});
+seg("segTheme", (value) => {
+  theme = value;
+  store("vocab-theme", value);
+  applyTheme();
+});
+seg("chipsShow", (field) => {
+  show[field] = !show[field];
+  store("vocab-show", JSON.stringify(show));
+  for (const p of rendered) renderSlide(p);
+});
+
+$("jumpForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = Number($("jumpInput").value);
+  if (!Number.isInteger(v) || v < 1 || !cards.length) return;
+  const target = Math.min(v, cards.length) - 1;
+  let p = list.findIndex((n) => n >= target);
+  if (p < 0) p = list.length;
+  $("jumpInput").value = "";
+  closeSheet();
+  scrollToPos(p, false);
+  if (list[p] !== target && p < list.length) toast(`No.${pad(target + 1)}은 목록에 없어 다음 단어로 왔어요`);
+});
+
+$("setBtn").addEventListener("click", openSheet);
+$("closeSheet").addEventListener("click", closeSheet);
+$("scrim").addEventListener("click", closeSheet);
+
+/* ---------- loading ---------- */
+
+async function loadDataset(file) {
+  if (autoplay) setAutoplay(false);
+  datasetFile = file;
+  store("vocab-dataset", file);
+  cards = [];
+  learned = [];
+  marked = [];
+  message("불러오는 중…");
+  let data;
+  try {
+    const res = await fetch(`./data/${file}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(String(res.status));
+    data = await res.json();
+    if (!Array.isArray(data)) throw new Error("not array");
+  } catch {
+    if (file === datasetFile) message(`${datasetLabel()}을 불러오지 못했어요`, "파일로 직접 열었다면 python3 -m http.server 로 띄워서 열어 주세요.");
+    return;
+  }
+  if (file !== datasetFile) return;
+  cards = data.map(normalizeCard).filter(Boolean);
+  cards.forEach((c, n) => { c.n = n; });
+  learned = loadBits(MASTERED_PREFIX);
+  marked = loadBits(BOOKMARK_PREFIX);
+  let saved = store(`vocab-i-${datasetName()}`);
+  if (saved === null && file === legacy.file) saved = legacy.i;
+  const n = Number(saved);
+  build(Number.isInteger(n) && n >= 0 ? Math.min(n, cards.length) : 0);
+  if (app.classList.contains("sheet-open")) paintSheet();
+}
+
+applyTheme();
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", applyTheme);
+loadDataset(DATA_FILES.some((d) => d.file === legacy.file) ? legacy.file : DATA_FILES[0].file);
 </script>
 </body>
 </html>
