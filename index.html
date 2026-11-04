@@ -677,7 +677,8 @@ const THEMES = [
   { value: "light", label: "라이트" },
   { value: "dark", label: "다크" }
 ];
-const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
+const LEGACY_BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
+const BITSET_BASE64_PREFIX = "b64:";
 const MASTERED_PREFIX = "vocab-mastered-";
 const BOOKMARK_PREFIX = "vocab-bookmarks-";
 const EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></svg>';
@@ -756,29 +757,44 @@ function loadRepeat(key) {
   return Number.isInteger(n) && n >= 0 && n <= 5 ? n : 1;
 }
 
-function encodeBitsToBase36(bits) {
-  if (!bits || !bits.length) return "";
-  const padded = [...bits];
-  while (padded.length % 5 !== 0) padded.push(false);
-  let out = "";
-  for (let i = 0; i < padded.length; i += 5) {
-    let value = 0;
-    for (let j = 0; j < 5; j++) {
-      if (padded[i + j]) value |= 1 << j;
-    }
-    out += BASE36[value] || "0";
+function encodeBitsToBase64(bits) {
+  const bytes = new Uint8Array(Math.ceil((bits?.length || 0) / 8));
+  for (let i = 0; i < (bits?.length || 0); i++) {
+    if (bits[i]) bytes[Math.floor(i / 8)] |= 1 << (i % 8);
   }
-  return out;
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return BITSET_BASE64_PREFIX + btoa(binary);
+}
+
+function decodeBase64ToBits(str, expectedLength) {
+  try {
+    const binary = atob(str.slice(BITSET_BASE64_PREFIX.length));
+    return Array.from({ length: expectedLength }, (_, i) => {
+      const byte = binary.charCodeAt(Math.floor(i / 8));
+      return Number.isFinite(byte) && Boolean((byte >> (i % 8)) & 1);
+    });
+  } catch {
+    return new Array(expectedLength).fill(false);
+  }
 }
 
 function decodeBase36ToBits(str, expectedLength) {
   const bits = [];
   for (const ch of str || "") {
-    const idx = BASE36.indexOf(ch);
+    const idx = LEGACY_BASE36.indexOf(ch);
     if (idx === -1) continue;
     for (let bit = 0; bit < 5; bit++) bits.push(Boolean((idx >> bit) & 1));
   }
   return Array.from({ length: expectedLength }, (_, i) => Boolean(bits[i]));
+}
+
+function decodeStoredBits(str, expectedLength) {
+  if (str.startsWith(BITSET_BASE64_PREFIX)) return decodeBase64ToBits(str, expectedLength);
+  if (str.length === expectedLength && /^[01]+$/.test(str)) {
+    return Array.from(str, (bit) => bit === "1");
+  }
+  return decodeBase36ToBits(str, expectedLength);
 }
 
 function datasetName() {
@@ -791,11 +807,15 @@ function datasetLabel() {
 }
 
 function loadBits(prefix) {
-  return decodeBase36ToBits(store(prefix + datasetName()) || "", cards.length);
+  const key = prefix + datasetName();
+  const saved = store(key) || "";
+  const bits = decodeStoredBits(saved, cards.length);
+  if (saved && !saved.startsWith(BITSET_BASE64_PREFIX)) store(key, encodeBitsToBase64(bits));
+  return bits;
 }
 
 function saveBits(prefix, bits) {
-  store(prefix + datasetName(), encodeBitsToBase36(bits));
+  store(prefix + datasetName(), encodeBitsToBase64(bits));
 }
 
 /* ---------- data ---------- */
